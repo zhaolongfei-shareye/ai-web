@@ -440,8 +440,14 @@
         });
 
         // Initialize Lifecycle Deployment
-        renderLangSelectorUI();
-        updateUIStrings();
+// ━━━━━ 🚀 修复后的初始化启动引擎 ━━━━━
+// 1. 确保全局分类标签和卡片数据被完全翻译并渲染出来
+updateUIStrings();
+// 2. 显性高亮当前应该处于激活状态的语言按钮（EN/中文/日本語/한국어）
+renderLangSelectorUI();
+// 3. 额外强制补一刀：首屏刷新时确保卡片和过滤栏直接暴露显示
+renderFilterTabs();
+renderTools();
     </script>
 </body>
 </html>
