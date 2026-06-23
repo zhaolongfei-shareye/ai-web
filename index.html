@@ -135,7 +135,7 @@
                 pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "該当データが存在しません。",
                 sideTitle: "個別仕様・性能ベンチマーク比較", dataTitle: "マスターデータコントロール",
                 all: "すべて表示", chat: "対話型AI & LLM", image: "画像生成プラットフォーム", video: "動画生成・編集", code: "プログラミング開発支援",
-                authTitle: "管理者認証プロトコル", saveBtn: "データを保存する", alertPass: "パスワードが一致しません！",
+                authTitle: "管理者認証プロトкол", saveBtn: "データを保存する", alertPass: "パスワードが一致しません！",
                 alertSelectLimit: "同時に比較できるのは2つのアイテムまでです。", alertFields: "名称およびURLアドレスは必須です。",
                 confirmDel: "このAIツールの登録データを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作"
             },
@@ -152,24 +152,29 @@
 
         // Complete Structured Static Data (Ensuring >=1 tool per type)
         const initDefaultTools = [
-            // Dialogue
             { id:1, name:"ChatGPT", category:"chat", desc:"Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and processing logic.", price:"Free / $20mo Plus", score:4.9, link:"https://openai.com" },
             { id:2, name:"Claude 3.5 Sonnet", category:"chat", desc:"Industry-leading LLM from Anthropic. Exceptional for source code architectures and advanced logical writing.", price:"Free / $20mo Pro", score:4.8, link:"https://anthropic.com" },
             { id:3, name:"Google Gemini", category:"chat", desc:"Google's native multimodal titan. Blazing fast data context reading with native access to live web intelligence ecosystem.", price:"Free / $20mo Advanced", score:4.7, link:"https://gemini.google.com" },
-            // Image
             { id:4, name:"Midjourney", category:"image", desc:"The ultimate golden standard for text-to-image synthesis, cinematic composition framing, and artistic quality.", price:"Starts $10/mo", score:4.8, link:"https://www.midjourney.com" },
             { id:5, name:"Stable Diffusion XL", category:"image", desc:"Open-source framework giving creators infinite parameter controls, model custom finetuning, and extensions.", price:"Free / Self-Hosted", score:4.6, link:"https://stability.ai" },
-            // Video
             { id:6, name:"Sora OpenAI", category:"video", desc:"State-of-the-art physics simulation engine creating 60-second highly coherent cinema fidelity scenes.", price:"Enterprise Access", score:4.9, link:"https://openai.com/sora" },
             { id:7, name:"Runway Gen-3 Alpha", category:"video", desc:"Major high-tier generative video generator built for cinematic rendering, hyper-realistic physics, and prompt fidelity.", price:"Subscription Base", score:4.5, link:"https://runwayml.com" },
             { id:8, name:"Luma Dream Machine", category:"video", desc:"High-speed continuous frame rendering engine delivering clean dynamic asset camera loops and fluid prompt motion.", price:"Free Quota / Paid", score:4.4, link:"https://lumalabs.ai" },
-            // Coding
             { id:9, name:"GitHub Copilot", category:"code", desc:"The global developer standard inline autocompletion engine seamlessly running on IDE layers to accelerate production.", price:"$10/mo Individual", score:4.8, link:"https://github.com" },
             { id:10, name:"Cursor IDE", category:"code", desc:"An AI-first visual code workspace branch optimizing multi-file cross-referencing and background debugging automation.", price:"Free Tier / $20mo", score:4.9, link:"https://cursor.com" },
             { id:11, name:"v0 by Vercel", category:"code", desc:"Generative UI system rendering component code structures instantly from clean layout design prompts.", price:"Free Quota Base", score:4.7, link:"https://v0.dev" }
         ];
 
-        let aiTools = JSON.parse(localStorage.getItem('portal_tools')) || initDefaultTools;
+        // 💡【核心强制修复】检查本地缓存是否损坏或为空，如果是，强制写入最新包含Gemini和全分类的完整数据
+        let currentLang = localStorage.getItem('portal_lang') || 'en';
+        let localData = localStorage.getItem('portal_tools');
+        
+        // 如果本地完全空，或者里面没有新加入的Gemini，强行用新列表覆盖本地缓存
+        if (!localData || !localData.includes("Gemini")) {
+            localStorage.setItem('portal_tools', JSON.stringify(initDefaultTools));
+            localData = JSON.stringify(initDefaultTools);
+        }
+        let aiTools = JSON.parse(localData);
         let selectedCompare = [];
         let currentFilter = "all";
 
@@ -252,7 +257,6 @@
 
             filterData.forEach(tool=>{
                 const isChecked = selectedCompare.find(s=>s.id === tool.id);
-                // Dynamically build the YouTube deep link architecture search query parameter string
                 const youtubeLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(tool.name + ' ' + t.ytQuery)}`;
                 
                 const card = document.createElement("div");
@@ -302,7 +306,6 @@
             renderTools();
         }
 
-        // Vault Access Logic
         document.getElementById("openAdminBtn").addEventListener("click", () => {
             if(sessionStorage.getItem("admin_authenticated") === "true") {
                 openAdminConsole();
@@ -327,7 +330,7 @@
 
         function logoutAdmin() {
             sessionStorage.removeItem("admin_authenticated");
-            adminModal.classList.replace("flex", "hidden");
+            adminModal.classList.replace("hidden", "flex");
         }
 
         function openAdminConsole() {
@@ -335,7 +338,6 @@
             adminModal.classList.replace("hidden", "flex");
         }
 
-        // Control Matrix Node Engine
         function renderAdminTable() {
             adminTableBody.innerHTML = "";
             const t = i18n[currentLang];
@@ -439,15 +441,9 @@
             localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
         });
 
-        // Initialize Lifecycle Deployment
-// ━━━━━ 🚀 修复后的初始化启动引擎 ━━━━━
-// 1. 确保全局分类标签和卡片数据被完全翻译并渲染出来
-updateUIStrings();
-// 2. 显性高亮当前应该处于激活状态的语言按钮（EN/中文/日本語/한국어）
-renderLangSelectorUI();
-// 3. 额外强制补一刀：首屏刷新时确保卡片和过滤栏直接暴露显示
-renderFilterTabs();
-renderTools();
+        // ━━━━━ 🚀 启动渲染序列（严格保序） ━━━━━
+        renderLangSelectorUI();
+        updateUIStrings();
     </script>
 </body>
 </html>
