@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub Pro - Full Stack Architecture Platform</title>
+    <title>AI Hub Pro - Full Stack Hub & Token Economy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -13,7 +13,7 @@
         .card-hover { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .star-fill { color: #fbbf24; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; }
@@ -23,281 +23,315 @@
     
     <div class="flex flex-col lg:flex-row min-h-screen">
         
-        <aside class="w-full lg:w-80 bg-white dark:bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
+        <aside class="w-full lg:w-80 bg-white dark:bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700 p-5 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen overflow-y-auto">
             <div>
-                <div class="flex items-center gap-4 border-b dark:border-gray-700 pb-5 mb-5">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary/50">
+                <div class="flex items-center gap-3 border-b dark:border-gray-700 pb-4 mb-4">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-11 h-11 rounded-full object-cover ring-2 ring-primary/50">
                     <div class="overflow-hidden">
-                        <h2 class="font-black text-lg truncate text-gray-900 dark:text-white">Alex Mercer</h2>
-                        <p class="text-xs text-primary font-semibold truncate">Premium AI Researcher</p>
+                        <h2 class="font-black text-sm truncate text-gray-900 dark:text-white">Alex Mercer</h2>
+                        <p class="text-[11px] text-primary font-semibold truncate">Premium AI Researcher</p>
                     </div>
                 </div>
-                
-                <div class="space-y-2.5 text-xs border-b dark:border-gray-700 pb-5 mb-5 text-gray-600 dark:text-gray-400">
-                    <div class="flex items-center gap-2"><i class="fa fa-globe w-4 text-center text-gray-400"></i> <span class="font-medium">Region:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Global</span></div>
-                    <div class="flex items-center gap-2"><i class="fa fa-briefcase w-4 text-center text-gray-400"></i> <span class="font-medium">Occupation:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Full-Stack Architect</span></div>
-                </div>
 
-                <div>
-                    <h3 class="text-xs font-black tracking-wider text-gray-400 uppercase mb-3 flex items-center justify-between">
-                        <span id="lblFavs">My Bookmarks</span>
-                        <span id="favCount" class="bg-red-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold">0</span>
+                <div class="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-3 border dark:border-gray-700 mb-4 text-xs">
+                    <h3 class="font-black text-[11px] uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
+                        <i class="fa fa-id-card text-primary"></i> <span id="lblAccount">Account Center</span>
                     </h3>
-                    <ul class="space-y-1 overflow-y-auto max-h-[35vh]" id="favoritesList"></ul>
+                    <div class="mb-2.5">
+                        <span class="text-[10px] text-gray-400 block mb-1" id="lblPaidList">Paid Agents:</span>
+                        <div id="paidAgentsContainer" class="flex flex-wrap gap-1"></div>
+                    </div>
+                    <div class="space-y-1.5 border-t dark:border-gray-700 pt-2 text-[11px]">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" id="lblTokenTotal">Total Deposited:</span>
+                            <span class="font-mono font-bold" id="valTokenTotal">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" id="lblTokenUsed">Consumed:</span>
+                            <span class="font-mono text-gray-500" id="valTokenUsed">0</span>
+                        </div>
+                        <div class="flex justify-between bg-primary/5 dark:bg-primary/20 p-1 rounded">
+                            <span class="font-medium text-primary dark:text-indigo-300" id="lblTokenLeft">Balance:</span>
+                            <span class="font-mono font-black text-primary dark:text-indigo-300" id="valTokenLeft">0</span>
+                        </div>
+                    </div>
+                    <button onclick="openTopupModal()" class="w-full mt-2.5 bg-primary hover:bg-indigo-700 text-white py-1.5 rounded-lg font-bold text-[11px] transition flex items-center justify-center gap-1">
+                        <i class="fa fa-bolt"></i> <span id="btnTopupEntry">Top-up Balance</span>
+                    </button>
+                </div>
+                
+                <div class="border-t dark:border-gray-700 pt-3">
+                    <h3 class="text-[11px] font-black tracking-wider text-gray-400 uppercase mb-2 flex items-center justify-between">
+                        <span id="lblFavs">My Bookmarks</span>
+                        <span id="favCount" class="bg-red-500 text-white px-2 py-0.2 rounded-full text-[9px] font-bold">0</span>
+                    </h3>
+                    <div id="categorizedFavorites" class="space-y-2 text-xs"></div>
                 </div>
             </div>
 
-            <div class="pt-4 border-t dark:border-gray-700 mt-5 flex items-center justify-between text-xs text-gray-400">
-                <span>System Status: v3.1 Fully Loaded</span>
-                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:opacity-80 transition">
+            <div class="pt-4 border-t dark:border-gray-700 mt-4 flex items-center justify-between text-[10px] text-gray-400">
+                <span>Core Ecosystem v4.0</span>
+                <button id="themeToggle" class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:opacity-80 transition">
                     <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:inline"></i>
                 </button>
             </div>
         </aside>
 
-        <main class="flex-1 p-4 md:p-8 overflow-x-hidden">
-            <header class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-6 border-b dark:border-gray-800 gap-4">
-                <div class="flex flex-col md:flex-row items-center gap-4">
-                    <h1 class="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2 cursor-pointer" onclick="backToMainDashboard()">
-                        <i class="fa fa-rocket text-primary"></i> <span id="navTitle">AI Matrix Hub</span>
+        <main class="flex-1 p-4 md:p-6 overflow-x-hidden">
+            <header class="flex flex-col sm:flex-row justify-between items-center mb-5 pb-5 border-b dark:border-gray-800 gap-3">
+                <div class="flex flex-col md:flex-row items-center gap-3">
+                    <h1 class="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 cursor-pointer" onclick="backToMainDashboard()">
+                        <i class="fa fa-cubes text-primary"></i> <span id="navTitle">AI Matrix Hub</span>
                     </h1>
                     <div class="flex rounded-lg bg-gray-200/70 dark:bg-gray-800 p-0.5 border dark:border-gray-700" id="langSelectorTabs">
-                        <button onclick="switchLang('en')" data-lang="en" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">EN</button>
-                        <button onclick="switchLang('zh')" data-lang="zh" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">中文</button>
-                        <button onclick="switchLang('ja')" data-lang="ja" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">日本語</button>
-                        <button onclick="switchLang('ko')" data-lang="ko" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">한국어</button>
+                        <button onclick="switchLang('en')" data-lang="en" class="px-2 py-0.5 text-xs font-bold rounded-md transition-all">EN</button>
+                        <button onclick="switchLang('zh')" data-lang="zh" class="px-2 py-0.5 text-xs font-bold rounded-md transition-all">中文</button>
+                        <button onclick="switchLang('ja')" data-lang="ja" class="px-2 py-0.5 text-xs font-bold rounded-md transition-all">日本語</button>
+                        <button onclick="switchLang('ko')" data-lang="ko" class="px-2 py-0.5 text-xs font-bold rounded-md transition-all">한국어</button>
                     </div>
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <button id="openAdminBtn" class="bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-3.5 py-2 rounded-lg hover:opacity-90 transition text-xs font-bold flex items-center gap-1.5">
+                    <button id="openAdminBtn" class="bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-3 py-1.5 rounded-lg hover:opacity-90 transition text-xs font-bold flex items-center gap-1">
                         <i class="fa fa-cog"></i> <span id="btnAdmin">Admin</span>
                     </button>
-                    <button id="openCompareBtn" class="bg-primary hover:bg-indigo-700 text-white px-4 py-2 rounded-lg hidden transition shadow-lg shadow-indigo-500/30 text-xs font-bold flex items-center gap-1.5">
+                    <button id="openCompareBtn" class="bg-primary hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg hidden transition text-xs font-bold flex items-center gap-1">
                         <i class="fa fa-exchange"></i> <span id="btnCompare">Compare</span>
                     </button>
                 </div>
             </header>
 
             <div id="dashboardViewBlock">
-                <div class="flex flex-wrap gap-2 mb-6" id="filterTabs"></div>
-                <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="toolContainer"></div>
+                <div class="flex flex-wrap gap-1.5 mb-5" id="filterTabs"></div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5" id="toolContainer"></div>
             </div>
 
-            <div id="detailViewBlock" class="hidden bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm max-w-4xl mx-auto"></div>
+            <div id="detailViewBlock" class="hidden bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm max-w-3xl mx-auto"></div>
         </main>
     </div>
 
-    <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-3">
-                <h2 class="text-xl font-bold dark:text-white flex items-center gap-2"><i class="fa fa-columns text-primary"></i> <span id="modalCompareTitle">Comparison</span></h2>
-                <button id="closeCompare" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+    <div id="topupModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-lg p-5 shadow-2xl overflow-y-auto max-h-[95vh]">
+            <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-2.5">
+                <h2 class="text-base font-black dark:text-white flex items-center gap-2 text-primary">
+                    <i class="fa fa-credit-card"></i> <span id="popTopupTitle">Secure VISA Gateway</span>
+                </h2>
+                <button onclick="closeTopupModal()" class="text-gray-400 hover:text-red-500 text-xl font-bold">&times;</button>
             </div>
-            <div class="grid md:grid-cols-2 gap-6" id="compareContent"></div>
-            <div class="mt-8 text-center border-t dark:border-gray-700 pt-4">
-                <button id="clearSelect" class="px-5 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition">Clear</button>
+            
+            <div class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-gray-700 dark:text-gray-300 mb-1" id="lblPopAgent">Target Agent / Core Wallet</label>
+                    <select id="popSelectAgent" class="w-full p-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none">
+                        <option value="0">Global Platform Wallet (Universal Token)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 dark:text-gray-300 mb-1" id="lblPopContent">Billing Content</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="p-2 border rounded-lg flex items-center gap-2 cursor-pointer bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                            <input type="radio" name="popBillingType" value="token" checked onclick="toggleBillingType('token')">
+                            <div><strong class="block text-[11px]">Token Top-up</strong><span class="text-[9px] text-gray-400">Pay as you go</span></div>
+                        </label>
+                        <label class="p-2 border rounded-lg flex items-center gap-2 cursor-pointer bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                            <input type="radio" name="popBillingType" value="sub" onclick="toggleBillingType('sub')">
+                            <div><strong class="block text-[11px]">Premium Pass</strong><span class="text-[9px] text-gray-400">Monthly Tier Plan</span></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="tokenAmountArea">
+                    <label class="block font-bold text-gray-700 dark:text-gray-300 mb-1" id="lblPopPack">Select Purchase Tier Amount</label>
+                    <div class="grid grid-cols-3 gap-2" id="topupPackageGrid">
+                        <button onclick="selectPackagePrice(9.99, 5000000)" class="p-2.5 border rounded-lg text-left bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:border-primary transition group active">
+                            <span class="block font-black text-gray-900 dark:text-white">$9.99</span>
+                            <span class="text-[10px] text-gray-400">5M Tokens</span>
+                        </button>
+                        <button onclick="selectPackagePrice(29.99, 20000000)" class="p-2.5 border rounded-lg text-left bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:border-primary transition group relative">
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[8px] font-bold px-1 rounded-bl">Save 10%</span>
+                            <span class="block font-black text-gray-900 dark:text-white">$29.99</span>
+                            <span class="text-[10px] text-gray-400">20M Tokens</span>
+                        </button>
+                        <button onclick="selectPackagePrice(99.99, 80000000)" class="p-2.5 border rounded-lg text-left bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:border-primary transition group relative">
+                            <span class="absolute top-0 right-0 bg-red-500 text-white text-[8px] font-bold px-1 rounded-bl">Save 20%</span>
+                            <span class="block font-black text-gray-900 dark:text-white">$99.99</span>
+                            <span class="text-[10px] text-gray-400">80M Tokens</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-900/40 p-3 rounded-xl border dark:border-gray-700 space-y-2">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-gray-700 dark:text-gray-300 text-[11px]">Credit Card Information</span>
+                        <div class="text-gray-400 space-x-1"><i class="fa fa-cc-visa text-blue-600 text-base"></i><i class="fa fa-cc-mastercard text-amber-500 text-base"></i></div>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Cardholder Name" id="visaName" class="w-full p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none">
+                    </div>
+                    <div>
+                        <div class="relative">
+                            <input type="text" placeholder="Card Number (4000 1234 5678 9010)" id="visaNum" class="w-full p-2 pl-8 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none font-mono">
+                            <i class="fa fa-lock absolute left-2.5 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" placeholder="MM/YY" id="visaExpiry" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none text-center font-mono">
+                        <input type="password" placeholder="CVV / CVC" id="visaCvc" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none text-center font-mono" maxlength="4">
+                    </div>
+                </div>
+
+                <button onclick="executeVisaPaymentMock()" id="btnSubmitTopup" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-xs font-black transition shadow-md shadow-emerald-600/20">
+                    Authorize & Secure Pay $9.99
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-auto p-5 shadow-2xl">
+            <div class="flex justify-between items-center mb-5 border-b dark:border-gray-700 pb-2">
+                <h2 class="text-base font-bold dark:text-white flex items-center gap-2"><i class="fa fa-columns text-primary"></i> <span id="modalCompareTitle">Comparison</span></h2>
+                <button id="closeCompare" class="text-gray-400 hover:text-red-500 text-xl">&times;</button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4" id="compareContent"></div>
+            <div class="mt-6 text-center border-t dark:border-gray-700 pt-3">
+                <button id="clearSelect" class="px-4 py-1.5 bg-red-500 text-white rounded-lg text-xs hover:bg-red-600 transition">Clear</button>
             </div>
         </div>
     </div>
 
     <div id="authModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-md p-6 shadow-2xl">
-            <h3 class="text-lg font-bold mb-4 dark:text-white" id="authTitle">Admin Access</h3>
-            <input type="password" id="authPassword" placeholder="Enter password (Default: 8888)" class="w-full p-2.5 border rounded-lg mb-4 bg-transparent dark:text-white dark:border-gray-600 outline-none focus:border-primary text-sm">
-            <div class="flex justify-end gap-2">
-                <button id="closeAuth" class="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg">Cancel</button>
-                <button onclick="verifyPassword()" class="px-4 py-2 text-sm bg-primary text-white rounded-lg hover:opacity-90">Verify</button>
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-sm p-5 shadow-2xl">
+            <h3 class="text-sm font-bold mb-3 dark:text-white" id="authTitle">Admin Access</h3>
+            <input type="password" id="authPassword" placeholder="Enter password (Default: 8888)" class="w-full p-2 border rounded-lg mb-3 bg-transparent dark:text-white dark:border-gray-600 text-xs">
+            <div class="flex justify-end gap-2 text-xs">
+                <button id="closeAuth" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg">Cancel</button>
+                <button onclick="verifyPassword()" class="px-3 py-1.5 bg-primary text-white rounded-lg">Verify</button>
             </div>
         </div>
     </div>
 
     <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-3">
-                <h2 class="text-xl font-bold dark:text-white flex items-center gap-2"><i class="fa fa-dashboard text-primary"></i> <span id="modalAdminTitle">Management Console</span></h2>
-                <div class="flex items-center gap-3">
-                    <button onclick="logoutAdmin()" class="text-xs text-red-500 border border-red-500/30 px-2 py-1 rounded hover:bg-red-500 hover:text-white transition">Logout</button>
-                    <button id="closeAdmin" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
-                </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-auto p-5 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-2">
+                <h2 class="text-base font-bold dark:text-white flex items-center gap-2"><i class="fa fa-dashboard text-primary"></i> <span id="modalAdminTitle">Management Console</span></h2>
+                <button onclick="logoutAdmin()" class="text-xs text-red-500 border border-red-500/30 px-2 py-0.5 rounded hover:bg-red-500 hover:text-white transition">Logout</button>
             </div>
             
-            <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl mb-6 grid sm:grid-cols-3 gap-3 border dark:border-gray-600 text-sm">
+            <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl mb-4 grid sm:grid-cols-2 gap-2 border dark:border-gray-600 text-xs">
                 <input type="hidden" id="toolId">
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Name</label><input type="text" id="toolName" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Category</label><select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <input type="text" id="toolName" placeholder="Asset Name" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="chat">Dialogue & Chat</option>
                     <option value="search">Search & Digest</option>
                     <option value="office">Office & Data</option>
                     <option value="code">Coding Assistant</option>
                     <option value="study">Study & Consultant</option>
                     <option value="image">Creative Design</option>
-                </select></div>
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Pricing Module (EN)</label><input type="text" id="toolPrice" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col sm:col-span-3"><label class="dark:text-gray-300 mb-1 text-xs">URL Website</label><input type="text" id="toolLink" placeholder="https://..." class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="sm:col-span-3 text-right"><button onclick="saveTool()" class="bg-primary text-white px-5 py-2 rounded-lg hover:opacity-90" id="btnSaveTool">Save</button></div>
+                </select>
+                <input type="text" id="toolPrice" placeholder="Pricing standard (e.g. Free)" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <input type="text" id="toolLink" placeholder="URL Website (https://...)" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <div class="sm:col-span-2 text-right"><button onclick="saveTool()" class="bg-primary text-white px-4 py-1.5 rounded-lg text-xs" id="btnSaveTool">Save</button></div>
             </div>
-
-            <div class="overflow-x-auto text-sm">
-                <table class="w-full text-left border-collapse dark:text-white">
-                    <thead><tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"></tr></thead>
-                    <tbody id="adminTableBody"></tbody>
-                </table>
-            </div>
+            <div class="overflow-x-auto text-xs"><table class="w-full text-left border-collapse dark:text-white"><tbody id="adminTableBody"></tbody></table></div>
         </div>
     </div>
 
     <script>
         const i18n = {
             en: {
-                title: "AI Matrix Hub", admin: "Admin", compare: "Compare", clear: "Clear",
-                pricing: "Pricing: ", visit: "Official Site", course: "Course", ytQuery: "tutorial", noTools: "No tools found.",
-                sideTitle: "Side comparison", dataTitle: "Console Manager", bookmarks: "My Bookmarks",
-                all: "All Ecosystem", chat: "Dialogue & Chat", search: "Search & Digest", office: "Office & Data", code: "Coding Assistant", study: "Study & Consultant", image: "Creative Design",
-                authTitle: "Security Authentication", saveBtn: "Save Asset", alertPass: "Password Invalid!", back: "Back to Dashboard",
-                alertSelectLimit: "Maximum 2 elements allowed.", alertFields: "Required attributes missing.", details: "Details",
-                confirmDel: "Delete this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions",
-                pros: "Advantages", cons: "Disadvantages", promptTitle: "Golden Prompt Sandbox", copy: "Copy", copied: "Copied!",
-                reviewTitle: "Visitor Reviews & Ratings", noReviews: "No reviews yet. Be the first to leave one!",
-                namePlaceholder: "Your Nickname", commentPlaceholder: "Share your experience with this tool...", submitReview: "Submit Review", alertComment: "Please provide a name, rating, and comment."
+                title: "AI Hub Matrix Pro", admin: "Admin Console", compare: "Compare Selected", clear: "Clear",
+                pricing: "Cost Metric: ", visit: "Direct Link", course: "Video Guide", ytQuery: "tutorial core usage", noTools: "Empty stack index.",
+                sideTitle: "Dual Configuration Review", dataTitle: "Central Data Engine", bookmarks: "Categorized Bookmarks",
+                all: "All Fields", chat: "Dialogue & Chat", search: "Search & Digest", office: "Office & Data", code: "Coding Assistant", study: "Study & Consultant", image: "Creative Design",
+                authTitle: "System Credential Verify", saveBtn: "Sync Assets Code", alertPass: "Authentication failed!", back: "Back to Catalog",
+                alertSelectLimit: "Cap target limit is 2 units.", alertFields: "Attributes cannot be empty.", details: "Inspect Review",
+                confirmDel: "Wipe this tool object?", colName:"Name", colCat:"Category", colAct:"Control",
+                pros: "Pros / Core Advantages", cons: "Cons / Technical Limits", promptTitle: "Sovereign Prompt Sandbox Playground", copy: "Copy Prompt", copied: "Copied!",
+                reviewTitle: "Collaborator Review Board Feed", noReviews: "No insights submitted yet.",
+                namePlaceholder: "Anonymous User", commentPlaceholder: "Share sandbox analytics...", submitReview: "Post Feedback", alertComment: "Fill missing feedback items.",
+                lblAccount: "Wallet Matrix Terminal", lblPaidList: "Active Premium Grants:", lblTokenTotal: "Lifetime Top-up Tokens:", lblTokenUsed: "Tokens Expended:", lblTokenLeft: "Available Net Pools:", btnTopupEntry: "Add Funds / VISA Buy",
+                popTopupTitle: "Secure Visa Financial Bridge", lblPopAgent: "Target Infrastructure Object", lblPopContent: "Transaction Intent Modality", lblPopPack: "Pre-funded Token Capitalization Bundle"
             },
             zh: {
-                title: "AI 工具矩阵互动网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
-                pricing: "计算资费：", visit: "直达官网", course: "在线课程", ytQuery: "入门教学视频", noTools: "当前分类暂无实例。",
-                sideTitle: "双端指标并排对比", dataTitle: "数据底座中心", bookmarks: "我的快捷收藏夹",
-                all: "全部生态圈", chat: "文本大模型与对话", search: "深度搜索与提炼", office: "办公协同与数据", code: "编程与技术辅助", study: "个人学习与顾问", image: "创意设计与多模态",
-                authTitle: "管理员高级身份验证", saveBtn: "将修改部署至本地", alertPass: "密码校验失败！", back: "返回主面板",
-                alertSelectLimit: "单次对比上限不得超过2个实例。", alertFields: "基础元数据不可空缺。", details: "详情页面",
-                confirmDel: "确定要彻底删除该工具吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元",
-                pros: "核心优势 (Pros)", cons: "局限不足 (Cons)", promptTitle: "黄金提示词沙盒 (Prompt Sandbox)", copy: "一键复制", copied: "复制成功！",
-                reviewTitle: "访客深度点评与打分", noReviews: "暂无历史点评。欢迎留下您的宝贵使用心得！",
-                namePlaceholder: "您的昵称", commentPlaceholder: "请撰写您对该工具的实际测评体验...", submitReview: "提交深度点评", alertComment: "请完整填写昵称、评分与测评意见。"
+                title: "AI 资产图谱与代币系统", admin: "数据管理后台", compare: "对比选中项", clear: "重设所有选中",
+                pricing: "计算资费：", visit: "直达官网", course: "教学课程", ytQuery: "入门高阶使用教程", noTools: "该类目暂无分配实例。",
+                sideTitle: "双向规格参数并排对比", dataTitle: "数据大盘底座控制台", bookmarks: "智能分类收藏夹",
+                all: "全领域生态圈", chat: "文本大模型与对话", search: "深度搜索与提炼", office: "办公协同与数据", code: "编程与技术辅助", study: "个人学习与顾问", image: "创意设计与多模态",
+                authTitle: "安全防御控制中心验证", saveBtn: "将模型资产部署至本地", alertPass: "管理员密码错误！", back: "返回主面板大盘",
+                alertSelectLimit: "单次合并比对最大上限支持2个实例。", alertFields: "核心元属性数据栏不能为空。", details: "详情页面 / 留言打分",
+                confirmDel: "是否彻底将该工具从核心数据中抹除？", colName:"工具名称", colCat:"所属分类", colAct:"操作指令",
+                pros: "核心优势 (Pros Matrix)", cons: "局限不足 (Cons Matrix)", promptTitle: "黄金提示词沙盒测试床 (Prompt Sandbox)", copy: "一键克隆提示词", copied: "提示词已进入剪贴板！",
+                reviewTitle: "访客深度测评与互动打分大盘", noReviews: "当前尚无测评历史。欢迎留下您的首次使用心声！",
+                namePlaceholder: "访客昵称", commentPlaceholder: "请撰写针对该模型的性能、缺陷或场景测试实感...", submitReview: "向底座提交测评打分", alertComment: "请完整填写您的昵称、星级评定及点评心得。",
+                lblAccount: "账户及代币中心", lblPaidList: "已开通付费的智能体:", lblTokenTotal: "历史累计充值 Token:", lblTokenUsed: "已消耗 Token 额度:", lblTokenLeft: "可用 Token 净余额:", btnTopupEntry: "立即使用 VISA 充值",
+                popTopupTitle: "VISA 国际信用卡安全在线网关", lblPopAgent: "选择充值目标（智能体/通用账户）", lblPopContent: "付费计费内容形式", lblPopPack: "选择充值 Token 规格包"
             },
             ja: {
-                title: "AIポータル比較ナビ", admin: "管理者ツール", compare: "比較する", clear: "クリア",
-                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "数据が存在しません。",
-                sideTitle: "個別仕様ベンチマーク比較", dataTitle: "データコントロール", bookmarks: "お気に入りブックマーク",
+                title: "AIポータル&トークンエコノミー", admin: "管理者ツール", compare: "比較する", clear: "クリア",
+                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "データが存在しません。",
+                sideTitle: "仕様ベンチマーク比較", dataTitle: "データコントロール", bookmarks: "カテゴリ別ブックマーク",
                 all: "すべて表示", chat: "対話型AI & LLM", search: "検索・情報抽出", office: "オフィス・データ処理", code: "開発・プログラミング", study: "学習・アドバイザー", image: "デザイン・マルチモーダル",
                 authTitle: "管理者認証プロトコル", saveBtn: "データを保存", alertPass: "パスワードが違います！", back: "ダッシュボードに戻る",
                 alertSelectLimit: "同時に比較できるのは2つまでです。", alertFields: "入力アドレスは必須です。", details: "詳細情報",
-                confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作",
-                pros: "メリット", cons: "デメリット", promptTitle: "おすすめプロンプト", copy: "コピー", copied: "完了！",
+                confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colAct:"操作",
+                pros: "メリット", cons: "デメリット", promptTitle: "プロンプト", copy: "コピー", copied: "完了！",
                 reviewTitle: "口コミ・評価レビュー", noReviews: "レビューはまだありません。",
-                namePlaceholder: "ニックネーム", commentPlaceholder: "レビューを入力...", submitReview: "投稿する", alertComment: "入力項目が不十分です。"
+                namePlaceholder: "ニックネーム", commentPlaceholder: "レビューを入力...", submitReview: "投稿する", alertComment: "入力項目が不十分です。",
+                lblAccount: "アカウント・トークン", lblPaidList: "有料付与エージェント:", lblTokenTotal: "累計チャージ量:", lblTokenUsed: "消費トークン:", lblTokenLeft: "有効残高プール:", btnTopupEntry: "VISAでチャージする",
+                popTopupTitle: "VISA 安全な決済ゲートウェイ", lblPopAgent: "対象エージェントの選択", lblPopContent: "決済プランの種類", lblPopPack: "トークンパックの選択"
             },
             ko: {
-                title: "AI 글로벌 비교 포털", admin: "관리자 모드", compare: "상세 비교", clear: "선택 초기화",
+                title: "AI 허브 & 토큰 이코노미", admin: "관리자 모드", compare: "상세 비교", clear: "선택 초기화",
                 pricing: "이용 요금：", visit: "공식 사이트", course: "무료 강좌", ytQuery: "기초 사용법", noTools: "할당된 도구가 없습니다.",
-                sideTitle: "양방향 인프라 스펙 비교", dataTitle: "클라우드 허브 관리", bookmarks: "내 즐겨찾기 폴더",
-                all: "전체 에코시스템", chat: "대화형 모델 & 대규모 언어", search: "검색 및 정보 요약", office: "오피스 및 데이터 협업", code: "코드 생성 및 자동화", study: "학습 및 개인 컨설턴트", image: "크리에이티브 디자인",
+                sideTitle: "양방향 스펙 비교", dataTitle: "클라우드 허브 관리", bookmarks: "폴더별 즐겨찾기",
+                all: "전체 에코시스템", chat: "대화형 모델 & LLM", search: "검색 및 정보 요약", office: "오피스 및 데이터 협업", code: "코드 생성 및 자동화", study: "학습 및 개인 컨설턴트", image: "크리에이티브 디자인",
                 authTitle: "관리자 자격 증명 창", saveBtn: "수정사항 동기화", alertPass: "암호가 올바르지 않습니다!", back: "메인 화면으로 가기",
                 alertSelectLimit: "최대 2개의 도구 조합만 비교 가능합니다.", alertFields: "입력 필수 파라미터 누락.", details: "상세조회",
-                confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널",
+                confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colAct:"액션 패널",
                 pros: "주요 장점", cons: "단점 및 한계", promptTitle: "추천 프롬프트 샌드박스", copy: "복사", copied: "복사됨!",
                 reviewTitle: "방문자 리뷰 및 별점 평점", noReviews: "작성된 리뷰가 없습니다.",
-                namePlaceholder: "닉네임 입력", commentPlaceholder: "리뷰 내용을 모두 입력해주세요...", submitReview: "리뷰 제출", alertComment: "모두 입력해주세요."
+                namePlaceholder: "닉네임 입력", commentPlaceholder: "리뷰 내용을 모두 입력해주세요...", submitReview: "리뷰 제출", alertComment: "모두 입력해주세요.",
+                lblAccount: "계정 및 토큰 허브", lblPaidList: "결제 완료 에이전트:", lblTokenTotal: "누적 충전 토큰:", lblTokenUsed: "소모된 토큰:", lblTokenLeft: "사용 가능한 잔액:", btnTopupEntry: "VISA 카드 충전",
+                popTopupTitle: "VISA 보안 결제 게이트웨이", lblPopAgent: "충전 대상 에이전트 선택", lblPopContent: "결제 방식 형태", lblPopPack: "토큰 패키지 규격 선택"
             }
         };
 
-        // 6 Full Categories Fully Loaded Array
+        // Complete Core 6 Database Categories Array
         const initDefaultTools = [
-            { 
-                id:1, name:"ChatGPT", category:"chat", score:4.9, link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Free / $20mo Plus", zh:"免费 / 20美元每月 Plus", ja:"無料 / 月額20ドル Plus", ko:"무료 / 월 $20 Plus" },
-                desc: {
-                    en: "Flagship advanced large language model by OpenAI. Unmatched reasoning and complex logic processing.",
-                    zh: "OpenAI 旗下的行业标杆级大语言模型。在逻辑推理、内容创作及多模态交互上具备极强的统治力。",
-                    ja: "OpenAIが開発した最高峰の対話型AI。高度な論理的推論、クリエイティブな文章作成に強みを持ちます。",
-                    ko: "OpenAI가 개발한 플래그십 고급 대규모 언어 모델. 비교할 수 없는 추론 능력 지원."
-                },
-                pros: { en: ["Top-tier reasoning", "Massive ecosystem"], zh: ["顶尖的高阶推理能力", "极其强大的应用生态(GPTs)"], ja: ["最高峰の推論能力", "強力なエコシステム"], ko: ["최고 수준의 추론 능력", "방대한 생태계"] },
-                cons: { en: ["High load context delays", "Strict firewalls"], zh: ["高负载下偶有延迟", "网络访问限制较为严格"], ja: ["混雑時の応答遅延", "厳格なセキュリティ"], ko: ["트래픽 집중 시 지연", "네트워크 방화벽"] },
-                prompt: 'Act as an expert senior software engineer. Refactor the following code architecture into clean execution blocks with detailed comments:'
-            },
-            { 
-                id:2, name:"Perplexity AI", category:"search", score:4.7, link:"https://www.perplexity.ai", img:"https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro", ja:"無料 / 月額20ドル Pro", ko:"무료 / 월 $20 Pro" },
-                desc: {
-                    en: "Conversational search engine that delivers instant answers backed by cited academic and live web sources.",
-                    zh: "对话式实时搜索引擎。输入任何问题，它会深度全网检索并提炼答案，自动附带权威引用文献与出处网页。",
-                    ja: "引用元を明記した検索結果をリアルタイムで返す、対話型の次世代AI検索エンジンツール。",
-                    ko: "실시간 웹 정보 및 학술 자료를 검색하여 신뢰할 수 있는 출처 인용과 함께 답변을 제공하는 대화형 검색 엔진."
-                },
-                pros: { en: ["Real-time citation tracking", "Copilot deep research model"], zh: ["自动标注准确的信息出处来源", "Copilot 深度全网学术探针模式"], ja: ["明確な情報ソース引用", "強力なディープリサーチモード"], ko: ["실시간 출처 인용 시스템", "디옵 파일럿 모드 리서치 기능"] },
-                cons: { en: ["Occasionally digests duplicate sources", "Slow deep modes"], zh: ["偶尔重复融合雷同信息源", "深度研究模式下响应时间稍长"], ja: ["情報の重複が稀にある", "ディープモードは時間を要する"], ko: ["가끔 중복 소스 취합", "딥 모드 구동 시 인출 지연"] },
-                prompt: 'Provide a comprehensive market analysis report on the clean energy sector in 2026, listing verified references:'
-            },
-            { 
-                id:3, name:"Julius AI", category:"office", score:4.6, link:"https://julius.ai", img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Starts $17/mo", zh:"17美元每月起", ja:"月額17ドルから", ko:"월 $17부터 시작" },
-                desc: {
-                    en: "Advanced data analyst tool that interprets spreadsheets, tracks anomalies, and codes custom Python visual graphs.",
-                    zh: "尖端的高级数据分析工具。能直接读取并拆解复杂电子表格，自动编写 Python 脚本提炼趋势并呈现高精可视化图表。",
-                    ja: "スプレッドシートやCSVを読み込み、高度なデータ分析とPythonによる美しいグラフ可視化を自動で行うツール。",
-                    ko: "엑셀 및 CSV 스프레드시트를 분석하고, 트렌드를 도출하며, Python 기반 시각화 차트를 자동 생성하는 도구."
-                },
-                pros: { en: ["Flawless data visualization", "Deep statistical analysis"], zh: ["完全无缝的复杂数据图表渲染", "支持高阶统计学回归分析预测"], ja: ["データ可視化が極めて優秀", "高度な統計回帰分析に対応"], ko: ["완벽한 데이터 차트 시각화", "고급 통계 모델 회귀 분석"] },
-                cons: { en: ["Strict data row upload limit", "Premium required"], zh: ["免费额度对文件行数限制极严", "核心高级图表需订阅解锁"], ja: ["無料プランの行数制限", "有料版でのみ真価を発揮"], ko: ["무료 플랜 업로드 제약", "핵심 분석 기능 유료화"] },
-                prompt: 'Analyze this sample dataset, identify statistical anomalies, and generate a clean distribution histogram script:'
-            },
-            { 
-                id:4, name:"Claude 3.5 Sonnet", category:"code", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro", ja:"無料 / 月額20ドル Pro", ko:"무료 / 월 $20 Pro" },
-                desc: {
-                    en: "Exceptional performance parameters for complex source code and multi-file code architectures.",
-                    zh: "Anthropic 推出的顶级大语言模型。其最具颠覆性的是对多文件整个代码库的深度理解力以及极度自然的文本笔触。",
-                    ja: "Anthropicによる業界最先端のLLM。複数ファイルにまたがるソースコードの解読や、自然な文章作成に優れています。",
-                    ko: "Anthropic의 업계 선도적인 LLM. 소스 코드 다중 파일 아키텍처 및 정밀한 학술적 논리 텍스트 작성에 탁월."
-                },
-                pros: { en: ["Amazing coding comprehension", "Artifacts sandbox preview"], zh: ["极其惊艳的代码架构编写", "独创 Artifacts 独立预览画布"], ja: ["驚異的なコード生成・解読", "便利なArtifacts表示機能"], ko: ["놀라운 코드 생성 및 이해력", "독창적인 Artifacts 혁신 UI"] },
-                cons: { en: ["Daily limits burn fast", "No image outputs"], zh: ["网页端高阶限额消耗极快", "不支持原生图片文件输出"], ja: ["利用制限への到達が早い", "画像生成機能は非搭載"], ko: ["일일 사용량 제한이 다소 타이트함", "이미지 생성 출력 미지원"] },
-                prompt: 'Analyze this project workspace directory. Find performance bottlenecks and generate an optimization strategy report:'
-            },
-            { 
-                id:5, name:"Khanmigo", category:"study", score:4.5, link:"https://www.khanacademy.org", img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Free for US Schools / Premium", zh:"美国学校免费 / 常规需订阅", ja:"米国学校無料 / 個別有料", ko:"미국 학교 무료 / 개별 유료" },
-                desc: {
-                    en: "AI tutor guide by Khan Academy that prompts students to find logic answers rather than cheating with quick copies.",
-                    zh: "可汗学院倾力打造的专属 AI 导师。它绝不直接给学生提供偷懒的复制标准答案，而是通过启发式问答引导你攻克数理化难关。",
-                    ja: "カーンアカデミーが開発したAIチューター。答えを直接教えるのではなく、ヒントを与えて生徒の論理的思考を促します。",
-                    ko: "칸아카데미의 AI 튜터 시스템. 직접적인 답을 주지 않고, 소크라테스식 질문을 통해 학생 스스로 정답을 도출하도록 유도."
-                },
-                pros: { en: ["Socratic learning guide", "Safe child environment"], zh: ["极佳的苏格拉底式启发教学法", "完全绿色安全的儿童学术空间"], ja: ["ソクラテス式の優れた対話指導", "子供向けの安全な学習環境"], ko: ["소크라테스식 학습 가이드", "안전한 유소년 필터링 환경"] },
-                cons: { en: ["Mainly focused on K-12 syllabus", "Slow responses"], zh: ["主要局限于中小学基础教育大纲", "引导过程有些繁琐且耗费时间"], ja: ["K-12教育カリキュラム中心", "時に誘導が冗長に感じられる"], ko: ["K-12 기본 교육과정에 편중", "빠른 정답 획득 목적엔 부적합"] },
-                prompt: 'I am confused about quadratic equations. Do not give me the answer, guide me through the concept step by step:'
-            },
-            { 
-                id:6, name:"Midjourney", category:"image", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80",
-                price: { en:"Starts $10/mo", zh:"10美元每月起", ja: "月額10ドルから", ko: "월 $10부터 시작" },
-                desc: {
-                    en: "The global visual golden standard for high-fidelity text-to-image synthesis and cinematic asset framing rendering.",
-                    zh: "全球公认的创意图像生成天花板。无需复杂参数即可直接渲染出电影级质感、精细纹理与极具艺术感的视觉画作。",
-                    ja: "高精度な画像生成のグローバルスタンダード。映画のようなライティングや、芸術的なディテール表現において敵なし。",
-                    ko: "고화질 텍스트-이미지 합성을 위한 글로벌 비주얼 골든 표준. 시네마틱 자산 프레임 렌더링 지원."
-                },
-                pros: { en: ["Cinematic lighting rendering", "Vast community gallery"], zh: ["无与伦比的电影级光影质感", "社区拥有海量审美渲染灵感"], ja: ["圧倒的な映画級の質感・芸術性", "インスピレーション溢れるギャラリー"], ko: ["독보적인 시네마틱 광원 연출", "영감을 주는 방대한 커뮤니티 갤러리"] },
-                cons: { en: ["Requires Discord workflow", "No perpetual free trial"], zh: ["依赖 Discord 社区工作流", "已取消永久免费试用额度"], ja: ["Discord経由の操作が特殊", "無料トライアルの廃止"], ko: ["Discord 워크플로우 기반 조작", "상시 무료 트라이얼 미지원"] },
-                prompt: 'Cinematic hyper-realistic raw macro shot of a cyberpunk mechanical workspace, Unreal Engine 5 render, 8k resolution --ar 16:9'
-            }
+            { id:1, name:"ChatGPT", category:"chat", score:4.9, icon:"fa-commenting", link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80", price: { en:"Free / $20mo Plus", zh:"免费 / 20美元每月 Plus" }, desc: { en: "Flagship advanced large language model by OpenAI.", zh: "OpenAI 旗下的行业标杆级大语言模型。在逻辑推理上具备极强的高阶表现。" }, pros:{ zh:["高阶逻辑推演能力","生态位完备"] }, cons:{ zh:["峰值期可能遇阻"] }, prompt: 'Act as an expert senior software engineer. Refactor the code:' },
+            { id:2, name:"Perplexity AI", category:"search", score:4.7, icon:"fa-search-plus", link:"https://www.perplexity.ai", img:"https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80", price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro" }, desc: { en: "Conversational search engine with live academic and web citations.", zh: "对话式高级实时搜索引擎。检索深度全网数据并提炼自带权威出处的结构化答案。" }, pros:{ zh:["出处溯源极其精准","提供深度副驾驶科研模式"] }, cons:{ zh:["大并发时偶有拼凑现象"] }, prompt: 'Provide a comprehensive market analysis report on clean energy in 2026:' },
+            { id:3, name:"Julius AI", category:"office", score:4.6, icon:"fa-table", link:"https://julius.ai", img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", price: { en:"Starts $17/mo", zh:"17美元每月起" }, desc: { en: "Data analyst tool that tracks mathematical anomalies and scripts graphs.", zh: "数据分析科学解析专家。能直接解析高级复杂电子表格并自主渲染高级可视化分布图。" }, pros:{ zh:["完美的高级图表代码执行","支持回溯算法推理"] }, cons:{ zh:["非付费用户上载行数限制明显"] }, prompt: 'Analyze this sample dataset and generate a clean distribution histogram script:' },
+            { id:4, name:"Claude 3.5 Sonnet", category:"code", score:4.8, icon:"fa-code", link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80", price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro" }, desc: { en: "Exceptional performance for large multi-file codebase structures.", zh: "代码架构与上下文理解领域的金标准大模型，其渲染预览画布能力在行业中绝无仅有。" }, pros:{ zh:["多文件代码树解构一流","Artifacts 画布预览生态"] }, cons:{ zh:["每日高级使用频度消耗极快"] }, prompt: 'Analyze this codebase directory. Find performance bottlenecks:' },
+            { id:5, name:"Khanmigo", category:"study", score:4.5, icon:"fa-graduation-cap", link:"https://www.khanacademy.org", img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80", price: { en:"Premium Tier Support", zh:"常规模块需订阅支持" }, desc: { en: "AI tutor by Khan Academy using Socratic dialogue concepts.", zh: "可汗学院定制启发式导师。绝不直接喂答案，专门通过循循善诱培养独立思考力。" }, pros:{ zh:["极具科学风范的苏格拉底提问引导","学习路径纯净安全"] }, cons:{ zh:["不适宜追求一键秒出速成答案的用户"] }, prompt: 'I am confused about quadratic equations. Guide me step by step without giving direct answers:' },
+            { id:6, name:"Midjourney", category:"image", score:4.8, icon:"fa-paint-brush", link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80", price: { en:"Starts $10/mo", zh:"10美元每月起" }, desc: { en: "Global standard gold benchmark for text-to-image synthesis.", zh: "高保真艺术创意绘图绝对领跑者。输出光影层次极强且自带超前电影感美学特质。" }, pros:{ zh:["无与伦比的设计创意渲染度","画作风格辨识度无可挑剔"] }, cons:{ zh:["极度依赖 Discord 交互通道"] }, prompt: 'Cinematic hyper-realistic raw macro shot of a cyberpunk mechanical workspace, 8k --ar 16:9' }
         ];
 
-        // Core App Context States Management
-        let currentLang = localStorage.getItem('portal_lang') || 'zh'; // Default zh to accommodate configuration preference
-        let localData = localStorage.getItem('portal_tools');
-        if (!localData || !localData.includes("search") || !localData.includes("office")) {
-            localStorage.setItem('portal_tools', JSON.stringify(initDefaultTools));
-            localData = JSON.stringify(initDefaultTools);
-        }
-        let aiTools = JSON.parse(localData);
-        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 4];
+        // Global Dynamic Reactive State Registries
+        let currentLang = localStorage.getItem('portal_lang') || 'zh';
+        let aiTools = JSON.parse(localStorage.getItem('portal_tools')) || initDefaultTools;
+        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 4, 6];
         let reviewsDb = JSON.parse(localStorage.getItem('portal_reviews')) || {
-            1: [{ name: "CodeNinja", score: 5, text: "Excellent execution workflows.", date: "2026-06-15 14:22" }]
+            1: [{ name: "DevOps_Guru", score: 5, text: "Top-tier logical deduction parsing workflows.", date: "2026-06-20 10:14" }]
         };
+
+        // NEW: Token Financial State Engine Initialization
+        let tokenWallet = JSON.parse(localStorage.getItem('portal_wallet')) || {
+            total: 35000000,
+            used: 12500000,
+            paidAgents: [1, 4] // ChatGPT, Claude are paid by default
+        };
+
         let selectedCompare = [];
         let currentFilter = "all";
         let activeReviewStars = 5;
+        
+        // Dynamic active variables for active VISA package state
+        let activeTopupPrice = 9.99;
+        let activeTopupTokens = 5000000;
 
-        // Dom Pickers
+        // Document DOM Nodes Pickers
         const toolContainer = document.getElementById("toolContainer");
         const compareModal = document.getElementById("compareModal");
         const compareContent = document.getElementById("compareContent");
@@ -306,10 +340,9 @@
         const adminModal = document.getElementById("adminModal");
         const adminTableBody = document.getElementById("adminTableBody");
         const filterTabs = document.getElementById("filterTabs");
-        const favoritesList = document.getElementById("favoritesList");
-        const favCount = document.getElementById("favCount");
         const dashboardViewBlock = document.getElementById("dashboardViewBlock");
         const detailViewBlock = document.getElementById("detailViewBlock");
+        const topupModal = document.getElementById("topupModal");
 
         function switchLang(langCode) {
             currentLang = langCode;
@@ -324,13 +357,14 @@
         function renderLangSelectorUI() {
             document.querySelectorAll("#langSelectorTabs button").forEach(btn => {
                 if(btn.dataset.lang === currentLang) {
-                    btn.className = "px-2.5 py-1 text-xs font-black rounded-md bg-primary text-white shadow-sm";
+                    btn.className = "px-2 py-0.5 text-xs font-black rounded-md bg-primary text-white shadow-sm";
                 } else {
-                    btn.className = "px-2.5 py-1 text-xs font-bold rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
+                    btn.className = "px-2 py-0.5 text-xs font-bold rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
                 }
             });
         }
 
+        // Reactive Synchronization View Node Updater
         function updateUIStrings() {
             const t = i18n[currentLang];
             document.getElementById("navTitle").innerText = t.title;
@@ -343,17 +377,208 @@
             document.getElementById("clearSelect").innerText = t.clear;
             document.getElementById("lblFavs").innerText = t.bookmarks;
 
+            // Update Account Localization Labels
+            document.getElementById("lblAccount").innerText = t.lblAccount;
+            document.getElementById("lblPaidList").innerText = t.lblPaidList;
+            document.getElementById("lblTokenTotal").innerText = t.lblTokenTotal;
+            document.getElementById("lblTokenUsed").innerText = t.lblTokenUsed;
+            document.getElementById("lblTokenLeft").innerText = t.lblTokenLeft;
+            document.getElementById("btnTopupEntry").innerText = t.btnTopupEntry;
+
+            // Update Topup Dialog Modal Localization
+            document.getElementById("popTopupTitle").innerText = t.popTopupTitle;
+            document.getElementById("lblPopAgent").innerText = t.lblPopAgent;
+            document.getElementById("lblPopContent").innerText = t.lblPopContent;
+            document.getElementById("lblPopPack").innerText = t.lblPopPack;
+
+            renderTokenDashboard();
             renderFilterTabs();
-            renderFavoritesSidebar();
+            renderCategorizedFavorites();
             renderTools();
+            populateTopupAgentOptions();
         }
 
+        // NEW Feature Layer: Render Wallet Metrics
+        function renderTokenDashboard() {
+            document.getElementById("valTokenTotal").innerText = tokenWallet.total.toLocaleString();
+            document.getElementById("valTokenUsed").innerText = tokenWallet.used.toLocaleString();
+            
+            const netBalance = tokenWallet.total - tokenWallet.used;
+            document.getElementById("valTokenLeft").innerText = netBalance.toLocaleString();
+
+            // Render Premium Grants Badges
+            const container = document.getElementById("paidAgentsContainer");
+            container.innerHTML = "";
+            if(tokenWallet.paidAgents.length === 0) {
+                container.innerHTML = `<span class="text-[10px] text-gray-400 font-medium italic">None</span>`;
+                return;
+            }
+            tokenWallet.paidAgents.forEach(id => {
+                const tool = aiTools.find(t => t.id === id);
+                if(tool) {
+                    const badge = document.createElement("span");
+                    badge.className = "bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded text-[9px] font-black tracking-tight flex items-center gap-0.5";
+                    badge.innerHTML = `<i class="fa ${tool.icon || 'fa-check'}"></i> ${tool.name}`;
+                    container.appendChild(badge);
+                }
+            });
+        }
+
+        // NEW Feature Layer: Render Categorized Bookmarks with Icons
+        function renderCategorizedFavorites() {
+            const targetBlock = document.getElementById("categorizedFavorites");
+            targetBlock.innerHTML = "";
+            const t = i18n[currentLang];
+            document.getElementById("favCount").innerText = selectedFavs.length;
+
+            const categories = [
+                { id: "chat", title: t.chat, icon: "fa-comments-o" },
+                { id: "search", title: t.search, icon: "fa-search" },
+                { id: "office", title: t.office, icon: "fa-briefcase" },
+                { id: "code", title: t.code, icon: "fa-code" },
+                { id: "study", title: t.study, icon: "fa-book" },
+                { id: "image", title: t.image, icon: "fa-magic" }
+            ];
+
+            categories.forEach(cat => {
+                const categoryFilteredTools = aiTools.filter(tool => selectedFavs.includes(tool.id) && tool.category === cat.id);
+                if (categoryFilteredTools.length === 0) return; // Do not show empty folders
+
+                const folderSection = document.createElement("div");
+                folderSection.className = "bg-gray-50/50 dark:bg-gray-900/20 p-2 rounded-lg border border-gray-100 dark:border-gray-700/40";
+                folderSection.innerHTML = `
+                    <div class="font-extrabold text-[10px] text-gray-400 uppercase tracking-tight flex items-center gap-1 mb-1.5">
+                        <i class="fa ${cat.icon}"></i> <span>${cat.title}</span>
+                    </div>
+                    <ul class="space-y-1 pl-1"></ul>
+                `;
+
+                const ul = folderSection.querySelector("ul");
+                categoryFilteredTools.forEach(tool => {
+                    const li = document.createElement("li");
+                    li.className = "group flex items-center justify-between py-0.5 rounded text-[11px] hover:bg-white dark:hover:bg-gray-700 transition cursor-pointer";
+                    li.innerHTML = `
+                        <span class="truncate text-gray-700 dark:text-gray-300 group-hover:text-primary font-medium flex items-center gap-1.5" onclick="navigateToDetails(${tool.id})">
+                            <i class="fa ${tool.icon || 'fa-cube'} opacity-70 text-primary"></i> <strong>${tool.name}</strong>
+                        </span>
+                        <button onclick="toggleFavorite(${tool.id}, event)" class="text-red-400 opacity-0 group-hover:opacity-100 hover:text-red-600 transition px-1"><i class="fa fa-heart"></i></button>
+                    `;
+                    ul.appendChild(li);
+                });
+
+                targetBlock.appendChild(folderSection);
+            });
+
+            if(selectedFavs.length === 0) {
+                targetBlock.innerHTML = `<p class="text-gray-400 italic text-[10px] text-center py-2">No bookmarks pinned.</p>`;
+            }
+        }
+
+        // Populate Topup Selection Core Options
+        function populateTopupAgentOptions() {
+            const selectNode = document.getElementById("popSelectAgent");
+            if (!selectNode) return;
+            selectNode.innerHTML = `<option value="0">Global Platform Wallet (Universal Token)</option>`;
+            aiTools.forEach(tool => {
+                const opt = document.createElement("option");
+                opt.value = tool.id;
+                opt.innerText = `${tool.name} [${i18n[currentLang][tool.category] || tool.category}]`;
+                selectNode.appendChild(opt);
+            });
+        }
+
+        // Token Financial Topup System Methods
+        function openTopupModal() { topupModal.classList.replace("hidden", "flex"); }
+        function closeTopupModal() { topupModal.classList.replace("flex", "hidden"); }
+
+        function toggleBillingType(mode) {
+            const amtArea = document.getElementById("tokenAmountArea");
+            const payBtn = document.getElementById("btnSubmitTopup");
+            if(mode === 'sub') {
+                amtArea.classList.add("hidden");
+                activeTopupPrice = 20.00; // Flat price tier standard for subscription mock
+                payBtn.innerText = `Authorize & Premium Subscribe $20.00 / Mo`;
+            } else {
+                amtArea.classList.remove("hidden");
+                // Restore active grid select parameter values
+                document.querySelectorAll("#topupPackageGrid button").forEach(b => {
+                    if(b.classList.contains("active")) b.click();
+                });
+            }
+        }
+
+        function selectPackagePrice(price, tokens) {
+            activeTopupPrice = price;
+            activeTopupTokens = tokens;
+            
+            // Toggle Visual States
+            const btns = document.querySelectorAll("#topupPackageGrid button");
+            btns.forEach(btn => {
+                btn.className = "p-2.5 border rounded-lg text-left bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:border-primary transition group relative text-xs";
+            });
+            event.currentTarget.className = "p-2.5 border rounded-lg text-left bg-primary/5 dark:bg-primary/20 border-primary transition group relative text-xs ring-1 ring-primary/30 active";
+
+            document.getElementById("btnSubmitTopup").innerText = `Authorize & Secure Pay $${price}`;
+        }
+
+        function executeVisaPaymentMock() {
+            const name = document.getElementById("visaName").value.trim();
+            const num = document.getElementById("visaNum").value.trim();
+            const expiry = document.getElementById("visaExpiry").value.trim();
+            const cvc = document.getElementById("visaCvc").value.trim();
+            const targetAgentId = parseInt(document.getElementById("popSelectAgent").value);
+            const billingMode = document.querySelector('input[name="popBillingType"]:checked').value;
+
+            if(!name || !num || !expiry || !cvc) {
+                alert(currentLang === 'zh' ? "请完整填写您的 VISA 信用卡安全扣款信息！" : "Please complete all standard credit card fields.");
+                return;
+            }
+
+            // Button loading animation mock simulation
+            const payBtn = document.getElementById("btnSubmitTopup");
+            const origText = payBtn.innerText;
+            payBtn.disabled = true;
+            payBtn.innerText = "Processing 3D-Secure Transaction Link...";
+
+            setTimeout(() => {
+                // Perform real-time mutations to state engine
+                if(billingMode === 'sub') {
+                    if(targetAgentId > 0) {
+                        if(!tokenWallet.paidAgents.includes(targetAgentId)) {
+                            tokenWallet.paidAgents.push(targetAgentId);
+                        }
+                    } else {
+                        // Global wallet premium pass activation
+                        aiTools.forEach(t => { if(!tokenWallet.paidAgents.includes(t.id)) tokenWallet.paidAgents.push(t.id); });
+                    }
+                    alert(currentLang === 'zh' ? "支付成功！您所选定的智能体专属高级服务已开通。" : "Subscription finalized successfully via Secure Gateway!");
+                } else {
+                    // Token Top-up injection integration route
+                    tokenWallet.total += activeTopupTokens;
+                    alert(currentLang === 'zh' ? `支付成功！已为您成功充值 ${activeTopupTokens.toLocaleString()} Token，大盘已实时更新。` : `Success! Deposited ${activeTopupTokens.toLocaleString()} Tokens into context allocation pools.`);
+                }
+
+                // Commit back to system disk clusters
+                localStorage.setItem('portal_wallet', JSON.stringify(tokenWallet));
+                
+                // Refresh views reactive loops
+                payBtn.disabled = false;
+                payBtn.innerText = origText;
+                closeTopupModal();
+                updateUIStrings();
+                
+                // Clear billing forms fields security protocol
+                ['visaName', 'visaNum', 'visaExpiry', 'visaCvc'].forEach(id => document.getElementById(id).value = '');
+            }, 1200);
+        }
+
+        // ================= PRE-EXISTING REFACTORED CORE SYSTEM ENGINES =================
         function renderFilterTabs() {
             const categories = ["all", "chat", "search", "office", "code", "study", "image"];
             filterTabs.innerHTML = "";
             categories.forEach(cat => {
                 const btn = document.createElement("button");
-                btn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${currentFilter === cat ? 'bg-primary text-white shadow-md' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}`;
+                btn.className = `px-3 py-1 rounded-lg text-xs font-bold transition-all ${currentFilter === cat ? 'bg-primary text-white shadow-sm' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}`;
                 btn.innerText = i18n[currentLang][cat] || cat;
                 btn.onclick = () => {
                     currentFilter = cat;
@@ -375,24 +600,6 @@
             return stars;
         }
 
-        function renderFavoritesSidebar() {
-            favoritesList.innerHTML = "";
-            favCount.innerText = selectedFavs.length;
-            
-            const bookmarkedTools = aiTools.filter(t => selectedFavs.includes(t.id));
-            bookmarkedTools.forEach(tool => {
-                const li = document.createElement("li");
-                li.className = "group flex items-center justify-between text-xs p-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700/60 text-gray-700 dark:text-gray-300 transition";
-                li.innerHTML = `
-                    <span class="truncate font-medium group-hover:text-primary flex items-center gap-1" onclick="navigateToDetails(${tool.id})">
-                        <i class="fa fa-angle-right opacity-50"></i><strong>${tool.name}</strong> <span class="text-[10px] text-amber-500 font-bold">★${tool.score.toFixed(1)}</span>
-                    </span>
-                    <button onclick="toggleFavorite(${tool.id}, event)" class="text-red-500 opacity-60 hover:opacity-100 px-1"><i class="fa fa-heart"></i></button>
-                `;
-                favoritesList.appendChild(li);
-            });
-        }
-
         function renderTools(){
             toolContainer.innerHTML = "";
             const t = i18n[currentLang];
@@ -406,7 +613,6 @@
             filterData.forEach(tool=>{
                 const isChecked = selectedCompare.find(s=>s.id === tool.id);
                 const isFav = selectedFavs.includes(tool.id);
-                
                 const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
                 const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
 
@@ -414,25 +620,26 @@
                 card.className = `card-hover bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 border transition-all flex flex-col justify-between ${isChecked ? 'border-primary ring-2 ring-primary/20' : 'border-gray-100 dark:border-gray-700/60'}`;
                 card.innerHTML = `
                     <div>
-                        <div class="flex justify-between items-start mb-2.5 gap-2">
-                            <h3 class="text-base font-bold text-gray-900 dark:text-white cursor-pointer hover:text-primary transition" onclick="navigateToDetails(${tool.id})">${tool.name}</h3>
+                        <div class="flex justify-between items-start mb-2 gap-2">
+                            <h3 class="text-sm font-bold text-gray-900 dark:text-white cursor-pointer hover:text-primary transition flex items-center gap-1.5" onclick="navigateToDetails(${tool.id})">
+                                <i class="fa ${tool.icon || 'fa-cube'} text-primary/70"></i><span>${tool.name}</span>
+                            </h3>
                             <div class="flex items-center gap-1.5">
-                                <button onclick="toggleFavorite(${tool.id}, event)" class="text-sm transition p-0.5 ${isFav ? 'text-red-500' : 'text-gray-300 dark:text-gray-600 hover:text-red-400'}">
+                                <button onclick="toggleFavorite(${tool.id}, event)" class="text-xs transition p-0.5 ${isFav ? 'text-red-500' : 'text-gray-300 dark:text-gray-600 hover:text-red-400'}">
                                     <i class="fa ${isFav ? 'fa-heart' : 'fa-heart-o'}"></i>
                                 </button>
                                 <label class="cursor-pointer select-none">
                                     <input type="checkbox" class="compare-checkbox hidden" data-id="${tool.id}" ${isChecked?"checked":""}>
-                                    <span class="px-1.5 py-0.5 text-[10px] rounded border transition font-bold ${isChecked ? 'bg-primary text-white border-primary' : 'border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500'}">${isChecked ? '✓' : '+ '+t.compare}</span>
+                                    <span class="px-1.5 py-0.5 text-[9px] rounded border transition font-bold ${isChecked ? 'bg-primary text-white border-primary' : 'border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500'}">${isChecked ? '✓' : '+ Compare'}</span>
                                 </label>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 cursor-pointer" onclick="navigateToDetails(${tool.id})">${localizedDesc}</p>
-                        <div class="text-[11px] mb-2"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-gray-200 font-semibold">${localizedPrice}</span></div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-2.5 line-clamp-2 cursor-pointer" onclick="navigateToDetails(${tool.id})">${localizedDesc}</p>
+                        <div class="text-[10px] mb-1"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-gray-200 font-semibold">${localizedPrice}</span></div>
                     </div>
-                    
-                    <div class="flex items-center justify-between mt-2 pt-3 border-t dark:border-gray-700/60">
-                        <div class="flex items-center text-[11px]">${renderStar(tool.score)}<span class="ml-1 text-gray-400 font-bold">${tool.score.toFixed(1)}</span></div>
-                        <button onclick="navigateToDetails(${tool.id})" class="text-[11px] text-primary font-bold hover:underline flex items-center gap-0.5">${t.details} <i class="fa fa-chevron-right text-[9px]"></i></button>
+                    <div class="flex items-center justify-between mt-2 pt-2 border-t dark:border-gray-700/60">
+                        <div class="flex items-center text-[10px]">${renderStar(tool.score)}<span class="ml-1 text-gray-400 font-bold">${tool.score.toFixed(1)}</span></div>
+                        <button onclick="navigateToDetails(${tool.id})" class="text-[10px] text-primary font-bold hover:underline flex items-center gap-0.5">${t.details} <i class="fa fa-chevron-right text-[8px]"></i></button>
                     </div>
                 `;
                 toolContainer.appendChild(card);
@@ -441,7 +648,6 @@
             openCompareBtn.classList.toggle("hidden", selectedCompare.length !== 2);
         }
 
-        // ================= SPECIFIC DETAILS NAVIGATION VIEW =================
         function navigateToDetails(toolId) {
             const tool = aiTools.find(t => t.id === toolId);
             if (!tool) return;
@@ -454,9 +660,9 @@
             const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
             const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
             
-            const arrayPros = (tool.pros && tool.pros[currentLang]) ? tool.pros[currentLang] : ["Premium features enabled"];
-            const arrayCons = (tool.cons && tool.cons[currentLang]) ? tool.cons[currentLang] : ["Check dynamic pricing details"];
-            const sandboxPrompt = tool.prompt || "Run sample execution routines.";
+            const arrayPros = (tool.pros && tool.pros[currentLang]) ? tool.pros[currentLang] : ["Premium features validated."];
+            const arrayCons = (tool.cons && tool.cons[currentLang]) ? tool.cons[currentLang] : ["Check data billing constraints."];
+            const sandboxPrompt = tool.prompt || "Analyze system asset schema arrays.";
 
             detailViewBlock.dataset.activeId = tool.id;
             dashboardViewBlock.classList.add("hidden");
@@ -464,70 +670,70 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             let html = `
-                <div class="flex items-center justify-between mb-5">
-                    <button onclick="backToMainDashboard()" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-primary transition flex items-center gap-1.5">
+                <div class="flex items-center justify-between mb-4">
+                    <button onclick="backToMainDashboard()" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1.5">
                         <i class="fa fa-arrow-left"></i> ${t.back}
                     </button>
-                    <button onclick="toggleFavorite(${tool.id}, event)" class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border transition ${isFav ? 'bg-red-50 dark:bg-red-950/20 text-red-500 border-red-200' : 'border-gray-200 dark:border-gray-700 text-gray-500'}">
-                        <i class="fa ${isFav ? 'fa-heart' : 'fa-heart-o'}"></i> ${isFav ? 'Bookmarked' : 'Add to Bookmarks'}
+                    <button onclick="toggleFavorite(${tool.id}, event)" class="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg border transition ${isFav ? 'bg-red-50 dark:bg-red-950/20 text-red-500 border-red-200' : 'border-gray-200 dark:border-gray-700 text-gray-500'}">
+                        <i class="fa ${isFav ? 'fa-heart' : 'fa-heart-o'}"></i> ${isFav ? 'Bookmarked' : 'Add Bookmarks'}
                     </button>
                 </div>
 
-                <div class="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden border dark:border-gray-700 mb-6 bg-gray-900 shadow-inner">
-                    <img src="${displayImg}" alt="${tool.name}" class="w-full h-full object-cover opacity-80">
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6">
-                        <span class="text-[10px] bg-primary text-white font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full w-max mb-2 block">${t[tool.category] || tool.category}</span>
-                        <h2 class="text-2xl sm:text-3xl font-black text-white">${tool.name}</h2>
+                <div class="relative w-full h-44 rounded-xl overflow-hidden border dark:border-gray-700 mb-4 bg-gray-900 shadow-inner">
+                    <img src="${displayImg}" alt="${tool.name}" class="w-full h-full object-cover opacity-75">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-5">
+                        <span class="text-[9px] bg-primary text-white font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full w-max mb-1.5 block">${t[tool.category] || tool.category}</span>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">${tool.name}</h2>
                     </div>
                 </div>
 
-                <div class="grid sm:grid-cols-2 gap-4 mb-6 text-xs bg-gray-50 dark:bg-gray-700/40 p-4 rounded-xl border dark:border-gray-700">
-                    <div><span class="text-gray-400 block mb-0.5">${t.pricing}</span><span class="text-sm font-bold text-gray-900 dark:text-white">${localizedPrice}</span></div>
-                    <div><span class="text-gray-400 block mb-0.5">Rating System Benchmark</span><span class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score.toFixed(1)} / 5.0)</span></div>
+                <div class="grid sm:grid-cols-2 gap-3 mb-4 text-xs bg-gray-50 dark:bg-gray-700/40 p-3 rounded-xl border dark:border-gray-700">
+                    <div><span class="text-gray-400 block text-[10px]">${t.pricing}</span><span class="font-bold text-gray-900 dark:text-white">${localizedPrice}</span></div>
+                    <div><span class="text-gray-400 block text-[10px]">Benchmark Infrastructure Score</span><span class="font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score.toFixed(1)})</span></div>
                 </div>
 
-                <div class="mb-6"><p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">${localizedDesc}</p></div>
+                <div class="mb-4"><p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300">${localizedDesc}</p></div>
 
-                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                    <div class="bg-emerald-50/50 dark:bg-emerald-950/10 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
-                        <h4 class="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-1.5"><i class="fa fa-check-circle"></i> ${t.pros}</h4>
-                        <ul class="space-y-1 text-xs text-gray-600 dark:text-gray-300">
-                            ${arrayPros.map(p => `<li><i class="fa fa-caret-right text-emerald-400 mr-1.5"></i>${p}</li>`).join('')}
+                <div class="grid md:grid-cols-2 gap-3 mb-4">
+                    <div class="bg-emerald-50/40 dark:bg-emerald-950/10 p-3 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                        <h4 class="text-[11px] font-black uppercase text-emerald-600 dark:text-emerald-400 mb-1 flex items-center gap-1"><i class="fa fa-check-circle"></i> ${t.pros}</h4>
+                        <ul class="space-y-0.5 text-xs text-gray-600 dark:text-gray-300">
+                            ${arrayPros.map(p => `<li><i class="fa fa-caret-right text-emerald-400 mr-1"></i>${p}</li>`).join('')}
                         </ul>
                     </div>
-                    <div class="bg-rose-50/50 dark:bg-rose-950/10 p-4 rounded-xl border border-rose-100 dark:border-rose-900/30">
-                        <h4 class="text-xs font-black uppercase text-rose-600 dark:text-rose-400 mb-2 flex items-center gap-1.5"><i class="fa fa-times-circle"></i> ${t.cons}</h4>
-                        <ul class="space-y-1 text-xs text-gray-600 dark:text-gray-300">
-                            ${arrayCons.map(c => `<li><i class="fa fa-caret-right text-rose-400 mr-1.5"></i>${c}</li>`).join('')}
+                    <div class="bg-rose-50/40 dark:bg-rose-950/10 p-3 rounded-xl border border-rose-100 dark:border-rose-900/30">
+                        <h4 class="text-[11px] font-black uppercase text-rose-600 dark:text-rose-400 mb-1 flex items-center gap-1"><i class="fa fa-times-circle"></i> ${t.cons}</h4>
+                        <ul class="space-y-0.5 text-xs text-gray-600 dark:text-gray-300">
+                            ${arrayCons.map(c => `<li><i class="fa fa-caret-right text-rose-400 mr-1"></i>${c}</li>`).join('')}
                         </ul>
                     </div>
                 </div>
 
-                <div class="bg-gray-100 dark:bg-gray-700/30 rounded-xl p-4 border dark:border-gray-700 mb-8">
-                    <div class="flex justify-between items-center mb-2">
-                        <h4 class="text-xs font-black tracking-wider text-gray-400 uppercase flex items-center gap-1.5"><i class="fa fa-terminal text-primary"></i> ${t.promptTitle}</h4>
-                        <button onclick="copyPromptText(this, \`${encodeURIComponent(sandboxPrompt)}\`)" class="text-[10px] bg-white dark:bg-gray-800 border dark:border-gray-600 px-2 py-1 rounded shadow-sm font-bold text-primary hover:opacity-80 transition">${t.copy}</button>
+                <div class="bg-gray-100 dark:bg-gray-700/30 rounded-xl p-3 border dark:border-gray-700 mb-5">
+                    <div class="flex justify-between items-center mb-1.5">
+                        <h4 class="text-[10px] font-black text-gray-400 uppercase flex items-center gap-1"><i class="fa fa-terminal text-primary"></i> ${t.promptTitle}</h4>
+                        <button onclick="copyPromptText(this, \`${encodeURIComponent(sandboxPrompt)}\`)" class="text-[9px] bg-white dark:bg-gray-800 border px-1.5 py-0.5 rounded shadow-sm font-bold text-primary">${t.copy}</button>
                     </div>
-                    <code class="block text-xs text-gray-700 dark:text-gray-300 font-mono break-all bg-white dark:bg-gray-900/40 p-2.5 border dark:border-gray-700/60 rounded-md select-all">${sandboxPrompt}</code>
+                    <code class="block text-xs text-gray-700 dark:text-gray-300 font-mono break-all bg-white dark:bg-gray-900/40 p-2 border dark:border-gray-700 rounded select-all">${sandboxPrompt}</code>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 pb-6 border-b dark:border-gray-700">
-                    <a href="${tool.link}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white transition shadow-sm flex items-center justify-center gap-1.5">${t.visit} <i class="fa fa-external-link"></i></a>
-                    <a href="${youtubeLink}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white transition shadow-sm flex items-center justify-center gap-1.5"><i class="fa fa-youtube-play"></i> ${t.course}</a>
+                <div class="grid grid-cols-2 gap-3 pb-5 border-b dark:border-gray-700">
+                    <a href="${tool.link}" target="_blank" class="w-full text-center py-2.5 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white transition flex items-center justify-center gap-1">${t.visit} <i class="fa fa-external-link"></i></a>
+                    <a href="${youtubeLink}" target="_blank" class="w-full text-center py-2.5 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white transition flex items-center justify-center gap-1"><i class="fa fa-youtube-play"></i> ${t.course}</a>
                 </div>
 
-                <div class="mt-8">
-                    <h3 class="text-base font-black dark:text-white mb-4 flex items-center gap-2"><i class="fa fa-comments-o text-primary"></i> ${t.reviewTitle}</h3>
-                    <div id="reviewsStreamBlock" class="space-y-3 mb-6"></div>
+                <div class="mt-6">
+                    <h3 class="text-sm font-black dark:text-white mb-3 flex items-center gap-1.5"><i class="fa fa-comments-o text-primary"></i> ${t.reviewTitle}</h3>
+                    <div id="reviewsStreamBlock" class="space-y-2.5 mb-4"></div>
 
-                    <div class="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-xl border dark:border-gray-700">
-                        <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-3">
-                            <input type="text" id="reviewerName" placeholder="${t.namePlaceholder}" class="p-2 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none w-full sm:w-48">
+                    <div class="bg-gray-50 dark:bg-gray-700/30 p-3 rounded-xl border dark:border-gray-700">
+                        <div class="flex flex-col sm:flex-row gap-2 items-start sm:items-center mb-2">
+                            <input type="text" id="reviewerName" placeholder="${t.namePlaceholder}" class="p-2 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none w-full sm:w-40">
                             <div class="flex items-center gap-1" id="starPickerContainer"></div>
                         </div>
-                        <textarea id="reviewerComment" rows="3" placeholder="${t.commentPlaceholder}" class="w-full p-3 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none focus:border-primary mb-3"></textarea>
+                        <textarea id="reviewerComment" rows="2" placeholder="${t.commentPlaceholder}" class="w-full p-2 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none focus:border-primary mb-2"></textarea>
                         <div class="text-right">
-                            <button onclick="submitNewReview(${tool.id})" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:opacity-90 transition">${t.submitReview}</button>
+                            <button onclick="submitNewReview(${tool.id})" class="px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-lg transition">${t.submitReview}</button>
                         </div>
                     </div>
                 </div>
@@ -545,15 +751,13 @@
         }
 
         function copyPromptText(button, textEncoded) {
-            const text = decodeURIComponent(textEncoded);
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerText;
+            navigator.clipboard.writeText(decodeURIComponent(textEncoded)).then(() => {
+                const orig = button.innerText;
                 button.innerText = i18n[currentLang].copied || "Copied!";
-                setTimeout(() => button.innerText = originalText, 1800);
+                setTimeout(() => button.innerText = orig, 1500);
             });
         }
 
-        // ================= SCORE INTERACTIVE LOGICS =================
         function renderStarsFormPicker() {
             const container = document.getElementById("starPickerContainer");
             if(!container) return;
@@ -570,26 +774,25 @@
             const feed = document.getElementById("reviewsStreamBlock");
             if(!feed) return;
             feed.innerHTML = "";
-            const t = i18n[currentLang];
             const currentList = reviewsDb[toolId] || [];
 
             if(currentList.length === 0) {
-                feed.innerHTML = `<p class="text-xs text-center text-gray-400 dark:text-gray-500 py-6">${t.noReviews}</p>`;
+                feed.innerHTML = `<p class="text-[11px] text-center text-gray-400 dark:text-gray-500 py-4">${i18n[currentLang].noReviews}</p>`;
                 return;
             }
 
             currentList.forEach(rev => {
                 const bubble = document.createElement("div");
-                bubble.className = "bg-white dark:bg-gray-800/40 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700/60 shadow-sm flex gap-3";
+                bubble.className = "bg-white dark:bg-gray-800/40 p-3 rounded-xl border border-gray-100 dark:border-gray-700/60 shadow-sm flex gap-2.5";
                 bubble.innerHTML = `
-                    <div class="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold flex items-center justify-center text-xs shrink-0 uppercase">${rev.name.substring(0,2)}</div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-xs font-black text-gray-900 dark:text-white truncate">${rev.name}</span>
-                            <span class="text-[10px] text-gray-400 font-mono">${rev.date}</span>
+                    <div class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-[10px] shrink-0 uppercase">${rev.name.substring(0,2)}</div>
+                    <div class="flex-1 min-w-0 text-xs">
+                        <div class="flex justify-between items-center mb-0.5">
+                            <span class="font-black text-gray-900 dark:text-white truncate">${rev.name}</span>
+                            <span class="text-[9px] text-gray-400 font-mono">${rev.date}</span>
                         </div>
-                        <div class="flex mb-1.5">${renderStar(rev.score)}</div>
-                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed break-words">${rev.text}</p>
+                        <div class="flex mb-1">${renderStar(rev.score)}</div>
+                        <p class="text-gray-600 dark:text-gray-300 break-words">${rev.text}</p>
                     </div>
                 `;
                 feed.appendChild(bubble);
@@ -599,8 +802,6 @@
         function submitNewReview(toolId) {
             const nameInp = document.getElementById("reviewerName");
             const textInp = document.getElementById("reviewerComment");
-            if(!nameInp || !textInp) return;
-
             const name = nameInp.value.trim();
             const text = textInp.value.trim();
             if(!name || !text) { alert(i18n[currentLang].alertComment); return; }
@@ -614,30 +815,25 @@
 
             const tool = aiTools.find(x => x.id === toolId);
             if(tool) {
-                const totalScore = reviewsDb[toolId].reduce((acc, current) => acc + current.score, 0);
+                const totalScore = reviewsDb[toolId].reduce((acc, c) => acc + c.score, 0);
                 tool.score = totalScore / reviewsDb[toolId].length;
                 localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             }
 
-            nameInp.value = "";
-            textInp.value = "";
-            activeReviewStars = 5;
-            
+            nameInp.value = ""; textInp.value = ""; activeReviewStars = 5;
             renderStarsFormPicker();
             renderActiveToolReviews(toolId);
-            renderFavoritesSidebar();
+            renderCategorizedFavorites();
             renderTools();
-            navigateToDetails(toolId);
         }
 
-        // Global Controllers 
         function toggleFavorite(id, event) {
             if(event) event.stopPropagation();
             if (selectedFavs.includes(id)) {
                 selectedFavs = selectedFavs.filter(favId => favId !== id);
             } else { selectedFavs.push(id); }
             localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
-            renderFavoritesSidebar();
+            renderCategorizedFavorites();
             renderTools();
             if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) {
                 navigateToDetails(id);
@@ -653,7 +849,7 @@
             renderTools();
         }
 
-        // Admin Auth Gateway
+        // Administrative Auth Gateway
         document.getElementById("openAdminBtn").addEventListener("click", () => {
             if(sessionStorage.getItem("admin_authenticated") === "true") { openAdminConsole(); } 
             else { document.getElementById("authPassword").value = ""; authModal.classList.replace("hidden", "flex"); }
@@ -673,40 +869,29 @@
         function renderAdminTable() {
             adminTableBody.innerHTML = "";
             const t = i18n[currentLang];
-            adminModal.querySelector("thead tr").innerHTML = `
-                <th class="p-2.5 border dark:border-gray-600">${t.colName}</th>
-                <th class="p-2.5 border dark:border-gray-600">${t.colCat}</th>
-                <th class="p-2.5 border dark:border-gray-600">${t.colAct}</th>
-            `;
             aiTools.forEach(tool=>{
                 const tr = document.createElement('tr');
                 tr.className = "border-b dark:border-b-gray-700 text-xs";
                 tr.innerHTML = `
-                    <td class="p-2.5 font-bold">${tool.name}</td>
-                    <td class="p-2.5"><span class="bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">${t[tool.category] || tool.category}</span></td>
-                    <td class="p-2.5 text-center space-x-2">
-                        <button onclick="deleteTool(${tool.id})" class="text-red-500 font-bold hover:underline">Delete</button>
-                    </td>
+                    <td class="p-2 font-bold">${tool.name}</td>
+                    <td class="p-2"><span class="bg-gray-100 dark:bg-gray-600 px-1.5 py-0.2 rounded text-[9px] font-bold">${t[tool.category] || tool.category}</span></td>
+                    <td class="p-2 text-right"><button onclick="deleteTool(${tool.id})" class="text-red-500 font-bold hover:underline">Delete</button></td>
                 `;
                 adminTableBody.appendChild(tr);
             });
         }
 
         function saveTool() {
-            const nameVal = document.getElementById('toolName').value;
-            const linkVal = document.getElementById('toolLink').value;
+            const nameVal = document.getElementById('toolName').value.trim();
+            const linkVal = document.getElementById('toolLink').value.trim();
             if(!nameVal || !linkVal) return alert(i18n[currentLang].alertFields);
 
-            const newAsset = {
-                id: Date.now(), name: nameVal, category: document.getElementById('toolCategory').value, score: 5.0, link: linkVal,
-                price: { en: document.getElementById('toolPrice').value || "Free", zh: "暂无标准", ja: "無料", ko: "무료" },
-                desc: { en: "Custom asset.", zh: "后台自定义写入的AI基础资产设施。", ja: "カスタムツール", ko: "커스텀 도구" },
-                pros: { en: ["Custom dynamic tracking"], zh: ["管理员自定义注入"] },
-                cons: { en: ["Awaiting community metric validation"], zh: ["尚未经过社区验证"] },
-                prompt: 'Analyze raw input assets:'
-            };
-
-            aiTools.push(newAsset);
+            aiTools.push({
+                id: Date.now(), name: nameVal, category: document.getElementById('toolCategory').value, score: 5.0, icon: "fa-cube", link: linkVal,
+                price: { en: document.getElementById('toolPrice').value || "Free", zh: document.getElementById('toolPrice').value || "免费" },
+                desc: { en: "Custom assets deployment setup.", zh: "后台自定义配置注入的全新AI智能体资产实例。" },
+                pros: { zh: ["高阶自定义灵活部署"] }, cons: { zh: ["暂无大规模公开评测"] }, prompt: 'Execute matrix tracking pipeline arrays:'
+            });
             localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             updateUIStrings();
             renderAdminTable();
@@ -717,39 +902,37 @@
             if(!confirm(i18n[currentLang].confirmDel)) return;
             aiTools = aiTools.filter(item => item.id !== id);
             selectedFavs = selectedFavs.filter(favId => favId !== id);
+            tokenWallet.paidAgents = tokenWallet.paidAgents.filter(paidId => paidId !== id);
             localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
+            localStorage.setItem('portal_wallet', JSON.stringify(tokenWallet));
             updateUIStrings();
             renderAdminTable();
             if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) { backToMainDashboard(); }
         }
 
-        // Compare Module Handlers
+        // Compare Panels Logic mapping
         openCompareBtn.addEventListener("click", ()=>{
             compareContent.innerHTML = "";
             selectedCompare.forEach(tool=>{
                 const card = document.createElement("div");
-                card.className = "bg-gray-50 dark:bg-gray-700/50 p-5 rounded-xl border dark:border-gray-600";
-                card.innerHTML = `
-                    <h3 class="text-lg font-bold mb-2 dark:text-white">${tool.name}</h3>
-                    <p class="text-xs mb-1 dark:text-white"><strong>Rating: </strong>${renderStar(tool.score)} ${tool.score.toFixed(1)}</p>
-                `;
+                card.className = "bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl border dark:border-gray-600 text-xs";
+                card.innerHTML = `<h3 class="font-bold mb-1 dark:text-white text-sm">${tool.name}</h3><p class="text-gray-500">Score Benchmark: ${tool.score.toFixed(1)}</p>`;
                 compareContent.appendChild(card);
             });
             compareModal.classList.replace("hidden", "flex");
         });
         document.getElementById("closeCompare").addEventListener("click", ()=>compareModal.classList.replace("flex", "hidden"));
         document.getElementById("clearSelect").addEventListener("click", ()=>{ selectedCompare = []; compareModal.classList.replace("flex", "hidden"); renderTools(); });
-        document.getElementById("closeAdmin").addEventListener("click", ()=>adminModal.classList.replace("flex", "hidden"));
 
-        // Dark-mode Switcher
+        // Dark/Light Theme Layer Trigger
         if(localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
         document.getElementById("themeToggle").addEventListener("click", ()=>{
             document.documentElement.classList.toggle("dark");
             localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
         });
 
-        // Bootstrap Launcher
+        // Initialize Application Shell Lifecycle
         renderLangSelectorUI();
         updateUIStrings();
     </script>
