@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub Pro - Community & Interactive Portal</title>
+    <title>AI Hub Pro - Full Stack Architecture Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -23,10 +23,8 @@
     
     <div class="flex flex-col lg:flex-row min-h-screen">
         
-        <!-- ================= LEFT SIDEBAR: PROFILE & FAVORITES ================= -->
         <aside class="w-full lg:w-80 bg-white dark:bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
             <div>
-                <!-- User Profile Section -->
                 <div class="flex items-center gap-4 border-b dark:border-gray-700 pb-5 mb-5">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary/50">
                     <div class="overflow-hidden">
@@ -35,14 +33,11 @@
                     </div>
                 </div>
                 
-                <!-- Meta Tags Metadata -->
                 <div class="space-y-2.5 text-xs border-b dark:border-gray-700 pb-5 mb-5 text-gray-600 dark:text-gray-400">
-                    <div class="flex items-center gap-2"><i class="fa fa-globe w-4 text-center text-gray-400"></i> <span class="font-medium">Region:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">United States</span></div>
+                    <div class="flex items-center gap-2"><i class="fa fa-globe w-4 text-center text-gray-400"></i> <span class="font-medium">Region:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Global</span></div>
                     <div class="flex items-center gap-2"><i class="fa fa-briefcase w-4 text-center text-gray-400"></i> <span class="font-medium">Occupation:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Full-Stack Architect</span></div>
-                    <div class="flex items-center gap-2"><i class="fa fa-envelope w-4 text-center text-gray-400"></i> <span class="font-medium truncate">alex.m@matrix.io</span></div>
                 </div>
 
-                <!-- Live Favorites Extension Tracker -->
                 <div>
                     <h3 class="text-xs font-black tracking-wider text-gray-400 uppercase mb-3 flex items-center justify-between">
                         <span id="lblFavs">My Bookmarks</span>
@@ -52,24 +47,20 @@
                 </div>
             </div>
 
-            <!-- Footer Meta Settings inside Sidebar -->
             <div class="pt-4 border-t dark:border-gray-700 mt-5 flex items-center justify-between text-xs text-gray-400">
-                <span>System Status: v3.0 Live</span>
+                <span>System Status: v3.1 Fully Loaded</span>
                 <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:opacity-80 transition">
                     <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:inline"></i>
                 </button>
             </div>
         </aside>
 
-        <!-- ================= RIGHT MAIN LAYOUT CONTENT BLOCK ================= -->
         <main class="flex-1 p-4 md:p-8 overflow-x-hidden">
-            <!-- Top Navigation Global Controls -->
             <header class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-6 border-b dark:border-gray-800 gap-4">
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <h1 class="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2 cursor-pointer" onclick="backToMainDashboard()">
                         <i class="fa fa-rocket text-primary"></i> <span id="navTitle">AI Matrix Hub</span>
                     </h1>
-                    <!-- Explicit Language Selector -->
                     <div class="flex rounded-lg bg-gray-200/70 dark:bg-gray-800 p-0.5 border dark:border-gray-700" id="langSelectorTabs">
                         <button onclick="switchLang('en')" data-lang="en" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">EN</button>
                         <button onclick="switchLang('zh')" data-lang="zh" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">中文</button>
@@ -88,19 +79,15 @@
                 </div>
             </header>
 
-            <!-- CONTAINER A: SUB-DASHBOARD HOME VIEW LAYER -->
             <div id="dashboardViewBlock">
                 <div class="flex flex-wrap gap-2 mb-6" id="filterTabs"></div>
                 <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="toolContainer"></div>
             </div>
 
-            <!-- CONTAINER B: DYNAMIC SPECIFIC TOOL DETAILS PAGE VIEW LAYER -->
             <div id="detailViewBlock" class="hidden bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm max-w-4xl mx-auto"></div>
         </main>
     </div>
 
-    <!-- Modals (Comparison, Authentication, Console) -->
-    <!-- Modal 1: Side Comparison Box -->
     <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-3">
@@ -114,7 +101,6 @@
         </div>
     </div>
 
-    <!-- Modal 2: Admin Password Gateway -->
     <div id="authModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-md p-6 shadow-2xl">
             <h3 class="text-lg font-bold mb-4 dark:text-white" id="authTitle">Admin Access</h3>
@@ -126,7 +112,6 @@
         </div>
     </div>
 
-    <!-- Modal 3: Console Management -->
     <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-3">
@@ -140,7 +125,14 @@
             <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl mb-6 grid sm:grid-cols-3 gap-3 border dark:border-gray-600 text-sm">
                 <input type="hidden" id="toolId">
                 <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Name</label><input type="text" id="toolName" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Category</label><select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"><option value="chat">Dialogue & Chat</option><option value="image">Image Generation</option><option value="video">Video Generation</option><option value="code">Coding Assistant</option></select></div>
+                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Category</label><select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="chat">Dialogue & Chat</option>
+                    <option value="search">Search & Digest</option>
+                    <option value="office">Office & Data</option>
+                    <option value="code">Coding Assistant</option>
+                    <option value="study">Study & Consultant</option>
+                    <option value="image">Creative Design</option>
+                </select></div>
                 <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Pricing Module (EN)</label><input type="text" id="toolPrice" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
                 <div class="flex flex-col sm:col-span-3"><label class="dark:text-gray-300 mb-1 text-xs">URL Website</label><input type="text" id="toolLink" placeholder="https://..." class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
                 <div class="sm:col-span-3 text-right"><button onclick="saveTool()" class="bg-primary text-white px-5 py-2 rounded-lg hover:opacity-90" id="btnSaveTool">Save</button></div>
@@ -155,15 +147,13 @@
         </div>
     </div>
 
-    <!-- JavaScript Deployment Engine Scripts -->
     <script>
-        // Comprehensive Localized Strings Object Map
         const i18n = {
             en: {
                 title: "AI Matrix Hub", admin: "Admin", compare: "Compare", clear: "Clear",
                 pricing: "Pricing: ", visit: "Official Site", course: "Course", ytQuery: "tutorial", noTools: "No tools found.",
-                sideTitle: "Side-by-Side Comparison", dataTitle: "Console Manager", bookmarks: "My Bookmarks",
-                all: "All Infrastructure", chat: "Dialogue & Chat", image: "Image Generation", video: "Video Generation", code: "Coding Assistant",
+                sideTitle: "Side comparison", dataTitle: "Console Manager", bookmarks: "My Bookmarks",
+                all: "All Ecosystem", chat: "Dialogue & Chat", search: "Search & Digest", office: "Office & Data", code: "Coding Assistant", study: "Study & Consultant", image: "Creative Design",
                 authTitle: "Security Authentication", saveBtn: "Save Asset", alertPass: "Password Invalid!", back: "Back to Dashboard",
                 alertSelectLimit: "Maximum 2 elements allowed.", alertFields: "Required attributes missing.", details: "Details",
                 confirmDel: "Delete this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions",
@@ -172,10 +162,10 @@
                 namePlaceholder: "Your Nickname", commentPlaceholder: "Share your experience with this tool...", submitReview: "Submit Review", alertComment: "Please provide a name, rating, and comment."
             },
             zh: {
-                title: "AI 核心工具互动网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
+                title: "AI 工具矩阵互动网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
                 pricing: "计算资费：", visit: "直达官网", course: "在线课程", ytQuery: "入门教学视频", noTools: "当前分类暂无实例。",
-                sideTitle: "双端指标并排对比", dataTitle: "云数据底座中心", bookmarks: "我的快捷收藏夹",
-                all: "全部生态圈", chat: "文本大模型与对话", image: "创意图像生成", video: "高精视频生成", code: "编程与提效辅助",
+                sideTitle: "双端指标并排对比", dataTitle: "数据底座中心", bookmarks: "我的快捷收藏夹",
+                all: "全部生态圈", chat: "文本大模型与对话", search: "深度搜索与提炼", office: "办公协同与数据", code: "编程与技术辅助", study: "个人学习与顾问", image: "创意设计与多模态",
                 authTitle: "管理员高级身份验证", saveBtn: "将修改部署至本地", alertPass: "密码校验失败！", back: "返回主面板",
                 alertSelectLimit: "单次对比上限不得超过2个实例。", alertFields: "基础元数据不可空缺。", details: "详情页面",
                 confirmDel: "确定要彻底删除该工具吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元",
@@ -185,93 +175,129 @@
             },
             ja: {
                 title: "AIポータル比較ナビ", admin: "管理者ツール", compare: "比較する", clear: "クリア",
-                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "データが存在しません。",
+                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "数据が存在しません。",
                 sideTitle: "個別仕様ベンチマーク比較", dataTitle: "データコントロール", bookmarks: "お気に入りブックマーク",
-                all: "すべて表示", chat: "対話型AI & LLM", image: "画像生成プラットフォーム", video: "動画生成・編集", code: "プログラミング開発支援",
+                all: "すべて表示", chat: "対話型AI & LLM", search: "検索・情報抽出", office: "オフィス・データ処理", code: "開発・プログラミング", study: "学習・アドバイザー", image: "デザイン・マルチモーダル",
                 authTitle: "管理者認証プロトコル", saveBtn: "データを保存", alertPass: "パスワードが違います！", back: "ダッシュボードに戻る",
                 alertSelectLimit: "同時に比較できるのは2つまでです。", alertFields: "入力アドレスは必須です。", details: "詳細情報",
                 confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作",
                 pros: "メリット", cons: "デメリット", promptTitle: "おすすめプロンプト", copy: "コピー", copied: "完了！",
-                reviewTitle: "口コミ・評価レビュー", noReviews: "レビューはまだありません。最初のレビューを書きましょう！",
-                namePlaceholder: "ニックネーム", commentPlaceholder: "このツールの使用感をレビュー...", submitReview: "レビューを投稿", alertComment: "名前、評価、コメントを入力してください。"
+                reviewTitle: "口コミ・評価レビュー", noReviews: "レビューはまだありません。",
+                namePlaceholder: "ニックネーム", commentPlaceholder: "レビューを入力...", submitReview: "投稿する", alertComment: "入力項目が不十分です。"
             },
             ko: {
                 title: "AI 글로벌 비교 포털", admin: "관리자 모드", compare: "상세 비교", clear: "선택 초기화",
                 pricing: "이용 요금：", visit: "공식 사이트", course: "무료 강좌", ytQuery: "기초 사용법", noTools: "할당된 도구가 없습니다.",
                 sideTitle: "양방향 인프라 스펙 비교", dataTitle: "클라우드 허브 관리", bookmarks: "내 즐겨찾기 폴더",
-                all: "전체 에코시스템", chat: "대화형 모델 & 대규모 언어", image: "이미지 생성 및 디자인", video: "시네마틱 비디오 빌더", code: "코드 생성 및 자동화 지원",
+                all: "전체 에코시스템", chat: "대화형 모델 & 대규모 언어", search: "검색 및 정보 요약", office: "오피스 및 데이터 협업", code: "코드 생성 및 자동화", study: "학습 및 개인 컨설턴트", image: "크리에이티브 디자인",
                 authTitle: "관리자 자격 증명 창", saveBtn: "수정사항 동기화", alertPass: "암호가 올바르지 않습니다!", back: "메인 화면으로 가기",
-                alertSelectLimit: "최대 2개의 도구 조합만 비교 가능합니다.", alertFields: "입력 필수 파라미터 누락.", details: "상세 상세조회",
+                alertSelectLimit: "최대 2개의 도구 조합만 비교 가능합니다.", alertFields: "입력 필수 파라미터 누락.", details: "상세조회",
                 confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널",
                 pros: "주요 장점", cons: "단점 및 한계", promptTitle: "추천 프롬프트 샌드박스", copy: "복사", copied: "복사됨!",
-                reviewTitle: "방문자 리뷰 및 별점 평점", noReviews: "작성된 리뷰가 없습니다. 첫 번째 리뷰를 남겨보세요!",
-                namePlaceholder: "닉네임 입력", commentPlaceholder: "이 도구에 대한 솔직한 평가를 남겨주세요...", submitReview: "리뷰 제출하기", alertComment: "닉네임, 별점, 리뷰 내용을 모두 입력해주세요."
+                reviewTitle: "방문자 리뷰 및 별점 평점", noReviews: "작성된 리뷰가 없습니다.",
+                namePlaceholder: "닉네임 입력", commentPlaceholder: "리뷰 내용을 모두 입력해주세요...", submitReview: "리뷰 제출", alertComment: "모두 입력해주세요."
             }
         };
 
-        // Fully Translatable Infrastructure Array Matrix
+        // 6 Full Categories Fully Loaded Array
         const initDefaultTools = [
             { 
                 id:1, name:"ChatGPT", category:"chat", score:4.9, link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80",
                 price: { en:"Free / $20mo Plus", zh:"免费 / 20美元每月 Plus", ja:"無料 / 月額20ドル Plus", ko:"무료 / 월 $20 Plus" },
                 desc: {
-                    en: "Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and complex logic processing.",
-                    zh: "OpenAI 旗下的行业标杆级大语言模型。在逻辑推理、内容创作、复杂代码分析及多模态交互上具备极强的统治力。",
-                    ja: "OpenAIが開発した最高峰の対話型AI。高度な論理的推論、クリエイティブな文章作成、複雑なロジック処理に圧倒的な強みを持ちます。",
-                    ko: "OpenAI가 개발한 플래그십 고급 대규모 언어 모델. 비교할 수 없는 추론 능력, 창의적인 텍스트 작성 및 복잡한 로직 처리 지원."
+                    en: "Flagship advanced large language model by OpenAI. Unmatched reasoning and complex logic processing.",
+                    zh: "OpenAI 旗下的行业标杆级大语言模型。在逻辑推理、内容创作及多模态交互上具备极强的统治力。",
+                    ja: "OpenAIが開発した最高峰の対話型AI。高度な論理的推論、クリエイティブな文章作成に強みを持ちます。",
+                    ko: "OpenAI가 개발한 플래그십 고급 대규모 언어 모델. 비교할 수 없는 추론 능력 지원."
                 },
-                pros: { en: ["Top-tier reasoning", "Massive ecosystem"], zh: ["顶尖的高阶推理能力", "极其强大的应用生态(GPTs)"], ja: ["最高峰の推論能力", "強力なプラグインエコシステム"], ko: ["최고 수준의 추론 능력", "방대한 GPTs 생태계"] },
-                cons: { en: ["High load context delays", "Strict web firewalls"], zh: ["高负载下偶有延迟", "网络访问限制较为严格"], ja: ["混雑時の応答遅延", "厳格なWebセキュリティ"], ko: ["트래픽 집중 시 지연", "엄격한 네트워크 방화벽"] },
-                prompt: 'Act as an expert senior full-stack software engineer. Refactor the following code architecture into clean, DRY execution blocks with detailed inline comments:'
+                pros: { en: ["Top-tier reasoning", "Massive ecosystem"], zh: ["顶尖的高阶推理能力", "极其强大的应用生态(GPTs)"], ja: ["最高峰の推論能力", "強力なエコシステム"], ko: ["최고 수준의 추론 능력", "방대한 생태계"] },
+                cons: { en: ["High load context delays", "Strict firewalls"], zh: ["高负载下偶有延迟", "网络访问限制较为严格"], ja: ["混雑時の応答遅延", "厳格なセキュリティ"], ko: ["트래픽 집중 시 지연", "네트워크 방화벽"] },
+                prompt: 'Act as an expert senior software engineer. Refactor the following code architecture into clean execution blocks with detailed comments:'
             },
             { 
-                id:2, name:"Claude 3.5 Sonnet", category:"chat", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+                id:2, name:"Perplexity AI", category:"search", score:4.7, link:"https://www.perplexity.ai", img:"https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
                 price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro", ja:"無料 / 月額20ドル Pro", ko:"무료 / 월 $20 Pro" },
                 desc: {
-                    en: "Industry-leading LLM from Anthropic. Exceptional performance parameters for source code multi-file architectures.",
-                    zh: "Anthropic 推出的顶级大语言模型。其最具颠覆性的是对多文件项目代码库的深度理解力以及极度自然的文本笔触。",
-                    ja: "Anthropicによる業界最先端のLLM。複数ファイルにまたがるソースコードの解読や、自然で洗練された長文記述に優れています。",
-                    ko: "Anthropic의 업계 선도적인 LLM. 소스 코드 다중 파일 아키텍처 및 정밀한 학술적 논리 텍스트 작성에 탁월한 성능."
+                    en: "Conversational search engine that delivers instant answers backed by cited academic and live web sources.",
+                    zh: "对话式实时搜索引擎。输入任何问题，它会深度全网检索并提炼答案，自动附带权威引用文献与出处网页。",
+                    ja: "引用元を明記した検索結果をリアルタイムで返す、対話型の次世代AI検索エンジンツール。",
+                    ko: "실시간 웹 정보 및 학술 자료를 검색하여 신뢰할 수 있는 출처 인용과 함께 답변을 제공하는 대화형 검색 엔진."
                 },
-                pros: { en: ["Amazing coding comprehension", "Artifacts sandbox preview"], zh: ["极其惊艳的代码架构编写", "独创 Artifacts 独立预览画布"], ja: ["驚異的なコード生成・解読", "便利なArtifacts表示機能"], ko: ["놀라운 코드 생성 및 이해력", "독창적인 Artifacts 혁신 UI"] },
-                cons: { en: ["Daily limits burn fast", "No image generation output"], zh: ["网页端高阶限额消耗极快", "不支持原生图片生成生成"], ja: ["利用制限への到達が早い", "画像生成機能は非搭載"], ko: ["일일 사용량 제한이 다소 타이트함", "이미지 생성 출력 미지원"] },
-                prompt: 'Analyze this multi-file project workspace directory. Find performance bottlenecks and generate a comprehensive markdown optimization strategy report:'
+                pros: { en: ["Real-time citation tracking", "Copilot deep research model"], zh: ["自动标注准确的信息出处来源", "Copilot 深度全网学术探针模式"], ja: ["明確な情報ソース引用", "強力なディープリサーチモード"], ko: ["실시간 출처 인용 시스템", "디옵 파일럿 모드 리서치 기능"] },
+                cons: { en: ["Occasionally digests duplicate sources", "Slow deep modes"], zh: ["偶尔重复融合雷同信息源", "深度研究模式下响应时间稍长"], ja: ["情報の重複が稀にある", "ディープモードは時間を要する"], ko: ["가끔 중복 소스 취합", "딥 모드 구동 시 인출 지연"] },
+                prompt: 'Provide a comprehensive market analysis report on the clean energy sector in 2026, listing verified references:'
             },
             { 
-                id:4, name:"Midjourney", category:"image", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80",
+                id:3, name:"Julius AI", category:"office", score:4.6, link:"https://julius.ai", img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Starts $17/mo", zh:"17美元每月起", ja:"月額17ドルから", ko:"월 $17부터 시작" },
+                desc: {
+                    en: "Advanced data analyst tool that interprets spreadsheets, tracks anomalies, and codes custom Python visual graphs.",
+                    zh: "尖端的高级数据分析工具。能直接读取并拆解复杂电子表格，自动编写 Python 脚本提炼趋势并呈现高精可视化图表。",
+                    ja: "スプレッドシートやCSVを読み込み、高度なデータ分析とPythonによる美しいグラフ可視化を自動で行うツール。",
+                    ko: "엑셀 및 CSV 스프레드시트를 분석하고, 트렌드를 도출하며, Python 기반 시각화 차트를 자동 생성하는 도구."
+                },
+                pros: { en: ["Flawless data visualization", "Deep statistical analysis"], zh: ["完全无缝的复杂数据图表渲染", "支持高阶统计学回归分析预测"], ja: ["データ可視化が極めて優秀", "高度な統計回帰分析に対応"], ko: ["완벽한 데이터 차트 시각화", "고급 통계 모델 회귀 분석"] },
+                cons: { en: ["Strict data row upload limit", "Premium required"], zh: ["免费额度对文件行数限制极严", "核心高级图表需订阅解锁"], ja: ["無料プランの行数制限", "有料版でのみ真価を発揮"], ko: ["무료 플랜 업로드 제약", "핵심 분석 기능 유료화"] },
+                prompt: 'Analyze this sample dataset, identify statistical anomalies, and generate a clean distribution histogram script:'
+            },
+            { 
+                id:4, name:"Claude 3.5 Sonnet", category:"code", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro", ja:"無料 / 月額20ドル Pro", ko:"무료 / 월 $20 Pro" },
+                desc: {
+                    en: "Exceptional performance parameters for complex source code and multi-file code architectures.",
+                    zh: "Anthropic 推出的顶级大语言模型。其最具颠覆性的是对多文件整个代码库的深度理解力以及极度自然的文本笔触。",
+                    ja: "Anthropicによる業界最先端のLLM。複数ファイルにまたがるソースコードの解読や、自然な文章作成に優れています。",
+                    ko: "Anthropic의 업계 선도적인 LLM. 소스 코드 다중 파일 아키텍처 및 정밀한 학술적 논리 텍스트 작성에 탁월."
+                },
+                pros: { en: ["Amazing coding comprehension", "Artifacts sandbox preview"], zh: ["极其惊艳的代码架构编写", "独创 Artifacts 独立预览画布"], ja: ["驚異的なコード生成・解読", "便利なArtifacts表示機能"], ko: ["놀라운 코드 생성 및 이해력", "독창적인 Artifacts 혁신 UI"] },
+                cons: { en: ["Daily limits burn fast", "No image outputs"], zh: ["网页端高阶限额消耗极快", "不支持原生图片文件输出"], ja: ["利用制限への到達が早い", "画像生成機能は非搭載"], ko: ["일일 사용량 제한이 다소 타이트함", "이미지 생성 출력 미지원"] },
+                prompt: 'Analyze this project workspace directory. Find performance bottlenecks and generate an optimization strategy report:'
+            },
+            { 
+                id:5, name:"Khanmigo", category:"study", score:4.5, link:"https://www.khanacademy.org", img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Free for US Schools / Premium", zh:"美国学校免费 / 常规需订阅", ja:"米国学校無料 / 個別有料", ko:"미국 학교 무료 / 개별 유료" },
+                desc: {
+                    en: "AI tutor guide by Khan Academy that prompts students to find logic answers rather than cheating with quick copies.",
+                    zh: "可汗学院倾力打造的专属 AI 导师。它绝不直接给学生提供偷懒的复制标准答案，而是通过启发式问答引导你攻克数理化难关。",
+                    ja: "カーンアカデミーが開発したAIチューター。答えを直接教えるのではなく、ヒントを与えて生徒の論理的思考を促します。",
+                    ko: "칸아카데미의 AI 튜터 시스템. 직접적인 답을 주지 않고, 소크라테스식 질문을 통해 학생 스스로 정답을 도출하도록 유도."
+                },
+                pros: { en: ["Socratic learning guide", "Safe child environment"], zh: ["极佳的苏格拉底式启发教学法", "完全绿色安全的儿童学术空间"], ja: ["ソクラテス式の優れた対話指導", "子供向けの安全な学習環境"], ko: ["소크라테스식 학습 가이드", "안전한 유소년 필터링 환경"] },
+                cons: { en: ["Mainly focused on K-12 syllabus", "Slow responses"], zh: ["主要局限于中小学基础教育大纲", "引导过程有些繁琐且耗费时间"], ja: ["K-12教育カリキュラム中心", "時に誘導が冗長に感じられる"], ko: ["K-12 기본 교육과정에 편중", "빠른 정답 획득 목적엔 부적합"] },
+                prompt: 'I am confused about quadratic equations. Do not give me the answer, guide me through the concept step by step:'
+            },
+            { 
+                id:6, name:"Midjourney", category:"image", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80",
                 price: { en:"Starts $10/mo", zh:"10美元每月起", ja: "月額10ドルから", ko: "월 $10부터 시작" },
                 desc: {
-                    en: "The global visual golden standard for high-fidelity text-to-image synthesis, cinematic asset framing rendering.",
+                    en: "The global visual golden standard for high-fidelity text-to-image synthesis and cinematic asset framing rendering.",
                     zh: "全球公认的创意图像生成天花板。无需复杂参数即可直接渲染出电影级质感、精细纹理与极具艺术感的视觉画作。",
-                    ja: "高精度な画像生成のグローバルスタンダード。映画のようなライティングや、芸術的なディテール表現において敵なしのクオリティ。",
-                    ko: "고화질 텍스트-이미지 합성을 위한 글로벌 비주얼 골든 표준. 시네마틱 자산 프레임 렌더링 및Peerless 디지털 예술 작화."
+                    ja: "高精度な画像生成のグローバルスタンダード。映画のようなライティングや、芸術的なディテール表現において敵なし。",
+                    ko: "고화질 텍스트-이미지 합성을 위한 글로벌 비주얼 골든 표준. 시네마틱 자산 프레임 렌더링 지원."
                 },
                 pros: { en: ["Cinematic lighting rendering", "Vast community gallery"], zh: ["无与伦比的电影级光影质感", "社区拥有海量审美渲染灵感"], ja: ["圧倒的な映画級の質感・芸術性", "インスピレーション溢れるギャラリー"], ko: ["독보적인 시네마틱 광원 연출", "영감을 주는 방대한 커뮤니티 갤러리"] },
                 cons: { en: ["Requires Discord workflow", "No perpetual free trial"], zh: ["依赖 Discord 社区工作流", "已取消永久免费试用额度"], ja: ["Discord経由の操作が特殊", "無料トライアルの廃止"], ko: ["Discord 워크플로우 기반 조작", "상시 무료 트라이얼 미지원"] },
-                prompt: 'Cinematic hyper-realistic raw macro shot of an futuristic cyberpunk biomechanical neon workshop, Unreal Engine 5 render, depth of field, 8k resolution --ar 16:9 --v 6.0'
+                prompt: 'Cinematic hyper-realistic raw macro shot of a cyberpunk mechanical workspace, Unreal Engine 5 render, 8k resolution --ar 16:9'
             }
         ];
 
-        // Global Application Architecture State Engines
-        let currentLang = localStorage.getItem('portal_lang') || 'en';
+        // Core App Context States Management
+        let currentLang = localStorage.getItem('portal_lang') || 'zh'; // Default zh to accommodate configuration preference
         let localData = localStorage.getItem('portal_tools');
-        if (!localData || !localData.includes("Pros")) {
+        if (!localData || !localData.includes("search") || !localData.includes("office")) {
             localStorage.setItem('portal_tools', JSON.stringify(initDefaultTools));
             localData = JSON.stringify(initDefaultTools);
         }
         let aiTools = JSON.parse(localData);
-        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 2];
+        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 4];
         let reviewsDb = JSON.parse(localStorage.getItem('portal_reviews')) || {
-            1: [
-                { name: "CodeNinja", score: 5, text: "Absolutely phenomenal for multi-turn architectural design.", date: "2026-06-15 14:22" },
-                { name: "木子李", score: 4, text: "经常用它写周报，中文逻辑通顺，就是高峰期稍微有点慢。", date: "2026-06-20 09:10" }
-            ]
+            1: [{ name: "CodeNinja", score: 5, text: "Excellent execution workflows.", date: "2026-06-15 14:22" }]
         };
         let selectedCompare = [];
         let currentFilter = "all";
-        let activeReviewStars = 5; // Form tracker
+        let activeReviewStars = 5;
 
-        // DOM Catchers
+        // Dom Pickers
         const toolContainer = document.getElementById("toolContainer");
         const compareModal = document.getElementById("compareModal");
         const compareContent = document.getElementById("compareContent");
@@ -323,7 +349,7 @@
         }
 
         function renderFilterTabs() {
-            const categories = ["all", "chat", "image", "video", "code"];
+            const categories = ["all", "chat", "search", "office", "code", "study", "image"];
             filterTabs.innerHTML = "";
             categories.forEach(cat => {
                 const btn = document.createElement("button");
@@ -381,7 +407,6 @@
                 const isChecked = selectedCompare.find(s=>s.id === tool.id);
                 const isFav = selectedFavs.includes(tool.id);
                 
-                // Polyfill values for cross-compatibility languages mapping safety
                 const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
                 const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
 
@@ -416,7 +441,7 @@
             openCompareBtn.classList.toggle("hidden", selectedCompare.length !== 2);
         }
 
-        // ================= FULL DEEP DETAIL ARCHITECTURE DETAILED EXPANSION ROW =================
+        // ================= SPECIFIC DETAILS NAVIGATION VIEW =================
         function navigateToDetails(toolId) {
             const tool = aiTools.find(t => t.id === toolId);
             if (!tool) return;
@@ -429,17 +454,15 @@
             const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
             const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
             
-            // Build Pros & Cons Array Safety fallbacks
-            const arrayPros = (tool.pros && tool.pros[currentLang]) ? tool.pros[currentLang] : ["Excellent features"];
-            const arrayCons = (tool.cons && tool.cons[currentLang]) ? tool.cons[currentLang] : ["Premium limits"];
-            const sandboxPrompt = tool.prompt || "Write a baseline generic hello world script.";
+            const arrayPros = (tool.pros && tool.pros[currentLang]) ? tool.pros[currentLang] : ["Premium features enabled"];
+            const arrayCons = (tool.cons && tool.cons[currentLang]) ? tool.cons[currentLang] : ["Check dynamic pricing details"];
+            const sandboxPrompt = tool.prompt || "Run sample execution routines.";
 
             detailViewBlock.dataset.activeId = tool.id;
             dashboardViewBlock.classList.add("hidden");
             detailViewBlock.classList.remove("hidden");
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Generate HTML Blocks Layout
             let html = `
                 <div class="flex items-center justify-between mb-5">
                     <button onclick="backToMainDashboard()" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-primary transition flex items-center gap-1.5">
@@ -450,7 +473,6 @@
                     </button>
                 </div>
 
-                <!-- Main Display Board -->
                 <div class="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden border dark:border-gray-700 mb-6 bg-gray-900 shadow-inner">
                     <img src="${displayImg}" alt="${tool.name}" class="w-full h-full object-cover opacity-80">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6">
@@ -459,18 +481,13 @@
                     </div>
                 </div>
 
-                <!-- Parameters Table Data Grid -->
                 <div class="grid sm:grid-cols-2 gap-4 mb-6 text-xs bg-gray-50 dark:bg-gray-700/40 p-4 rounded-xl border dark:border-gray-700">
                     <div><span class="text-gray-400 block mb-0.5">${t.pricing}</span><span class="text-sm font-bold text-gray-900 dark:text-white">${localizedPrice}</span></div>
                     <div><span class="text-gray-400 block mb-0.5">Rating System Benchmark</span><span class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score.toFixed(1)} / 5.0)</span></div>
                 </div>
 
-                <!-- Description Block -->
-                <div class="mb-6">
-                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">${localizedDesc}</p>
-                </div>
+                <div class="mb-6"><p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">${localizedDesc}</p></div>
 
-                <!-- ADVANCED EXPANSION MATRIX: PROS & CONS ROW BLOCK -->
                 <div class="grid md:grid-cols-2 gap-4 mb-6">
                     <div class="bg-emerald-50/50 dark:bg-emerald-950/10 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
                         <h4 class="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-1.5"><i class="fa fa-check-circle"></i> ${t.pros}</h4>
@@ -486,7 +503,6 @@
                     </div>
                 </div>
 
-                <!-- ADVANCED EXPANSION MATRIX: PROMPT SANDBOX COPY ENGINE -->
                 <div class="bg-gray-100 dark:bg-gray-700/30 rounded-xl p-4 border dark:border-gray-700 mb-8">
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="text-xs font-black tracking-wider text-gray-400 uppercase flex items-center gap-1.5"><i class="fa fa-terminal text-primary"></i> ${t.promptTitle}</h4>
@@ -495,30 +511,23 @@
                     <code class="block text-xs text-gray-700 dark:text-gray-300 font-mono break-all bg-white dark:bg-gray-900/40 p-2.5 border dark:border-gray-700/60 rounded-md select-all">${sandboxPrompt}</code>
                 </div>
 
-                <!-- CTA Anchors -->
                 <div class="grid grid-cols-2 gap-4 pb-6 border-b dark:border-gray-700">
                     <a href="${tool.link}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white transition shadow-sm flex items-center justify-center gap-1.5">${t.visit} <i class="fa fa-external-link"></i></a>
                     <a href="${youtubeLink}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white transition shadow-sm flex items-center justify-center gap-1.5"><i class="fa fa-youtube-play"></i> ${t.course}</a>
                 </div>
 
-                <!-- ================= VISTOR REVIEWS & COMMENT BOARD SYSTEM ================= -->
                 <div class="mt-8">
                     <h3 class="text-base font-black dark:text-white mb-4 flex items-center gap-2"><i class="fa fa-comments-o text-primary"></i> ${t.reviewTitle}</h3>
-                    
-                    <!-- Dynamic Live Feed Stream -->
                     <div id="reviewsStreamBlock" class="space-y-3 mb-6"></div>
 
-                    <!-- Input Review Form -->
                     <div class="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-xl border dark:border-gray-700">
                         <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-3">
                             <input type="text" id="reviewerName" placeholder="${t.namePlaceholder}" class="p-2 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none w-full sm:w-48">
-                            
-                            <!-- Interactive Star Clicker Builder -->
                             <div class="flex items-center gap-1" id="starPickerContainer"></div>
                         </div>
                         <textarea id="reviewerComment" rows="3" placeholder="${t.commentPlaceholder}" class="w-full p-3 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none focus:border-primary mb-3"></textarea>
                         <div class="text-right">
-                            <button onclick="submitNewReview(${tool.id})" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:opacity-90 shadow-md shadow-indigo-500/10 transition">${t.submitReview}</button>
+                            <button onclick="submitNewReview(${tool.id})" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:opacity-90 transition">${t.submitReview}</button>
                         </div>
                     </div>
                 </div>
@@ -535,7 +544,6 @@
             dashboardViewBlock.classList.remove("hidden");
         }
 
-        // Clipbox copy sandbox function
         function copyPromptText(button, textEncoded) {
             const text = decodeURIComponent(textEncoded);
             navigator.clipboard.writeText(text).then(() => {
@@ -545,7 +553,7 @@
             });
         }
 
-        // ================= COMMENT CORE LOGIC ENGINE SYSTEM =================
+        // ================= SCORE INTERACTIVE LOGICS =================
         function renderStarsFormPicker() {
             const container = document.getElementById("starPickerContainer");
             if(!container) return;
@@ -574,9 +582,7 @@
                 const bubble = document.createElement("div");
                 bubble.className = "bg-white dark:bg-gray-800/40 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700/60 shadow-sm flex gap-3";
                 bubble.innerHTML = `
-                    <div class="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold flex items-center justify-center text-xs shrink-0 uppercase">
-                        ${rev.name.substring(0,2)}
-                    </div>
+                    <div class="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold flex items-center justify-center text-xs shrink-0 uppercase">${rev.name.substring(0,2)}</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center mb-1">
                             <span class="text-xs font-black text-gray-900 dark:text-white truncate">${rev.name}</span>
@@ -599,7 +605,6 @@
             const text = textInp.value.trim();
             if(!name || !text) { alert(i18n[currentLang].alertComment); return; }
 
-            // Timestamp Formatter
             const now = new Date();
             const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
@@ -607,15 +612,13 @@
             reviewsDb[toolId].push({ name, score: activeReviewStars, text, date: timeStr });
             localStorage.setItem('portal_reviews', JSON.stringify(reviewsDb));
 
-            // Dynamic Core Score Engine Cascade recalculation
             const tool = aiTools.find(x => x.id === toolId);
             if(tool) {
                 const totalScore = reviewsDb[toolId].reduce((acc, current) => acc + current.score, 0);
-                tool.score = totalScore / reviewsDb[toolId].length; // Re-average weights
+                tool.score = totalScore / reviewsDb[toolId].length;
                 localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             }
 
-            // Flush view structures inline feedback loop
             nameInp.value = "";
             textInp.value = "";
             activeReviewStars = 5;
@@ -624,8 +627,6 @@
             renderActiveToolReviews(toolId);
             renderFavoritesSidebar();
             renderTools();
-            
-            // Re-render parameters layout panel header to reflect realtime scores metrics changes
             navigateToDetails(toolId);
         }
 
@@ -652,12 +653,13 @@
             renderTools();
         }
 
-        // Admin Security Hooks
+        // Admin Auth Gateway
         document.getElementById("openAdminBtn").addEventListener("click", () => {
             if(sessionStorage.getItem("admin_authenticated") === "true") { openAdminConsole(); } 
             else { document.getElementById("authPassword").value = ""; authModal.classList.replace("hidden", "flex"); }
         });
         document.getElementById("closeAuth").addEventListener("click", () => authModal.classList.replace("flex", "hidden"));
+        
         function verifyPassword() {
             if(document.getElementById("authPassword").value === "8888") {
                 sessionStorage.setItem("admin_authenticated", "true");
@@ -695,18 +697,13 @@
             const linkVal = document.getElementById('toolLink').value;
             if(!nameVal || !linkVal) return alert(i18n[currentLang].alertFields);
 
-            // Construct compliant full multi-language structured nodes models to prevent breakage
             const newAsset = {
-                id: Date.now(),
-                name: nameVal,
-                category: document.getElementById('toolCategory').value,
-                score: 5.0,
-                link: linkVal,
+                id: Date.now(), name: nameVal, category: document.getElementById('toolCategory').value, score: 5.0, link: linkVal,
                 price: { en: document.getElementById('toolPrice').value || "Free", zh: "暂无标准", ja: "無料", ko: "무료" },
-                desc: { en: "Custom assets loaded inside admin panels.", zh: "后台自定义写入的AI基础资产设施。", ja: "カスタムツール", ko: "커스텀 도구" },
-                pros: { en: ["Custom active infrastructure"], zh: ["管理员自定义注入"] },
-                cons: { en: ["Awaiting user feedback reviews"], zh: ["尚未经过社区验证"] },
-                prompt: 'Analyze this input prompt assets:'
+                desc: { en: "Custom asset.", zh: "后台自定义写入的AI基础资产设施。", ja: "カスタムツール", ko: "커스텀 도구" },
+                pros: { en: ["Custom dynamic tracking"], zh: ["管理员自定义注入"] },
+                cons: { en: ["Awaiting community metric validation"], zh: ["尚未经过社区验证"] },
+                prompt: 'Analyze raw input assets:'
             };
 
             aiTools.push(newAsset);
@@ -752,7 +749,7 @@
             localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
         });
 
-        // Bootstrap Launcher Sequence Execution
+        // Bootstrap Launcher
         renderLangSelectorUI();
         updateUIStrings();
     </script>
