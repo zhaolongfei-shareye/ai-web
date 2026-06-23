@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具横向对比门户</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#4F46E5' } } } }
+    </script>
+    <style>
+        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15); }
+        .star-fill { color: #fbbf24; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+            <h1 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-gray-800 dark:text-white">
+                <i class="fa fa-rocket text-primary"></i> AI工具对比库
+            </h1>
+            <div class="flex items-center gap-3">
+                <button id="openAdminBtn" class="bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-4 py-2 rounded-lg hover:opacity-90 transition text-sm flex items-center gap-1">
+                    <i class="fa fa-cog"></i> 管理后台
+                </button>
+                <button id="themeToggle" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white flex items-center gap-2 hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">
+                    <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:inline"></i><span>模式</span>
+                </button>
+                <button id="openCompareBtn" class="bg-primary hover:bg-indigo-700 text-white px-5 py-2 rounded-lg hidden transition shadow-lg shadow-indigo-500/30 text-sm">
+                    <i class="fa fa-exchange"></i> 开启对比
+                </button>
+            </div>
+        </header>
+
+        <div class="flex flex-wrap gap-2 mb-8" id="filterTabs">
+            <button data-filter="all" class="filter-btn active px-4 py-2 rounded-lg bg-primary text-white">全部工具</button>
+            <button data-filter="chat" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">对话聊天</button>
+            <button data-filter="image" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">图像生成</button>
+            <button data-filter="video" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">视频生成</button>
+            <button data-filter="code" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white">编程编码</button>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="toolContainer"></div>
+    </div>
+
+    <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-5xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-3">
+                <h2 class="text-xl font-bold dark:text-white"><i class="fa fa-columns text-primary"></i> 双工具并排对比</h2>
+                <button id="closeCompare" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6" id="compareContent"></div>
+            <div class="mt-8 text-center border-t dark:border-gray-700 pt-4">
+                <button id="clearSelect" class="px-5 py-2 bg-red-500 text-white rounded-lg">清空选择</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-3">
+                <h2 class="text-xl font-bold dark:text-white"><i class="fa fa-dashboard text-primary"></i> 在线后台数据管理</h2>
+                <button id="closeAdmin" class="text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl mb-6 grid sm:grid-cols-3 gap-3 border dark:border-gray-600">
+                <input type="hidden" id="toolId">
+                <input type="text" id="toolName" placeholder="工具名称" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm">
+                <select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm">
+                    <option value="chat">对话聊天</option>
+                    <option value="image">图像生成</option>
+                    <option value="video">视频生成</option>
+                    <option value="code">编程编码</option>
+                </select>
+                <input type="number" step="0.1" id="toolScore" placeholder="评分 (0-5.0)" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm">
+                <input type="text" id="toolPrice" placeholder="费用说明" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm">
+                <input type="text" id="toolLink" placeholder="官网链接 (https://...)" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm sm:col-span-2">
+                <textarea id="toolDesc" placeholder="核心介绍短语..." class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white text-sm sm:col-span-3 h-16"></textarea>
+                <div class="sm:col-span-3 text-right">
+                    <button onclick="saveTool()" class="bg-primary text-white px-4 py-1.5 rounded text-sm hover:opacity-90">保存工具</button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto text-sm">
+                <table class="w-full text-left border-collapse dark:text-white">
+                    <thead>
+                        <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                            <th class="p-2 border dark:border-gray-600">名称</th>
+                            <th class="p-2 border dark:border-gray-600">分类</th>
+                            <th class="p-2 border dark:border-gray-600">价格</th>
+                            <th class="p-2 border dark:border-gray-600 text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始默认数据源
+        const defaultTools = [
+            { id:1,name:"ChatGPT",category:"chat",desc:"OpenAI旗舰大语言模型，通用对话、文案、逻辑推理全能工具",price:"免费版+20美元/月Plus会员",score:4.9,link:"https://openai.com" },
+            { id:2,name:"Claude 3",category:"chat",desc:"长文本解析天花板，支持超大文档阅读，安全性极高",price:"免费额度+付费订阅",score:4.8,link:"https://anthropic.com" },
+            { id:3,name:"Midjourney",category:"image",desc:"业界顶尖AI绘画工具，艺术质感、构图表现力领先同行",price:"10美元起月度订阅",score:4.7,link:"https://www.midjourney.com" }
+        ];
+
+        // 【核心修改】数据优先从本地浏览器缓存读取，实现刷新不丢失
+        let aiTools = JSON.parse(localStorage.getItem('portal_tools')) || defaultTools;
+        let selectedCompare = [];
+        let currentFilter = "all";
+
+        const toolContainer = document.getElementById("toolContainer");
+        const compareModal = document.getElementById("compareModal");
+        const compareContent = document.getElementById("compareContent");
+        const openCompareBtn = document.getElementById("openCompareBtn");
+        const adminModal = document.getElementById("adminModal");
+        const adminTableBody = document.getElementById("adminTableBody");
+
+        function syncStorage() {
+            localStorage.setItem('portal_tools', JSON.stringify(aiTools));
+            renderTools();
+            renderAdminTable();
+        }
+
+        function renderStar(rating){
+            let stars = "";
+            for(let i=1;i<=5;i++){
+                if(i <= Math.floor(rating)) stars += '<i class="fa fa-star star-fill mr-0.5"></i>';
+                else if(i - rating < 1) stars += '<i class="fa fa-star-half-o star-fill mr-0.5"></i>';
+                else stars += '<i class="fa fa-star-o text-gray-300 dark:text-gray-600 mr-0.5"></i>';
+            }
+            return stars;
+        }
+
+        function renderTools(){
+            toolContainer.innerHTML = "";
+            const filterData = currentFilter === "all" ? aiTools : aiTools.filter(item=>item.category === currentFilter);
+            if(filterData.length === 0) {
+                toolContainer.innerHTML = `<p class="col-span-full text-center text-gray-400 py-10">该分类下暂无工具</p>`;
+                return;
+            }
+            filterData.forEach(tool=>{
+                const isChecked = selectedCompare.find(s=>s.id === tool.id);
+                const card = document.createElement("div");
+                card.className = `card-hover bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 border ${isChecked ? 'border-primary ring-2 ring-primary/20' : 'border-gray-100 dark:border-gray-700'}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3 gap-2">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">${tool.name}</h3>
+                        <label class="cursor-pointer">
+                            <input type="checkbox" class="compare-checkbox hidden" data-id="${tool.id}" ${isChecked?"checked":""}>
+                            <span class="px-2 py-0.5 text-xs rounded border ${isChecked ? 'bg-primary text-white border-primary' : 'border-gray-300 text-gray-500'}">${isChecked ? '✓ 已选' : '加入对比'}</span>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 min-h-[60px]">${tool.desc}</p>
+                    <div class="text-sm mb-2"><span class="text-gray-400">费用：</span><span class="dark:text-white font-medium">${tool.price}</span></div>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t dark:border-gray-700">
+                        <div class="flex items-center">${renderStar(tool.score)}</div>
+                        <a href="${tool.link}" target="_blank" class="text-sm text-primary flex items-center gap-1">前往官网 <i class="fa fa-external-link text-xs"></i></a>
+                    </div>
+                `;
+                toolContainer.appendChild(card);
+            });
+            document.querySelectorAll(".compare-checkbox").forEach(cb=>cb.addEventListener("change", handleSelectCompare));
+            openCompareBtn.classList.toggle("hidden", selectedCompare.length !== 2);
+        }
+
+        function handleSelectCompare(e){
+            const id = parseInt(e.target.dataset.id);
+            if(e.target.checked){
+                if(selectedCompare.length >= 2) { alert("仅可同时对比两款工具"); e.target.checked = false; return; }
+                selectedCompare.push(aiTools.find(t=>t.id === id));
+            } else {
+                selectedCompare = selectedCompare.filter(item=>item.id !== id);
+            }
+            renderTools();
+        }
+
+        // 后台表格管理逻辑
+        function renderAdminTable() {
+            adminTableBody.innerHTML = "";
+            aiTools.forEach(t=>{
+                const tr = document.createElement('tr');
+                tr.className = "border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/30";
+                tr.innerHTML = `
+                    <td class="p-2 font-medium">${t.name}</td>
+                    <td class="p-2"><span class="bg-gray-100 dark:bg-gray-600 px-1.5 py-0.5 rounded text-xs">${t.category}</span></td>
+                    <td class="p-2 max-w-[120px] truncate">${t.price}</td>
+                    <td class="p-2 text-center space-x-2">
+                        <button onclick="editTool(${t.id})" class="text-primary hover:underline">编辑</button>
+                        <button onclick="deleteTool(${t.id})" class="text-red-500 hover:underline">删除</button>
+                    </td>
+                `;
+                adminTableBody.appendChild(tr);
+            });
+        }
+
+        function editTool(id) {
+            const t = aiTools.find(item=>item.id === id);
+            document.getElementById('toolId').value = t.id;
+            document.getElementById('toolName').value = t.name;
+            document.getElementById('toolCategory').value = t.category;
+            document.getElementById('toolScore').value = t.score;
+            document.getElementById('toolPrice').value = t.price;
+            document.getElementById('toolLink').value = t.link;
+            document.getElementById('toolDesc').value = t.desc;
+        }
+
+        function saveTool() {
+            const idVal = document.getElementById('toolId').value;
+            const nameVal = document.getElementById('toolName').value;
+            const linkVal = document.getElementById('toolLink').value;
+            if(!nameVal || !linkVal) return alert("名称和网址不能为空");
+
+            const newTool = {
+                id: idVal ? parseInt(idVal) : Date.now(),
+                name: nameVal,
+                category: document.getElementById('toolCategory').value,
+                score: parseFloat(document.getElementById('toolScore').value) || 5.0,
+                price: document.getElementById('toolPrice').value || "免费",
+                link: linkVal,
+                desc: document.getElementById('toolDesc').value || ""
+            };
+
+            if(idVal) {
+                aiTools = aiTools.map(item => item.id === parseInt(idVal) ? newTool : item);
+            } else { aiTools.push(newTool); }
+
+            syncStorage();
+            // 清空表单
+            ['toolId','toolName','toolScore','toolPrice','toolLink','toolDesc'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        function deleteTool(id) {
+            if(!confirm("确定删除吗？")) return;
+            aiTools = aiTools.filter(item => item.id !== id);
+            selectedCompare = selectedCompare.filter(item => item.id !== id);
+            syncStorage();
+        }
+
+        // 弹窗和公共事件控制
+        openCompareBtn.addEventListener("click", ()=>{
+            compareContent.innerHTML = "";
+            selectedCompare.forEach(tool=>{
+                const card = document.createElement("div");
+                card.className = "bg-gray-50 dark:bg-gray-700/50 p-5 rounded-xl border dark:border-gray-600";
+                card.innerHTML = `<h3 class="text-xl font-bold mb-2 dark:text-white">${tool.name}</h3><p class="text-sm text-gray-600 dark:text-gray-300 mb-4">${tool.desc}</p><p class="text-sm mb-1 dark:text-white"><strong>定价：</strong>${tool.price}</p><p class="text-sm flex items-center gap-1 dark:text-white"><strong>评分：</strong>${renderStar(tool.score)} ${tool.score}</p>`;
+                compareContent.appendChild(card);
+            });
+            compareModal.classList.replace("hidden", "flex");
+        });
+
+        document.getElementById("closeCompare").addEventListener("click", ()=>compareModal.classList.replace("flex", "hidden"));
+        document.getElementById("clearSelect").addEventListener("click", ()=>{ selectedCompare = []; compareModal.classList.replace("flex", "hidden"); renderTools(); });
+        
+        document.getElementById("openAdminBtn").addEventListener("click", ()=>{ renderAdminTable(); adminModal.classList.replace("hidden", "flex"); });
+        document.getElementById("closeAdmin").addEventListener("click", ()=>adminModal.classList.replace("flex", "hidden"));
+
+        document.querySelectorAll(".filter-btn").forEach(btn=>{
+            btn.addEventListener("click", (e)=>{
+                document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("bg-primary", "text-white"));
+                e.target.classList.add("bg-primary", "text-white");
+                currentFilter = btn.dataset.filter;
+                renderTools();
+            });
+        });
+
+        if(localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
+        document.getElementById("themeToggle").addEventListener("click", ()=>{
+            document.documentElement.classList.toggle("dark");
+            localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+        });
+
+        renderTools();
+    </script>
+</body>
+</html>
