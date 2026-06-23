@@ -3,49 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tools Comparison Portal Matrix</title>
+    <title>AI Hub Pro - Enterprise Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#4F46E5' } } } }
     </script>
     <style>
-        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15); }
+        .card-hover { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .star-fill { color: #fbbf24; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
-        <header class="flex flex-col lg:flex-row justify-between items-center mb-8 gap-6 border-b dark:border-gray-800 pb-6">
-            <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-                <h1 class="text-2xl md:text-3xl font-black text-gray-800 dark:text-white flex items-center gap-2">
-                    <i class="fa fa-rocket text-primary animate-bounce"></i> <span id="navTitle">AI Tools Hub</span>
-                </h1>
-                <div class="flex rounded-lg bg-gray-200/70 dark:bg-gray-800 p-1 border dark:border-gray-700" id="langSelectorTabs">
-                    <button onclick="switchLang('en')" data-lang="en" class="px-3 py-1.5 text-xs font-bold rounded-md transition-all">EN</button>
-                    <button onclick="switchLang('zh')" data-lang="zh" class="px-3 py-1.5 text-xs font-bold rounded-md transition-all">中文</button>
-                    <button onclick="switchLang('ja')" data-lang="ja" class="px-3 py-1.5 text-xs font-bold rounded-md transition-all">日本語</button>
-                    <button onclick="switchLang('ko')" data-lang="ko" class="px-3 py-1.5 text-xs font-bold rounded-md transition-all">한국어</button>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 min-h-screen text-gray-800 dark:text-gray-100">
+    
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        
+        <aside class="w-full lg:w-80 bg-white dark:bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
+            <div>
+                <div class="flex items-center gap-4 border-b dark:border-gray-700 pb-5 mb-5">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary/50">
+                    <div class="overflow-hidden">
+                        <h2 class="font-black text-lg truncate text-gray-900 dark:text-white">Alex Mercer</h2>
+                        <p class="text-xs text-primary font-semibold truncate">Premium AI Researcher</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-2.5 text-xs border-b dark:border-gray-700 pb-5 mb-5 text-gray-600 dark:text-gray-400">
+                    <div class="flex items-center gap-2"><i class="fa fa-globe w-4 text-center text-gray-400"></i> <span class="font-medium">Region:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">United States</span></div>
+                    <div class="flex items-center gap-2"><i class="fa fa-briefcase w-4 text-center text-gray-400"></i> <span class="font-medium">Occupation:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Full-Stack Architect</span></div>
+                    <div class="flex items-center gap-2"><i class="fa fa-envelope w-4 text-center text-gray-400"></i> <span class="font-medium truncate">alex.m@matrix.io</span></div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-black tracking-wider text-gray-400 uppercase mb-3 flex items-center justify-between">
+                        <span id="lblFavs">My Bookmarks</span>
+                        <span id="favCount" class="bg-red-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold">0</span>
+                    </h3>
+                    <ul class="space-y-1 overflow-y-auto max-h-[35vh]" id="favoritesList"></ul>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-3">
-                <button id="themeToggle" class="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-sm hover:opacity-80 transition">
+
+            <div class="pt-4 border-t dark:border-gray-700 mt-5 flex items-center justify-between text-xs text-gray-400">
+                <span>System Status: v2.5 Online</span>
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:opacity-80 transition">
                     <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:inline"></i>
                 </button>
-                <button id="openAdminBtn" class="bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-4 py-2 rounded-lg hover:opacity-90 transition text-sm font-semibold flex items-center gap-1.5">
-                    <i class="fa fa-cog"></i> <span id="btnAdmin">Admin</span>
-                </button>
-                <button id="openCompareBtn" class="bg-primary hover:bg-indigo-700 text-white px-5 py-2 rounded-lg hidden transition shadow-lg shadow-indigo-500/30 text-sm font-bold flex items-center gap-1.5">
-                    <i class="fa fa-exchange"></i> <span id="btnCompare">Compare</span>
-                </button>
             </div>
-        </header>
+        </aside>
 
-        <div class="flex flex-wrap gap-2 mb-8" id="filterTabs"></div>
+        <main class="flex-1 p-4 md:p-8 overflow-x-hidden">
+            <header class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-6 border-b dark:border-gray-800 gap-4">
+                <div class="flex flex-col md:flex-row items-center gap-4">
+                    <h1 class="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2 cursor-pointer" onclick="backToMainDashboard()">
+                        <i class="fa fa-rocket text-primary"></i> <span id="navTitle">AI Matrix Hub</span>
+                    </h1>
+                    <div class="flex rounded-lg bg-gray-200/70 dark:bg-gray-800 p-0.5 border dark:border-gray-700" id="langSelectorTabs">
+                        <button onclick="switchLang('en')" data-lang="en" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">EN</button>
+                        <button onclick="switchLang('zh')" data-lang="zh" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">中文</button>
+                        <button onclick="switchLang('ja')" data-lang="ja" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">日本語</button>
+                        <button onclick="switchLang('ko')" data-lang="ko" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">한국어</button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button id="openAdminBtn" class="bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-3.5 py-2 rounded-lg hover:opacity-90 transition text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa fa-cog"></i> <span id="btnAdmin">Admin</span>
+                    </button>
+                    <button id="openCompareBtn" class="bg-primary hover:bg-indigo-700 text-white px-4 py-2 rounded-lg hidden transition shadow-lg shadow-indigo-500/30 text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa fa-exchange"></i> <span id="btnCompare">Compare</span>
+                    </button>
+                </div>
+            </header>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="toolContainer"></div>
+            <div id="dashboardViewBlock">
+                <div class="flex flex-wrap gap-2 mb-6" id="filterTabs"></div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="toolContainer"></div>
+            </div>
+
+            <div id="detailViewBlock" class="hidden bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm max-w-4xl mx-auto"></div>
+        </main>
     </div>
 
     <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
@@ -110,74 +151,72 @@
     </div>
 
     <script>
-        // Multi-Language Matrix Object Pack
+        // Comprehensive Localized Strings Object Map
         const i18n = {
             en: {
-                title: "AI Matrix Hub", admin: "Admin", compare: "Compare", clear: "Clear Selection",
+                title: "AI Matrix Hub", admin: "Admin", compare: "Compare", clear: "Clear",
                 pricing: "Pricing: ", visit: "Official Site", course: "Course", ytQuery: "tutorial", noTools: "No tools found.",
-                sideTitle: "Side-by-Side Comparison", dataTitle: "Console Manager",
+                sideTitle: "Side-by-Side Comparison", dataTitle: "Console Manager", bookmarks: "My Bookmarks",
                 all: "All Infrastructure", chat: "Dialogue & Chat", image: "Image Generation", video: "Video Generation", code: "Coding Assistant",
-                authTitle: "System Security Authentication", saveBtn: "Save Asset", alertPass: "Access Denied: Invalid Password!",
-                alertSelectLimit: "Restriction: Maximum 2 elements for side analytics.", alertFields: "Required attributes missing.",
-                confirmDel: "Execute erasure protocol on this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions"
+                authTitle: "Security Authentication", saveBtn: "Save Asset", alertPass: "Password Invalid!", back: "Back to Dashboard",
+                alertSelectLimit: "Maximum 2 elements allowed.", alertFields: "Required attributes missing.", details: "Details",
+                confirmDel: "Delete this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions"
             },
             zh: {
                 title: "AI 核心工具导航网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
-                pricing: "计算资费：", visit: "直达官网", course: "在线课程", ytQuery: "入门教学视频", noTools: "当前分类没有任何应用实例。",
-                sideTitle: "双端性能指标并排对比", dataTitle: "云数据底座控制中心",
+                pricing: "计算资费：", visit: "直达官网", course: "在线课程", ytQuery: "入门教学视频", noTools: "当前分类暂无实例。",
+                sideTitle: "双端指标并排对比", dataTitle: "云数据底座中心", bookmarks: "我的快捷收藏夹",
                 all: "全部生态圈", chat: "文本大模型与对话", image: "创意图像生成", video: "高精视频生成", code: "编程与提效辅助",
-                authTitle: "管理员最高安全级别验证", saveBtn: "将修改部署至本地", alertPass: "密码校验失败，请重试！",
-                alertSelectLimit: "单次对比上限不得超过2个实例。", alertFields: "基础元数据关键行不可空缺。",
-                confirmDel: "确定要彻底删除该工具的所有配置节点吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元"
+                authTitle: "管理员高级身份验证", saveBtn: "将修改部署至本地", alertPass: "密码校验失败！", back: "返回主面板",
+                alertSelectLimit: "单次对比上限不得超过2个实例。", alertFields: "基础元数据不可空缺。", details: "详情页面",
+                confirmDel: "确定要彻底删除该工具吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元"
             },
             ja: {
-                title: "AIポータル比較ナビ", admin: "管理者ツール", compare: "比較する", clear: "選択クリア",
-                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "該当データが存在しません。",
-                sideTitle: "個別仕様・性能ベンチマーク比較", dataTitle: "マスターデータコントロール",
+                title: "AIポータル比較ナビ", admin: "管理者ツール", compare: "比較する", clear: "クリア",
+                pricing: "料金体系：", visit: "公式サイト", course: "オンライン講座", ytQuery: "使い方 講座", noTools: "データが存在しません。",
+                sideTitle: "個別仕様ベンチマーク比較", dataTitle: "データコントロール", bookmarks: "お気に入りブックマーク",
                 all: "すべて表示", chat: "対話型AI & LLM", image: "画像生成プラットフォーム", video: "動画生成・編集", code: "プログラミング開発支援",
-                authTitle: "管理者認証プロトкол", saveBtn: "データを保存する", alertPass: "パスワードが一致しません！",
-                alertSelectLimit: "同時に比較できるのは2つのアイテムまでです。", alertFields: "名称およびURLアドレスは必須です。",
-                confirmDel: "このAIツールの登録データを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作"
+                authTitle: "管理者認証プロトコル", saveBtn: "データを保存", alertPass: "パスワードが違います！", back: "ダッシュボードに戻る",
+                alertSelectLimit: "同時に比較できるのは2つまでです。", alertFields: "入力アドレスは必須です。", details: "詳細情報",
+                confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作"
             },
             ko: {
                 title: "AI 글로벌 비교 포털", admin: "관리자 모드", compare: "상세 비교", clear: "선택 초기화",
-                pricing: "이용 요금：", visit: "공식 사이트", course: "무료 강좌", ytQuery: "기초 사용법", noTools: "해당 카테고리에 할당된 도구가 없습니다.",
-                sideTitle: "양방향 핵심 인프라 스펙 비교", dataTitle: "클라우드 스토리지 허브 관리",
+                pricing: "이용 요금：", visit: "공식 사이트", course: "무료 강좌", ytQuery: "기초 사용법", noTools: "할당된 도구가 없습니다.",
+                sideTitle: "양방향 인프라 스펙 비교", dataTitle: "클라우드 허브 관리", bookmarks: "내 즐겨찾기 폴더",
                 all: "전체 에코시스템", chat: "대화형 모델 & 대규모 언어", image: "이미지 생성 및 디자인", video: "시네마틱 비디오 빌더", code: "코드 생성 및 자동화 지원",
-                authTitle: "관리자 전용 자격 증명 창", saveBtn: "수정사항 동기화", alertPass: "액세스 거부: 암호가 올바르지 않습니다!",
-                alertSelectLimit: "최대 2개의 도구 조합만 비교 분석을 지원합니다.", alertFields: "입력 필수 파라미터가 누락되었습니다.",
-                confirmDel: "해당 데이터베이스 개체를 영구적으로 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널"
+                authTitle: "관리자 자격 증명 창", saveBtn: "수정사항 동기화", alertPass: "암호가 올바르지 않습니다!", back: "메인 화면으로 가기",
+                alertSelectLimit: "최대 2개의 도구 조합만 비교 가능합니다.", alertFields: "입력 필수 파라미터 누락.", details: "상세 상세조회",
+                confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널"
             }
         };
 
-        // Complete Structured Static Data (Ensuring >=1 tool per type)
+        // Static Master Framework Array (Enhanced UI metadata tags added with live standard mock screenshots placeholders)
         const initDefaultTools = [
-            { id:1, name:"ChatGPT", category:"chat", desc:"Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and processing logic.", price:"Free / $20mo Plus", score:4.9, link:"https://openai.com" },
-            { id:2, name:"Claude 3.5 Sonnet", category:"chat", desc:"Industry-leading LLM from Anthropic. Exceptional for source code architectures and advanced logical writing.", price:"Free / $20mo Pro", score:4.8, link:"https://anthropic.com" },
-            { id:3, name:"Google Gemini", category:"chat", desc:"Google's native multimodal titan. Blazing fast data context reading with native access to live web intelligence ecosystem.", price:"Free / $20mo Advanced", score:4.7, link:"https://gemini.google.com" },
-            { id:4, name:"Midjourney", category:"image", desc:"The ultimate golden standard for text-to-image synthesis, cinematic composition framing, and artistic quality.", price:"Starts $10/mo", score:4.8, link:"https://www.midjourney.com" },
-            { id:5, name:"Stable Diffusion XL", category:"image", desc:"Open-source framework giving creators infinite parameter controls, model custom finetuning, and extensions.", price:"Free / Self-Hosted", score:4.6, link:"https://stability.ai" },
-            { id:6, name:"Sora OpenAI", category:"video", desc:"State-of-the-art physics simulation engine creating 60-second highly coherent cinema fidelity scenes.", price:"Enterprise Access", score:4.9, link:"https://openai.com/sora" },
-            { id:7, name:"Runway Gen-3 Alpha", category:"video", desc:"Major high-tier generative video generator built for cinematic rendering, hyper-realistic physics, and prompt fidelity.", price:"Subscription Base", score:4.5, link:"https://runwayml.com" },
-            { id:8, name:"Luma Dream Machine", category:"video", desc:"High-speed continuous frame rendering engine delivering clean dynamic asset camera loops and fluid prompt motion.", price:"Free Quota / Paid", score:4.4, link:"https://lumalabs.ai" },
-            { id:9, name:"GitHub Copilot", category:"code", desc:"The global developer standard inline autocompletion engine seamlessly running on IDE layers to accelerate production.", price:"$10/mo Individual", score:4.8, link:"https://github.com" },
-            { id:10, name:"Cursor IDE", category:"code", desc:"An AI-first visual code workspace branch optimizing multi-file cross-referencing and background debugging automation.", price:"Free Tier / $20mo", score:4.9, link:"https://cursor.com" },
-            { id:11, name:"v0 by Vercel", category:"code", desc:"Generative UI system rendering component code structures instantly from clean layout design prompts.", price:"Free Quota Base", score:4.7, link:"https://v0.dev" }
+            { id:1, name:"ChatGPT", category:"chat", desc:"Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and complex logic processing.", price:"Free / $20mo Plus", score:4.9, link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80" },
+            { id:2, name:"Claude 3.5 Sonnet", category:"chat", desc:"Industry-leading LLM from Anthropic. Exceptional performance parameters for source code multi-file architectures and advanced granular academic logical text writing.", price:"Free / $20mo Pro", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" },
+            { id:3, name:"Google Gemini", category:"chat", desc:"Google's native multimodal titan ecosystem. Blazing fast native data context token reading limits with hyper-optimized access to live search network intelligence.", price:"Free / $20mo Advanced", score:4.7, link:"https://gemini.google.com", img:"https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80" },
+            { id:4, name:"Midjourney", category:"image", desc:"The global visual golden standard for high-fidelity text-to-image synthesis, cinematic asset framing rendering, and peerless digital artistic texture generation output.", price:"Starts $10/mo", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80" },
+            { id:5, name:"Stable Diffusion XL", category:"image", desc:"Open-source pipeline neural framework giving creators infinite variable checkpoint adjustments, local custom fine-tuning weights, and modular extension scripting.", price:"Free / Self-Hosted", score:4.6, link:"https://stability.ai", img:"https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=800&q=80" },
+            { id:6, name:"Sora OpenAI", category:"video", desc:"State-of-the-art physics generative environment simulation engine rendering full 60-second seamless camera loops with highly consistent cinema narrative fidelity.", price:"Enterprise Access", score:4.9, link:"https://openai.com/sora", img:"https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" },
+            { id:7, name:"Runway Gen-3 Alpha", category:"video", desc:"High-tier commercial video engine tailored for complex cinematic tracking prompts, realistic environmental lighting simulations, and ultra-fluid text directive motions.", price:"Subscription Base", score:4.5, link:"https://runwayml.com", img:"https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80" },
+            { id:8, name:"GitHub Copilot", category:"code", desc:"The industry baseline production autocompletion engine running directly inside IDE environments to write boilerplates and unit scripts autonomously.", price:"$10/mo Individual", score:4.8, link:"https://github.com", img:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" },
+            { id:9, name:"Cursor IDE", category:"code", desc:"An evolutionary AI-first editor environment built on VS Code layouts, optimizing cross-file logic compilation references and background console bug sweeps.", price:"Free Tier / $20mo", score:4.9, link:"https://cursor.com", img:"https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80" }
         ];
 
-        // 💡【核心强制修复】检查本地缓存是否损坏或为空，如果是，强制写入最新包含Gemini和全分类的完整数据
+        // System Core Lifecycle Data Purgatory State Synchronizer
         let currentLang = localStorage.getItem('portal_lang') || 'en';
         let localData = localStorage.getItem('portal_tools');
-        
-        // 如果本地完全空，或者里面没有新加入的Gemini，强行用新列表覆盖本地缓存
         if (!localData || !localData.includes("Gemini")) {
             localStorage.setItem('portal_tools', JSON.stringify(initDefaultTools));
             localData = JSON.stringify(initDefaultTools);
         }
         let aiTools = JSON.parse(localData);
+        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 3]; // Default mock items pinned
         let selectedCompare = [];
         let currentFilter = "all";
 
+        // DOM Layout View Mapping Elements
         const toolContainer = document.getElementById("toolContainer");
         const compareModal = document.getElementById("compareModal");
         const compareContent = document.getElementById("compareContent");
@@ -186,20 +225,28 @@
         const adminModal = document.getElementById("adminModal");
         const adminTableBody = document.getElementById("adminTableBody");
         const filterTabs = document.getElementById("filterTabs");
+        const favoritesList = document.getElementById("favoritesList");
+        const favCount = document.getElementById("favCount");
+        const dashboardViewBlock = document.getElementById("dashboardViewBlock");
+        const detailViewBlock = document.getElementById("detailViewBlock");
 
         function switchLang(langCode) {
             currentLang = langCode;
             localStorage.setItem('portal_lang', langCode);
             renderLangSelectorUI();
             updateUIStrings();
+            // Re-render current detail block view inline if open to ensure dynamic sync
+            if(!detailViewBlock.classList.contains("hidden") && detailViewBlock.dataset.activeId) {
+                navigateToDetails(parseInt(detailViewBlock.dataset.activeId));
+            }
         }
 
         function renderLangSelectorUI() {
             document.querySelectorAll("#langSelectorTabs button").forEach(btn => {
                 if(btn.dataset.lang === currentLang) {
-                    btn.className = "px-3 py-1.5 text-xs font-black rounded-md bg-primary text-white shadow-sm";
+                    btn.className = "px-2.5 py-1 text-xs font-black rounded-md bg-primary text-white shadow-sm";
                 } else {
-                    btn.className = "px-3 py-1.5 text-xs font-bold rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
+                    btn.className = "px-2.5 py-1 text-xs font-bold rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white";
                 }
             });
         }
@@ -214,8 +261,10 @@
             document.getElementById("authTitle").innerText = t.authTitle;
             document.getElementById("btnSaveTool").innerText = t.saveBtn;
             document.getElementById("clearSelect").innerText = t.clear;
+            document.getElementById("lblFavs").innerText = t.bookmarks;
 
             renderFilterTabs();
+            renderFavoritesSidebar();
             renderTools();
         }
 
@@ -224,10 +273,11 @@
             filterTabs.innerHTML = "";
             categories.forEach(cat => {
                 const btn = document.createElement("button");
-                btn.className = `px-4 py-2 rounded-lg text-sm font-semibold transition ${currentFilter === cat ? 'bg-primary text-white shadow-md' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'}`;
+                btn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${currentFilter === cat ? 'bg-primary text-white shadow-md' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}`;
                 btn.innerText = i18n[currentLang][cat];
                 btn.onclick = () => {
                     currentFilter = cat;
+                    backToMainDashboard();
                     renderFilterTabs();
                     renderTools();
                 };
@@ -245,6 +295,26 @@
             return stars;
         }
 
+        // Sidebar Dynamic Favorite Sync Matrix Renderer
+        function renderFavoritesSidebar() {
+            favoritesList.innerHTML = "";
+            favCount.innerText = selectedFavs.length;
+            
+            const bookmarkedTools = aiTools.filter(t => selectedFavs.includes(t.id));
+            bookmarkedTools.forEach(tool => {
+                const li = document.createElement("li");
+                li.className = "group flex items-center justify-between text-xs p-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700/60 text-gray-700 dark:text-gray-300 transition";
+                li.innerHTML = `
+                    <span class="truncate font-medium group-hover:text-primary" onclick="navigateToDetails(${tool.id})">
+                        <i class="fa fa-angle-right mr-1.5 opacity-50"></i>${tool.name}
+                    </span>
+                    <button onclick="toggleFavorite(${tool.id}, event)" class="text-red-500 opacity-60 hover:opacity-100 px-1"><i class="fa fa-heart"></i></button>
+                `;
+                favoritesList.appendChild(li);
+            });
+        }
+
+        // Primary Grid Renderer
         function renderTools(){
             toolContainer.innerHTML = "";
             const t = i18n[currentLang];
@@ -257,38 +327,113 @@
 
             filterData.forEach(tool=>{
                 const isChecked = selectedCompare.find(s=>s.id === tool.id);
-                const youtubeLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(tool.name + ' ' + t.ytQuery)}`;
+                const isFav = selectedFavs.includes(tool.id);
                 
                 const card = document.createElement("div");
-                card.className = `card-hover bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 border transition-all flex flex-col justify-between ${isChecked ? 'border-primary ring-2 ring-primary/20' : 'border-gray-100 dark:border-gray-700'}`;
+                card.className = `card-hover bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 border transition-all flex flex-col justify-between ${isChecked ? 'border-primary ring-2 ring-primary/20' : 'border-gray-100 dark:border-gray-700/60'}`;
                 card.innerHTML = `
                     <div>
-                        <div class="flex justify-between items-start mb-3 gap-2">
-                            <h3 class="text-md font-bold text-gray-800 dark:text-white">${tool.name}</h3>
-                            <label class="cursor-pointer select-none">
-                                <input type="checkbox" class="compare-checkbox hidden" data-id="${tool.id}" ${isChecked?"checked":""}>
-                                <span class="px-2 py-0.5 text-[11px] rounded border transition font-bold ${isChecked ? 'bg-primary text-white border-primary' : 'border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400'}">${isChecked ? '✓' : '+ '+t.compare}</span>
-                            </label>
+                        <div class="flex justify-between items-start mb-2.5 gap-2">
+                            <h3 class="text-base font-bold text-gray-900 dark:text-white cursor-pointer hover:text-primary transition" onclick="navigateToDetails(${tool.id})">${tool.name}</h3>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="toggleFavorite(${tool.id}, event)" class="text-sm transition p-0.5 ${isFav ? 'text-red-500' : 'text-gray-300 dark:text-gray-600 hover:text-red-400'}">
+                                    <i class="fa ${isFav ? 'fa-heart' : 'fa-heart-o'}"></i>
+                                </button>
+                                <label class="cursor-pointer select-none">
+                                    <input type="checkbox" class="compare-checkbox hidden" data-id="${tool.id}" ${isChecked?"checked":""}>
+                                    <span class="px-1.5 py-0.5 text-[10px] rounded border transition font-bold ${isChecked ? 'bg-primary text-white border-primary' : 'border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500'}">${isChecked ? '✓' : '+ '+t.compare}</span>
+                                </label>
+                            </div>
                         </div>
-                        <p class="text-xs text-gray-600 dark:text-gray-300 mb-4 min-h-[48px] line-clamp-3">${tool.desc}</p>
-                        <div class="text-[11px] mb-2"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-white font-medium">${tool.price}</span></div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 cursor-pointer" onclick="navigateToDetails(${tool.id})">${tool.desc}</p>
+                        <div class="text-[11px] mb-2"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-gray-200 font-semibold">${tool.price}</span></div>
                     </div>
                     
-                    <div class="flex flex-col gap-2 mt-3 pt-3 border-t dark:border-gray-700">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center text-xs">${renderStar(tool.score)}</div>
-                            <span class="text-xs font-bold text-gray-400">${tool.score}</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-1">
-                            <a href="${tool.link}" target="_blank" class="text-center py-1.5 rounded-md text-xs font-bold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition flex items-center justify-center gap-1">${t.visit} <i class="fa fa-external-link text-[10px]"></i></a>
-                            <a href="${youtubeLink}" target="_blank" class="text-center py-1.5 rounded-md text-xs font-bold bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition flex items-center justify-center gap-1"><i class="fa fa-youtube-play"></i> ${t.course}</a>
-                        </div>
+                    <div class="flex items-center justify-between mt-2 pt-3 border-t dark:border-gray-700/60">
+                        <div class="flex items-center text-[11px]">${renderStar(tool.score)}<span class="ml-1 text-gray-400 font-bold">${tool.score}</span></div>
+                        <button onclick="navigateToDetails(${tool.id})" class="text-[11px] text-primary font-bold hover:underline flex items-center gap-0.5">${t.details} <i class="fa fa-chevron-right text-[9px]"></i></button>
                     </div>
                 `;
                 toolContainer.appendChild(card);
             });
             document.querySelectorAll(".compare-checkbox").forEach(cb=>cb.addEventListener("change", handleSelectCompare));
             openCompareBtn.classList.toggle("hidden", selectedCompare.length !== 2);
+        }
+
+        // ================= DETAILED SINGLE VIEW ROUTING LOGIC =================
+        function navigateToDetails(toolId) {
+            const tool = aiTools.find(t => t.id === toolId);
+            if (!tool) return;
+            
+            const t = i18n[currentLang];
+            const isFav = selectedFavs.includes(tool.id);
+            const youtubeLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(tool.name + ' ' + t.ytQuery)}`;
+            // Auto fallback image framework if missing from dashboard arrays
+            const displayImg = tool.img || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
+
+            detailViewBlock.dataset.activeId = tool.id;
+            dashboardViewBlock.classList.add("hidden");
+            detailViewBlock.classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            detailViewBlock.innerHTML = `
+                <div class="flex items-center justify-between mb-5">
+                    <button onclick="backToMainDashboard()" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-primary transition flex items-center gap-1.5">
+                        <i class="fa fa-arrow-left"></i> ${t.back}
+                    </button>
+                    <button onclick="toggleFavorite(${tool.id}, event)" class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border transition ${isFav ? 'bg-red-50 dark:bg-red-950/20 text-red-500 border-red-200' : 'border-gray-200 dark:border-gray-700 text-gray-500'}">
+                        <i class="fa ${isFav ? 'fa-heart' : 'fa-heart-o'}"></i> ${isFav ? 'Bookmarked' : 'Add to Bookmarks'}
+                    </button>
+                </div>
+
+                <div class="relative w-full h-52 sm:h-72 rounded-xl overflow-hidden border dark:border-gray-700 mb-6 bg-gray-900 shadow-inner">
+                    <img src="${displayImg}" alt="${tool.name} Sandbox" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 flex flex-col justify-end">
+                        <span class="text-[10px] bg-primary text-white font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full w-max mb-2">${t[tool.category]}</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white">${tool.name}</h2>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4 mb-6 text-xs bg-gray-50 dark:bg-gray-700/40 p-4 rounded-xl border dark:border-gray-700">
+                    <div><span class="text-gray-400 block mb-0.5">${t.pricing}</span><span class="text-sm font-bold text-gray-900 dark:text-white">${tool.price}</span></div>
+                    <div><span class="text-gray-400 block mb-0.5">Rating Performance</span><span class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score} / 5.0)</span></div>
+                </div>
+
+                <div class="prose dark:prose-invert max-w-none mb-8">
+                    <h3 class="text-sm font-black tracking-wider text-gray-400 uppercase mb-2">Detailed Framework Profile</h3>
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300 bg-white dark:bg-transparent rounded-lg">${tool.desc} Built and continuous performance metrics benchmarked via internal testing cycles.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t dark:border-gray-700">
+                    <a href="${tool.link}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition shadow-sm flex items-center justify-center gap-1.5">${t.visit} <i class="fa fa-external-link"></i></a>
+                    <a href="${youtubeLink}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition shadow-sm flex items-center justify-center gap-1.5"><i class="fa fa-youtube-play"></i> ${t.course}</a>
+                </div>
+            `;
+        }
+
+        function backToMainDashboard() {
+            detailViewBlock.classList.add("hidden");
+            detailViewBlock.removeAttribute("data-activeId");
+            dashboardViewBlock.classList.remove("hidden");
+        }
+
+        // Global Favorite Core Processor
+        function toggleFavorite(id, event) {
+            if(event) event.stopPropagation(); // Avoid triggering card routes nested inside clicks
+            
+            if (selectedFavs.includes(id)) {
+                selectedFavs = selectedFavs.filter(favId => favId !== id);
+            } else {
+                selectedFavs.push(id);
+            }
+            localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
+            renderFavoritesSidebar();
+            renderTools();
+            
+            // If the user updates favorite status while sitting inside details view, redraw standard container instantly
+            if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) {
+                navigateToDetails(id);
+            }
         }
 
         function handleSelectCompare(e){
@@ -306,6 +451,7 @@
             renderTools();
         }
 
+        // Vault Credentials Check Blocks
         document.getElementById("openAdminBtn").addEventListener("click", () => {
             if(sessionStorage.getItem("admin_authenticated") === "true") {
                 openAdminConsole();
@@ -321,7 +467,7 @@
             const inputPass = document.getElementById("authPassword").value;
             if(inputPass === "8888") {
                 sessionStorage.setItem("admin_authenticated", "true");
-                authModal.classList.replace("hidden", "flex");
+                authModal.classList.replace("flex", "hidden");
                 openAdminConsole();
             } else {
                 alert(i18n[currentLang].alertPass);
@@ -330,7 +476,7 @@
 
         function logoutAdmin() {
             sessionStorage.removeItem("admin_authenticated");
-            adminModal.classList.replace("hidden", "flex");
+            adminModal.classList.replace("flex", "hidden");
         }
 
         function openAdminConsole() {
@@ -341,7 +487,6 @@
         function renderAdminTable() {
             adminTableBody.innerHTML = "";
             const t = i18n[currentLang];
-            
             const thead = adminModal.querySelector("thead tr");
             thead.innerHTML = `
                 <th class="p-2.5 border dark:border-gray-600">${t.colName}</th>
@@ -352,7 +497,7 @@
 
             aiTools.forEach(tool=>{
                 const tr = document.createElement('tr');
-                tr.className = "border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/30 text-xs";
+                tr.className = "border-b dark:border-b-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/30 text-xs";
                 tr.innerHTML = `
                     <td class="p-2.5 font-bold">${tool.name}</td>
                     <td class="p-2.5"><span class="bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">${t[tool.category]}</span></td>
@@ -390,7 +535,8 @@
                 score: parseFloat(document.getElementById('toolScore').value) || 5.0,
                 price: document.getElementById('toolPrice').value || "Free",
                 link: linkVal,
-                desc: document.getElementById('toolDesc').value || ""
+                desc: document.getElementById('toolDesc').value || "",
+                img: idVal ? (aiTools.find(x => x.id === parseInt(idVal))?.img || "") : ""
             };
 
             if(idVal) {
@@ -410,9 +556,14 @@
             if(!confirm(i18n[currentLang].confirmDel)) return;
             aiTools = aiTools.filter(item => item.id !== id);
             selectedCompare = selectedCompare.filter(item => item.id !== id);
+            selectedFavs = selectedFavs.filter(favId => favId !== id);
             localStorage.setItem('portal_tools', JSON.stringify(aiTools));
+            localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
             updateUIStrings();
             renderAdminTable();
+            if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) {
+                backToMainDashboard();
+            }
         }
 
         openCompareBtn.addEventListener("click", ()=>{
@@ -441,7 +592,7 @@
             localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
         });
 
-        // ━━━━━ 🚀 启动渲染序列（严格保序） ━━━━━
+        // Initialize Core Sequence Execution Order 
         renderLangSelectorUI();
         updateUIStrings();
     </script>
