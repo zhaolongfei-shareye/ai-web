@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub Pro - Enterprise Portal</title>
+    <title>AI Hub Pro - Community & Interactive Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -23,8 +23,10 @@
     
     <div class="flex flex-col lg:flex-row min-h-screen">
         
+        <!-- ================= LEFT SIDEBAR: PROFILE & FAVORITES ================= -->
         <aside class="w-full lg:w-80 bg-white dark:bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
             <div>
+                <!-- User Profile Section -->
                 <div class="flex items-center gap-4 border-b dark:border-gray-700 pb-5 mb-5">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary/50">
                     <div class="overflow-hidden">
@@ -33,12 +35,14 @@
                     </div>
                 </div>
                 
+                <!-- Meta Tags Metadata -->
                 <div class="space-y-2.5 text-xs border-b dark:border-gray-700 pb-5 mb-5 text-gray-600 dark:text-gray-400">
                     <div class="flex items-center gap-2"><i class="fa fa-globe w-4 text-center text-gray-400"></i> <span class="font-medium">Region:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">United States</span></div>
                     <div class="flex items-center gap-2"><i class="fa fa-briefcase w-4 text-center text-gray-400"></i> <span class="font-medium">Occupation:</span> <span class="ml-auto text-gray-900 dark:text-gray-200">Full-Stack Architect</span></div>
                     <div class="flex items-center gap-2"><i class="fa fa-envelope w-4 text-center text-gray-400"></i> <span class="font-medium truncate">alex.m@matrix.io</span></div>
                 </div>
 
+                <!-- Live Favorites Extension Tracker -->
                 <div>
                     <h3 class="text-xs font-black tracking-wider text-gray-400 uppercase mb-3 flex items-center justify-between">
                         <span id="lblFavs">My Bookmarks</span>
@@ -48,20 +52,24 @@
                 </div>
             </div>
 
+            <!-- Footer Meta Settings inside Sidebar -->
             <div class="pt-4 border-t dark:border-gray-700 mt-5 flex items-center justify-between text-xs text-gray-400">
-                <span>System Status: v2.5 Online</span>
+                <span>System Status: v3.0 Live</span>
                 <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:opacity-80 transition">
                     <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:inline"></i>
                 </button>
             </div>
         </aside>
 
+        <!-- ================= RIGHT MAIN LAYOUT CONTENT BLOCK ================= -->
         <main class="flex-1 p-4 md:p-8 overflow-x-hidden">
+            <!-- Top Navigation Global Controls -->
             <header class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-6 border-b dark:border-gray-800 gap-4">
                 <div class="flex flex-col md:flex-row items-center gap-4">
                     <h1 class="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2 cursor-pointer" onclick="backToMainDashboard()">
                         <i class="fa fa-rocket text-primary"></i> <span id="navTitle">AI Matrix Hub</span>
                     </h1>
+                    <!-- Explicit Language Selector -->
                     <div class="flex rounded-lg bg-gray-200/70 dark:bg-gray-800 p-0.5 border dark:border-gray-700" id="langSelectorTabs">
                         <button onclick="switchLang('en')" data-lang="en" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">EN</button>
                         <button onclick="switchLang('zh')" data-lang="zh" class="px-2.5 py-1 text-xs font-bold rounded-md transition-all">中文</button>
@@ -80,15 +88,19 @@
                 </div>
             </header>
 
+            <!-- CONTAINER A: SUB-DASHBOARD HOME VIEW LAYER -->
             <div id="dashboardViewBlock">
                 <div class="flex flex-wrap gap-2 mb-6" id="filterTabs"></div>
                 <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="toolContainer"></div>
             </div>
 
+            <!-- CONTAINER B: DYNAMIC SPECIFIC TOOL DETAILS PAGE VIEW LAYER -->
             <div id="detailViewBlock" class="hidden bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm max-w-4xl mx-auto"></div>
         </main>
     </div>
 
+    <!-- Modals (Comparison, Authentication, Console) -->
+    <!-- Modal 1: Side Comparison Box -->
     <div id="compareModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-3">
@@ -102,6 +114,7 @@
         </div>
     </div>
 
+    <!-- Modal 2: Admin Password Gateway -->
     <div id="authModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-md p-6 shadow-2xl">
             <h3 class="text-lg font-bold mb-4 dark:text-white" id="authTitle">Admin Access</h3>
@@ -113,6 +126,7 @@
         </div>
     </div>
 
+    <!-- Modal 3: Console Management -->
     <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-auto p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-3">
@@ -127,29 +141,21 @@
                 <input type="hidden" id="toolId">
                 <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Name</label><input type="text" id="toolName" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
                 <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Category</label><select id="toolCategory" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"><option value="chat">Dialogue & Chat</option><option value="image">Image Generation</option><option value="video">Video Generation</option><option value="code">Coding Assistant</option></select></div>
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Score (0-5.0)</label><input type="number" step="0.1" id="toolScore" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Pricing Module</label><input type="text" id="toolPrice" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col sm:col-span-2"><label class="dark:text-gray-300 mb-1 text-xs">URL Website</label><input type="text" id="toolLink" placeholder="https://..." class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
-                <div class="flex flex-col sm:col-span-3"><label class="dark:text-gray-300 mb-1 text-xs">Description</label><textarea id="toolDesc" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 h-16"></textarea></div>
+                <div class="flex flex-col"><label class="dark:text-gray-300 mb-1 text-xs">Pricing Module (EN)</label><input type="text" id="toolPrice" class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
+                <div class="flex flex-col sm:col-span-3"><label class="dark:text-gray-300 mb-1 text-xs">URL Website</label><input type="text" id="toolLink" placeholder="https://..." class="p-2 border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600"></div>
                 <div class="sm:col-span-3 text-right"><button onclick="saveTool()" class="bg-primary text-white px-5 py-2 rounded-lg hover:opacity-90" id="btnSaveTool">Save</button></div>
             </div>
 
             <div class="overflow-x-auto text-sm">
                 <table class="w-full text-left border-collapse dark:text-white">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
-                            <th class="p-2.5 border dark:border-gray-600">Name</th>
-                            <th class="p-2.5 border dark:border-gray-600">Category</th>
-                            <th class="p-2.5 border dark:border-gray-600">Pricing</th>
-                            <th class="p-2.5 border dark:border-gray-600 text-center">Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"></tr></thead>
                     <tbody id="adminTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript Deployment Engine Scripts -->
     <script>
         // Comprehensive Localized Strings Object Map
         const i18n = {
@@ -160,16 +166,22 @@
                 all: "All Infrastructure", chat: "Dialogue & Chat", image: "Image Generation", video: "Video Generation", code: "Coding Assistant",
                 authTitle: "Security Authentication", saveBtn: "Save Asset", alertPass: "Password Invalid!", back: "Back to Dashboard",
                 alertSelectLimit: "Maximum 2 elements allowed.", alertFields: "Required attributes missing.", details: "Details",
-                confirmDel: "Delete this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions"
+                confirmDel: "Delete this entity?", colName:"Name", colCat:"Category", colPrice:"Pricing", colAct:"Actions",
+                pros: "Advantages", cons: "Disadvantages", promptTitle: "Golden Prompt Sandbox", copy: "Copy", copied: "Copied!",
+                reviewTitle: "Visitor Reviews & Ratings", noReviews: "No reviews yet. Be the first to leave one!",
+                namePlaceholder: "Your Nickname", commentPlaceholder: "Share your experience with this tool...", submitReview: "Submit Review", alertComment: "Please provide a name, rating, and comment."
             },
             zh: {
-                title: "AI 核心工具导航网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
+                title: "AI 核心工具互动网", admin: "管理后台", compare: "对比选中", clear: "清空选择",
                 pricing: "计算资费：", visit: "直达官网", course: "在线课程", ytQuery: "入门教学视频", noTools: "当前分类暂无实例。",
                 sideTitle: "双端指标并排对比", dataTitle: "云数据底座中心", bookmarks: "我的快捷收藏夹",
                 all: "全部生态圈", chat: "文本大模型与对话", image: "创意图像生成", video: "高精视频生成", code: "编程与提效辅助",
                 authTitle: "管理员高级身份验证", saveBtn: "将修改部署至本地", alertPass: "密码校验失败！", back: "返回主面板",
                 alertSelectLimit: "单次对比上限不得超过2个实例。", alertFields: "基础元数据不可空缺。", details: "详情页面",
-                confirmDel: "确定要彻底删除该工具吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元"
+                confirmDel: "确定要彻底删除该工具吗？", colName:"名称", colCat:"领域分类", colPrice:"资费标准", colAct:"操作单元",
+                pros: "核心优势 (Pros)", cons: "局限不足 (Cons)", promptTitle: "黄金提示词沙盒 (Prompt Sandbox)", copy: "一键复制", copied: "复制成功！",
+                reviewTitle: "访客深度点评与打分", noReviews: "暂无历史点评。欢迎留下您的宝贵使用心得！",
+                namePlaceholder: "您的昵称", commentPlaceholder: "请撰写您对该工具的实际测评体验...", submitReview: "提交深度点评", alertComment: "请完整填写昵称、评分与测评意见。"
             },
             ja: {
                 title: "AIポータル比較ナビ", admin: "管理者ツール", compare: "比較する", clear: "クリア",
@@ -178,7 +190,10 @@
                 all: "すべて表示", chat: "対話型AI & LLM", image: "画像生成プラットフォーム", video: "動画生成・編集", code: "プログラミング開発支援",
                 authTitle: "管理者認証プロトコル", saveBtn: "データを保存", alertPass: "パスワードが違います！", back: "ダッシュボードに戻る",
                 alertSelectLimit: "同時に比較できるのは2つまでです。", alertFields: "入力アドレスは必須です。", details: "詳細情報",
-                confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作"
+                confirmDel: "このデータを完全に抹消しますか？", colName:"ツール名", colCat:"カテゴリ", colPrice:"料金", colAct:"操作",
+                pros: "メリット", cons: "デメリット", promptTitle: "おすすめプロンプト", copy: "コピー", copied: "完了！",
+                reviewTitle: "口コミ・評価レビュー", noReviews: "レビューはまだありません。最初のレビューを書きましょう！",
+                namePlaceholder: "ニックネーム", commentPlaceholder: "このツールの使用感をレビュー...", submitReview: "レビューを投稿", alertComment: "名前、評価、コメントを入力してください。"
             },
             ko: {
                 title: "AI 글로벌 비교 포털", admin: "관리자 모드", compare: "상세 비교", clear: "선택 초기화",
@@ -187,36 +202,76 @@
                 all: "전체 에코시스템", chat: "대화형 모델 & 대규모 언어", image: "이미지 생성 및 디자인", video: "시네마틱 비디오 빌더", code: "코드 생성 및 자동화 지원",
                 authTitle: "관리자 자격 증명 창", saveBtn: "수정사항 동기화", alertPass: "암호가 올바르지 않습니다!", back: "메인 화면으로 가기",
                 alertSelectLimit: "최대 2개의 도구 조합만 비교 가능합니다.", alertFields: "입력 필수 파라미터 누락.", details: "상세 상세조회",
-                confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널"
+                confirmDel: "해당 데이터베이스 개체를 삭제하시겠습니까?", colName:"도구명", colCat:"분류", colPrice:"과금 체계", colAct:"액션 패널",
+                pros: "주요 장점", cons: "단점 및 한계", promptTitle: "추천 프롬프트 샌드박스", copy: "복사", copied: "복사됨!",
+                reviewTitle: "방문자 리뷰 및 별점 평점", noReviews: "작성된 리뷰가 없습니다. 첫 번째 리뷰를 남겨보세요!",
+                namePlaceholder: "닉네임 입력", commentPlaceholder: "이 도구에 대한 솔직한 평가를 남겨주세요...", submitReview: "리뷰 제출하기", alertComment: "닉네임, 별점, 리뷰 내용을 모두 입력해주세요."
             }
         };
 
-        // Static Master Framework Array (Enhanced UI metadata tags added with live standard mock screenshots placeholders)
+        // Fully Translatable Infrastructure Array Matrix
         const initDefaultTools = [
-            { id:1, name:"ChatGPT", category:"chat", desc:"Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and complex logic processing.", price:"Free / $20mo Plus", score:4.9, link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80" },
-            { id:2, name:"Claude 3.5 Sonnet", category:"chat", desc:"Industry-leading LLM from Anthropic. Exceptional performance parameters for source code multi-file architectures and advanced granular academic logical text writing.", price:"Free / $20mo Pro", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" },
-            { id:3, name:"Google Gemini", category:"chat", desc:"Google's native multimodal titan ecosystem. Blazing fast native data context token reading limits with hyper-optimized access to live search network intelligence.", price:"Free / $20mo Advanced", score:4.7, link:"https://gemini.google.com", img:"https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80" },
-            { id:4, name:"Midjourney", category:"image", desc:"The global visual golden standard for high-fidelity text-to-image synthesis, cinematic asset framing rendering, and peerless digital artistic texture generation output.", price:"Starts $10/mo", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80" },
-            { id:5, name:"Stable Diffusion XL", category:"image", desc:"Open-source pipeline neural framework giving creators infinite variable checkpoint adjustments, local custom fine-tuning weights, and modular extension scripting.", price:"Free / Self-Hosted", score:4.6, link:"https://stability.ai", img:"https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=800&q=80" },
-            { id:6, name:"Sora OpenAI", category:"video", desc:"State-of-the-art physics generative environment simulation engine rendering full 60-second seamless camera loops with highly consistent cinema narrative fidelity.", price:"Enterprise Access", score:4.9, link:"https://openai.com/sora", img:"https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" },
-            { id:7, name:"Runway Gen-3 Alpha", category:"video", desc:"High-tier commercial video engine tailored for complex cinematic tracking prompts, realistic environmental lighting simulations, and ultra-fluid text directive motions.", price:"Subscription Base", score:4.5, link:"https://runwayml.com", img:"https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80" },
-            { id:8, name:"GitHub Copilot", category:"code", desc:"The industry baseline production autocompletion engine running directly inside IDE environments to write boilerplates and unit scripts autonomously.", price:"$10/mo Individual", score:4.8, link:"https://github.com", img:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" },
-            { id:9, name:"Cursor IDE", category:"code", desc:"An evolutionary AI-first editor environment built on VS Code layouts, optimizing cross-file logic compilation references and background console bug sweeps.", price:"Free Tier / $20mo", score:4.9, link:"https://cursor.com", img:"https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80" }
+            { 
+                id:1, name:"ChatGPT", category:"chat", score:4.9, link:"https://openai.com", img:"https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Free / $20mo Plus", zh:"免费 / 20美元每月 Plus", ja:"無料 / 月額20ドル Plus", ko:"무료 / 월 $20 Plus" },
+                desc: {
+                    en: "Flagship advanced large language model by OpenAI. Unmatched reasoning, creative drafting, and complex logic processing.",
+                    zh: "OpenAI 旗下的行业标杆级大语言模型。在逻辑推理、内容创作、复杂代码分析及多模态交互上具备极强的统治力。",
+                    ja: "OpenAIが開発した最高峰の対話型AI。高度な論理的推論、クリエイティブな文章作成、複雑なロジック処理に圧倒的な強みを持ちます。",
+                    ko: "OpenAI가 개발한 플래그십 고급 대규모 언어 모델. 비교할 수 없는 추론 능력, 창의적인 텍스트 작성 및 복잡한 로직 처리 지원."
+                },
+                pros: { en: ["Top-tier reasoning", "Massive ecosystem"], zh: ["顶尖的高阶推理能力", "极其强大的应用生态(GPTs)"], ja: ["最高峰の推論能力", "強力なプラグインエコシステム"], ko: ["최고 수준의 추론 능력", "방대한 GPTs 생태계"] },
+                cons: { en: ["High load context delays", "Strict web firewalls"], zh: ["高负载下偶有延迟", "网络访问限制较为严格"], ja: ["混雑時の応答遅延", "厳格なWebセキュリティ"], ko: ["트래픽 집중 시 지연", "엄격한 네트워크 방화벽"] },
+                prompt: 'Act as an expert senior full-stack software engineer. Refactor the following code architecture into clean, DRY execution blocks with detailed inline comments:'
+            },
+            { 
+                id:2, name:"Claude 3.5 Sonnet", category:"chat", score:4.8, link:"https://anthropic.com", img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Free / $20mo Pro", zh:"免费 / 20美元每月 Pro", ja:"無料 / 月額20ドル Pro", ko:"무료 / 월 $20 Pro" },
+                desc: {
+                    en: "Industry-leading LLM from Anthropic. Exceptional performance parameters for source code multi-file architectures.",
+                    zh: "Anthropic 推出的顶级大语言模型。其最具颠覆性的是对多文件项目代码库的深度理解力以及极度自然的文本笔触。",
+                    ja: "Anthropicによる業界最先端のLLM。複数ファイルにまたがるソースコードの解読や、自然で洗練された長文記述に優れています。",
+                    ko: "Anthropic의 업계 선도적인 LLM. 소스 코드 다중 파일 아키텍처 및 정밀한 학술적 논리 텍스트 작성에 탁월한 성능."
+                },
+                pros: { en: ["Amazing coding comprehension", "Artifacts sandbox preview"], zh: ["极其惊艳的代码架构编写", "独创 Artifacts 独立预览画布"], ja: ["驚異的なコード生成・解読", "便利なArtifacts表示機能"], ko: ["놀라운 코드 생성 및 이해력", "독창적인 Artifacts 혁신 UI"] },
+                cons: { en: ["Daily limits burn fast", "No image generation output"], zh: ["网页端高阶限额消耗极快", "不支持原生图片生成生成"], ja: ["利用制限への到達が早い", "画像生成機能は非搭載"], ko: ["일일 사용량 제한이 다소 타이트함", "이미지 생성 출력 미지원"] },
+                prompt: 'Analyze this multi-file project workspace directory. Find performance bottlenecks and generate a comprehensive markdown optimization strategy report:'
+            },
+            { 
+                id:4, name:"Midjourney", category:"image", score:4.8, link:"https://www.midjourney.com", img:"https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80",
+                price: { en:"Starts $10/mo", zh:"10美元每月起", ja: "月額10ドルから", ko: "월 $10부터 시작" },
+                desc: {
+                    en: "The global visual golden standard for high-fidelity text-to-image synthesis, cinematic asset framing rendering.",
+                    zh: "全球公认的创意图像生成天花板。无需复杂参数即可直接渲染出电影级质感、精细纹理与极具艺术感的视觉画作。",
+                    ja: "高精度な画像生成のグローバルスタンダード。映画のようなライティングや、芸術的なディテール表現において敵なしのクオリティ。",
+                    ko: "고화질 텍스트-이미지 합성을 위한 글로벌 비주얼 골든 표준. 시네마틱 자산 프레임 렌더링 및Peerless 디지털 예술 작화."
+                },
+                pros: { en: ["Cinematic lighting rendering", "Vast community gallery"], zh: ["无与伦比的电影级光影质感", "社区拥有海量审美渲染灵感"], ja: ["圧倒的な映画級の質感・芸術性", "インスピレーション溢れるギャラリー"], ko: ["독보적인 시네마틱 광원 연출", "영감을 주는 방대한 커뮤니티 갤러리"] },
+                cons: { en: ["Requires Discord workflow", "No perpetual free trial"], zh: ["依赖 Discord 社区工作流", "已取消永久免费试用额度"], ja: ["Discord経由の操作が特殊", "無料トライアルの廃止"], ko: ["Discord 워크플로우 기반 조작", "상시 무료 트라이얼 미지원"] },
+                prompt: 'Cinematic hyper-realistic raw macro shot of an futuristic cyberpunk biomechanical neon workshop, Unreal Engine 5 render, depth of field, 8k resolution --ar 16:9 --v 6.0'
+            }
         ];
 
-        // System Core Lifecycle Data Purgatory State Synchronizer
+        // Global Application Architecture State Engines
         let currentLang = localStorage.getItem('portal_lang') || 'en';
         let localData = localStorage.getItem('portal_tools');
-        if (!localData || !localData.includes("Gemini")) {
+        if (!localData || !localData.includes("Pros")) {
             localStorage.setItem('portal_tools', JSON.stringify(initDefaultTools));
             localData = JSON.stringify(initDefaultTools);
         }
         let aiTools = JSON.parse(localData);
-        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 3]; // Default mock items pinned
+        let selectedFavs = JSON.parse(localStorage.getItem('portal_favs')) || [1, 2];
+        let reviewsDb = JSON.parse(localStorage.getItem('portal_reviews')) || {
+            1: [
+                { name: "CodeNinja", score: 5, text: "Absolutely phenomenal for multi-turn architectural design.", date: "2026-06-15 14:22" },
+                { name: "木子李", score: 4, text: "经常用它写周报，中文逻辑通顺，就是高峰期稍微有点慢。", date: "2026-06-20 09:10" }
+            ]
+        };
         let selectedCompare = [];
         let currentFilter = "all";
+        let activeReviewStars = 5; // Form tracker
 
-        // DOM Layout View Mapping Elements
+        // DOM Catchers
         const toolContainer = document.getElementById("toolContainer");
         const compareModal = document.getElementById("compareModal");
         const compareContent = document.getElementById("compareContent");
@@ -235,7 +290,6 @@
             localStorage.setItem('portal_lang', langCode);
             renderLangSelectorUI();
             updateUIStrings();
-            // Re-render current detail block view inline if open to ensure dynamic sync
             if(!detailViewBlock.classList.contains("hidden") && detailViewBlock.dataset.activeId) {
                 navigateToDetails(parseInt(detailViewBlock.dataset.activeId));
             }
@@ -274,7 +328,7 @@
             categories.forEach(cat => {
                 const btn = document.createElement("button");
                 btn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${currentFilter === cat ? 'bg-primary text-white shadow-md' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}`;
-                btn.innerText = i18n[currentLang][cat];
+                btn.innerText = i18n[currentLang][cat] || cat;
                 btn.onclick = () => {
                     currentFilter = cat;
                     backToMainDashboard();
@@ -287,7 +341,7 @@
 
         function renderStar(rating){
             let stars = "";
-            for(let i=1;i<=5;i++){
+            for(let i=1; i<=5; i++){
                 if(i <= Math.floor(rating)) stars += '<i class="fa fa-star star-fill mr-0.5"></i>';
                 else if(i - rating < 1) stars += '<i class="fa fa-star-half-o star-fill mr-0.5"></i>';
                 else stars += '<i class="fa fa-star-o text-gray-300 dark:text-gray-600 mr-0.5"></i>';
@@ -295,7 +349,6 @@
             return stars;
         }
 
-        // Sidebar Dynamic Favorite Sync Matrix Renderer
         function renderFavoritesSidebar() {
             favoritesList.innerHTML = "";
             favCount.innerText = selectedFavs.length;
@@ -305,8 +358,8 @@
                 const li = document.createElement("li");
                 li.className = "group flex items-center justify-between text-xs p-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700/60 text-gray-700 dark:text-gray-300 transition";
                 li.innerHTML = `
-                    <span class="truncate font-medium group-hover:text-primary" onclick="navigateToDetails(${tool.id})">
-                        <i class="fa fa-angle-right mr-1.5 opacity-50"></i>${tool.name}
+                    <span class="truncate font-medium group-hover:text-primary flex items-center gap-1" onclick="navigateToDetails(${tool.id})">
+                        <i class="fa fa-angle-right opacity-50"></i><strong>${tool.name}</strong> <span class="text-[10px] text-amber-500 font-bold">★${tool.score.toFixed(1)}</span>
                     </span>
                     <button onclick="toggleFavorite(${tool.id}, event)" class="text-red-500 opacity-60 hover:opacity-100 px-1"><i class="fa fa-heart"></i></button>
                 `;
@@ -314,7 +367,6 @@
             });
         }
 
-        // Primary Grid Renderer
         function renderTools(){
             toolContainer.innerHTML = "";
             const t = i18n[currentLang];
@@ -329,6 +381,10 @@
                 const isChecked = selectedCompare.find(s=>s.id === tool.id);
                 const isFav = selectedFavs.includes(tool.id);
                 
+                // Polyfill values for cross-compatibility languages mapping safety
+                const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
+                const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
+
                 const card = document.createElement("div");
                 card.className = `card-hover bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 border transition-all flex flex-col justify-between ${isChecked ? 'border-primary ring-2 ring-primary/20' : 'border-gray-100 dark:border-gray-700/60'}`;
                 card.innerHTML = `
@@ -345,12 +401,12 @@
                                 </label>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 cursor-pointer" onclick="navigateToDetails(${tool.id})">${tool.desc}</p>
-                        <div class="text-[11px] mb-2"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-gray-200 font-semibold">${tool.price}</span></div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 cursor-pointer" onclick="navigateToDetails(${tool.id})">${localizedDesc}</p>
+                        <div class="text-[11px] mb-2"><span class="text-gray-400">${t.pricing}</span><span class="dark:text-gray-200 font-semibold">${localizedPrice}</span></div>
                     </div>
                     
                     <div class="flex items-center justify-between mt-2 pt-3 border-t dark:border-gray-700/60">
-                        <div class="flex items-center text-[11px]">${renderStar(tool.score)}<span class="ml-1 text-gray-400 font-bold">${tool.score}</span></div>
+                        <div class="flex items-center text-[11px]">${renderStar(tool.score)}<span class="ml-1 text-gray-400 font-bold">${tool.score.toFixed(1)}</span></div>
                         <button onclick="navigateToDetails(${tool.id})" class="text-[11px] text-primary font-bold hover:underline flex items-center gap-0.5">${t.details} <i class="fa fa-chevron-right text-[9px]"></i></button>
                     </div>
                 `;
@@ -360,7 +416,7 @@
             openCompareBtn.classList.toggle("hidden", selectedCompare.length !== 2);
         }
 
-        // ================= DETAILED SINGLE VIEW ROUTING LOGIC =================
+        // ================= FULL DEEP DETAIL ARCHITECTURE DETAILED EXPANSION ROW =================
         function navigateToDetails(toolId) {
             const tool = aiTools.find(t => t.id === toolId);
             if (!tool) return;
@@ -368,15 +424,23 @@
             const t = i18n[currentLang];
             const isFav = selectedFavs.includes(tool.id);
             const youtubeLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(tool.name + ' ' + t.ytQuery)}`;
-            // Auto fallback image framework if missing from dashboard arrays
             const displayImg = tool.img || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
+
+            const localizedDesc = tool.desc[currentLang] || tool.desc['en'] || tool.desc;
+            const localizedPrice = tool.price[currentLang] || tool.price['en'] || tool.price;
+            
+            // Build Pros & Cons Array Safety fallbacks
+            const arrayPros = (tool.pros && tool.pros[currentLang]) ? tool.pros[currentLang] : ["Excellent features"];
+            const arrayCons = (tool.cons && tool.cons[currentLang]) ? tool.cons[currentLang] : ["Premium limits"];
+            const sandboxPrompt = tool.prompt || "Write a baseline generic hello world script.";
 
             detailViewBlock.dataset.activeId = tool.id;
             dashboardViewBlock.classList.add("hidden");
             detailViewBlock.classList.remove("hidden");
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            detailViewBlock.innerHTML = `
+            // Generate HTML Blocks Layout
+            let html = `
                 <div class="flex items-center justify-between mb-5">
                     <button onclick="backToMainDashboard()" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-primary transition flex items-center gap-1.5">
                         <i class="fa fa-arrow-left"></i> ${t.back}
@@ -386,29 +450,83 @@
                     </button>
                 </div>
 
-                <div class="relative w-full h-52 sm:h-72 rounded-xl overflow-hidden border dark:border-gray-700 mb-6 bg-gray-900 shadow-inner">
-                    <img src="${displayImg}" alt="${tool.name} Sandbox" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 flex flex-col justify-end">
-                        <span class="text-[10px] bg-primary text-white font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full w-max mb-2">${t[tool.category]}</span>
+                <!-- Main Display Board -->
+                <div class="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden border dark:border-gray-700 mb-6 bg-gray-900 shadow-inner">
+                    <img src="${displayImg}" alt="${tool.name}" class="w-full h-full object-cover opacity-80">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6">
+                        <span class="text-[10px] bg-primary text-white font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full w-max mb-2 block">${t[tool.category] || tool.category}</span>
                         <h2 class="text-2xl sm:text-3xl font-black text-white">${tool.name}</h2>
                     </div>
                 </div>
 
+                <!-- Parameters Table Data Grid -->
                 <div class="grid sm:grid-cols-2 gap-4 mb-6 text-xs bg-gray-50 dark:bg-gray-700/40 p-4 rounded-xl border dark:border-gray-700">
-                    <div><span class="text-gray-400 block mb-0.5">${t.pricing}</span><span class="text-sm font-bold text-gray-900 dark:text-white">${tool.price}</span></div>
-                    <div><span class="text-gray-400 block mb-0.5">Rating Performance</span><span class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score} / 5.0)</span></div>
+                    <div><span class="text-gray-400 block mb-0.5">${t.pricing}</span><span class="text-sm font-bold text-gray-900 dark:text-white">${localizedPrice}</span></div>
+                    <div><span class="text-gray-400 block mb-0.5">Rating System Benchmark</span><span class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1">${renderStar(tool.score)} (${tool.score.toFixed(1)} / 5.0)</span></div>
                 </div>
 
-                <div class="prose dark:prose-invert max-w-none mb-8">
-                    <h3 class="text-sm font-black tracking-wider text-gray-400 uppercase mb-2">Detailed Framework Profile</h3>
-                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300 bg-white dark:bg-transparent rounded-lg">${tool.desc} Built and continuous performance metrics benchmarked via internal testing cycles.</p>
+                <!-- Description Block -->
+                <div class="mb-6">
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">${localizedDesc}</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 pt-4 border-t dark:border-gray-700">
-                    <a href="${tool.link}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition shadow-sm flex items-center justify-center gap-1.5">${t.visit} <i class="fa fa-external-link"></i></a>
-                    <a href="${youtubeLink}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition shadow-sm flex items-center justify-center gap-1.5"><i class="fa fa-youtube-play"></i> ${t.course}</a>
+                <!-- ADVANCED EXPANSION MATRIX: PROS & CONS ROW BLOCK -->
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-emerald-50/50 dark:bg-emerald-950/10 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                        <h4 class="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 mb-2 flex items-center gap-1.5"><i class="fa fa-check-circle"></i> ${t.pros}</h4>
+                        <ul class="space-y-1 text-xs text-gray-600 dark:text-gray-300">
+                            ${arrayPros.map(p => `<li><i class="fa fa-caret-right text-emerald-400 mr-1.5"></i>${p}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50/50 dark:bg-rose-950/10 p-4 rounded-xl border border-rose-100 dark:border-rose-900/30">
+                        <h4 class="text-xs font-black uppercase text-rose-600 dark:text-rose-400 mb-2 flex items-center gap-1.5"><i class="fa fa-times-circle"></i> ${t.cons}</h4>
+                        <ul class="space-y-1 text-xs text-gray-600 dark:text-gray-300">
+                            ${arrayCons.map(c => `<li><i class="fa fa-caret-right text-rose-400 mr-1.5"></i>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ADVANCED EXPANSION MATRIX: PROMPT SANDBOX COPY ENGINE -->
+                <div class="bg-gray-100 dark:bg-gray-700/30 rounded-xl p-4 border dark:border-gray-700 mb-8">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-xs font-black tracking-wider text-gray-400 uppercase flex items-center gap-1.5"><i class="fa fa-terminal text-primary"></i> ${t.promptTitle}</h4>
+                        <button onclick="copyPromptText(this, \`${encodeURIComponent(sandboxPrompt)}\`)" class="text-[10px] bg-white dark:bg-gray-800 border dark:border-gray-600 px-2 py-1 rounded shadow-sm font-bold text-primary hover:opacity-80 transition">${t.copy}</button>
+                    </div>
+                    <code class="block text-xs text-gray-700 dark:text-gray-300 font-mono break-all bg-white dark:bg-gray-900/40 p-2.5 border dark:border-gray-700/60 rounded-md select-all">${sandboxPrompt}</code>
+                </div>
+
+                <!-- CTA Anchors -->
+                <div class="grid grid-cols-2 gap-4 pb-6 border-b dark:border-gray-700">
+                    <a href="${tool.link}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-white transition shadow-sm flex items-center justify-center gap-1.5">${t.visit} <i class="fa fa-external-link"></i></a>
+                    <a href="${youtubeLink}" target="_blank" class="w-full text-center py-3 rounded-lg text-xs font-black bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white transition shadow-sm flex items-center justify-center gap-1.5"><i class="fa fa-youtube-play"></i> ${t.course}</a>
+                </div>
+
+                <!-- ================= VISTOR REVIEWS & COMMENT BOARD SYSTEM ================= -->
+                <div class="mt-8">
+                    <h3 class="text-base font-black dark:text-white mb-4 flex items-center gap-2"><i class="fa fa-comments-o text-primary"></i> ${t.reviewTitle}</h3>
+                    
+                    <!-- Dynamic Live Feed Stream -->
+                    <div id="reviewsStreamBlock" class="space-y-3 mb-6"></div>
+
+                    <!-- Input Review Form -->
+                    <div class="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-xl border dark:border-gray-700">
+                        <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-3">
+                            <input type="text" id="reviewerName" placeholder="${t.namePlaceholder}" class="p-2 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none w-full sm:w-48">
+                            
+                            <!-- Interactive Star Clicker Builder -->
+                            <div class="flex items-center gap-1" id="starPickerContainer"></div>
+                        </div>
+                        <textarea id="reviewerComment" rows="3" placeholder="${t.commentPlaceholder}" class="w-full p-3 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 outline-none focus:border-primary mb-3"></textarea>
+                        <div class="text-right">
+                            <button onclick="submitNewReview(${tool.id})" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:opacity-90 shadow-md shadow-indigo-500/10 transition">${t.submitReview}</button>
+                        </div>
+                    </div>
                 </div>
             `;
+            
+            detailViewBlock.innerHTML = html;
+            renderStarsFormPicker();
+            renderActiveToolReviews(tool.id);
         }
 
         function backToMainDashboard() {
@@ -417,20 +535,109 @@
             dashboardViewBlock.classList.remove("hidden");
         }
 
-        // Global Favorite Core Processor
-        function toggleFavorite(id, event) {
-            if(event) event.stopPropagation(); // Avoid triggering card routes nested inside clicks
-            
-            if (selectedFavs.includes(id)) {
-                selectedFavs = selectedFavs.filter(favId => favId !== id);
-            } else {
-                selectedFavs.push(id);
+        // Clipbox copy sandbox function
+        function copyPromptText(button, textEncoded) {
+            const text = decodeURIComponent(textEncoded);
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerText;
+                button.innerText = i18n[currentLang].copied || "Copied!";
+                setTimeout(() => button.innerText = originalText, 1800);
+            });
+        }
+
+        // ================= COMMENT CORE LOGIC ENGINE SYSTEM =================
+        function renderStarsFormPicker() {
+            const container = document.getElementById("starPickerContainer");
+            if(!container) return;
+            container.innerHTML = "";
+            for(let i=1; i<=5; i++) {
+                const star = document.createElement("i");
+                star.className = `fa cursor-pointer transition text-sm ${i <= activeReviewStars ? 'fa-star text-amber-500' : 'fa-star-o text-gray-300 dark:text-gray-600'}`;
+                star.onclick = () => { activeReviewStars = i; renderStarsFormPicker(); };
+                container.appendChild(star);
             }
-            localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
+        }
+
+        function renderActiveToolReviews(toolId) {
+            const feed = document.getElementById("reviewsStreamBlock");
+            if(!feed) return;
+            feed.innerHTML = "";
+            const t = i18n[currentLang];
+            const currentList = reviewsDb[toolId] || [];
+
+            if(currentList.length === 0) {
+                feed.innerHTML = `<p class="text-xs text-center text-gray-400 dark:text-gray-500 py-6">${t.noReviews}</p>`;
+                return;
+            }
+
+            currentList.forEach(rev => {
+                const bubble = document.createElement("div");
+                bubble.className = "bg-white dark:bg-gray-800/40 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700/60 shadow-sm flex gap-3";
+                bubble.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold flex items-center justify-center text-xs shrink-0 uppercase">
+                        ${rev.name.substring(0,2)}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-black text-gray-900 dark:text-white truncate">${rev.name}</span>
+                            <span class="text-[10px] text-gray-400 font-mono">${rev.date}</span>
+                        </div>
+                        <div class="flex mb-1.5">${renderStar(rev.score)}</div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed break-words">${rev.text}</p>
+                    </div>
+                `;
+                feed.appendChild(bubble);
+            });
+        }
+
+        function submitNewReview(toolId) {
+            const nameInp = document.getElementById("reviewerName");
+            const textInp = document.getElementById("reviewerComment");
+            if(!nameInp || !textInp) return;
+
+            const name = nameInp.value.trim();
+            const text = textInp.value.trim();
+            if(!name || !text) { alert(i18n[currentLang].alertComment); return; }
+
+            // Timestamp Formatter
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+            if(!reviewsDb[toolId]) reviewsDb[toolId] = [];
+            reviewsDb[toolId].push({ name, score: activeReviewStars, text, date: timeStr });
+            localStorage.setItem('portal_reviews', JSON.stringify(reviewsDb));
+
+            // Dynamic Core Score Engine Cascade recalculation
+            const tool = aiTools.find(x => x.id === toolId);
+            if(tool) {
+                const totalScore = reviewsDb[toolId].reduce((acc, current) => acc + current.score, 0);
+                tool.score = totalScore / reviewsDb[toolId].length; // Re-average weights
+                localStorage.setItem('portal_tools', JSON.stringify(aiTools));
+            }
+
+            // Flush view structures inline feedback loop
+            nameInp.value = "";
+            textInp.value = "";
+            activeReviewStars = 5;
+            
+            renderStarsFormPicker();
+            renderActiveToolReviews(toolId);
             renderFavoritesSidebar();
             renderTools();
             
-            // If the user updates favorite status while sitting inside details view, redraw standard container instantly
+            // Re-render parameters layout panel header to reflect realtime scores metrics changes
+            navigateToDetails(toolId);
+        }
+
+        // Global Controllers 
+        function toggleFavorite(id, event) {
+            if(event) event.stopPropagation();
+            if (selectedFavs.includes(id)) {
+                selectedFavs = selectedFavs.filter(favId => favId !== id);
+            } else { selectedFavs.push(id); }
+            localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
+            renderFavoritesSidebar();
+            renderTools();
             if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) {
                 navigateToDetails(id);
             }
@@ -439,71 +646,43 @@
         function handleSelectCompare(e){
             const id = parseInt(e.target.dataset.id);
             if(e.target.checked){
-                if(selectedCompare.length >= 2) { 
-                    alert(i18n[currentLang].alertSelectLimit); 
-                    e.target.checked = false; 
-                    return; 
-                }
+                if(selectedCompare.length >= 2) { alert(i18n[currentLang].alertSelectLimit); e.target.checked = false; return; }
                 selectedCompare.push(aiTools.find(t=>t.id === id));
-            } else {
-                selectedCompare = selectedCompare.filter(item=>item.id !== id);
-            }
+            } else { selectedCompare = selectedCompare.filter(item=>item.id !== id); }
             renderTools();
         }
 
-        // Vault Credentials Check Blocks
+        // Admin Security Hooks
         document.getElementById("openAdminBtn").addEventListener("click", () => {
-            if(sessionStorage.getItem("admin_authenticated") === "true") {
-                openAdminConsole();
-            } else {
-                document.getElementById("authPassword").value = "";
-                authModal.classList.replace("hidden", "flex");
-            }
+            if(sessionStorage.getItem("admin_authenticated") === "true") { openAdminConsole(); } 
+            else { document.getElementById("authPassword").value = ""; authModal.classList.replace("hidden", "flex"); }
         });
-
         document.getElementById("closeAuth").addEventListener("click", () => authModal.classList.replace("flex", "hidden"));
-
         function verifyPassword() {
-            const inputPass = document.getElementById("authPassword").value;
-            if(inputPass === "8888") {
+            if(document.getElementById("authPassword").value === "8888") {
                 sessionStorage.setItem("admin_authenticated", "true");
                 authModal.classList.replace("flex", "hidden");
                 openAdminConsole();
-            } else {
-                alert(i18n[currentLang].alertPass);
-            }
+            } else { alert(i18n[currentLang].alertPass); }
         }
-
-        function logoutAdmin() {
-            sessionStorage.removeItem("admin_authenticated");
-            adminModal.classList.replace("flex", "hidden");
-        }
-
-        function openAdminConsole() {
-            renderAdminTable();
-            adminModal.classList.replace("hidden", "flex");
-        }
+        function logoutAdmin() { sessionStorage.removeItem("admin_authenticated"); adminModal.classList.replace("flex", "hidden"); }
+        function openAdminConsole() { renderAdminTable(); adminModal.classList.replace("hidden", "flex"); }
 
         function renderAdminTable() {
             adminTableBody.innerHTML = "";
             const t = i18n[currentLang];
-            const thead = adminModal.querySelector("thead tr");
-            thead.innerHTML = `
+            adminModal.querySelector("thead tr").innerHTML = `
                 <th class="p-2.5 border dark:border-gray-600">${t.colName}</th>
                 <th class="p-2.5 border dark:border-gray-600">${t.colCat}</th>
-                <th class="p-2.5 border dark:border-gray-600">${t.colPrice}</th>
-                <th class="p-2.5 border dark:border-gray-600 text-center">${t.colAct}</th>
+                <th class="p-2.5 border dark:border-gray-600">${t.colAct}</th>
             `;
-
             aiTools.forEach(tool=>{
                 const tr = document.createElement('tr');
-                tr.className = "border-b dark:border-b-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/30 text-xs";
+                tr.className = "border-b dark:border-b-gray-700 text-xs";
                 tr.innerHTML = `
                     <td class="p-2.5 font-bold">${tool.name}</td>
-                    <td class="p-2.5"><span class="bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">${t[tool.category]}</span></td>
-                    <td class="p-2.5 max-w-[135px] truncate">${tool.price}</td>
+                    <td class="p-2.5"><span class="bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">${t[tool.category] || tool.category}</span></td>
                     <td class="p-2.5 text-center space-x-2">
-                        <button onclick="editTool(${tool.id})" class="text-primary font-bold hover:underline">Edit</button>
                         <button onclick="deleteTool(${tool.id})" class="text-red-500 font-bold hover:underline">Delete</button>
                     </td>
                 `;
@@ -511,61 +690,44 @@
             });
         }
 
-        function editTool(id) {
-            const t = aiTools.find(item=>item.id === id);
-            document.getElementById('toolId').value = t.id;
-            document.getElementById('toolName').value = t.name;
-            document.getElementById('toolCategory').value = t.category;
-            document.getElementById('toolScore').value = t.score;
-            document.getElementById('toolPrice').value = t.price;
-            document.getElementById('toolLink').value = t.link;
-            document.getElementById('toolDesc').value = t.desc;
-        }
-
         function saveTool() {
-            const idVal = document.getElementById('toolId').value;
             const nameVal = document.getElementById('toolName').value;
             const linkVal = document.getElementById('toolLink').value;
             if(!nameVal || !linkVal) return alert(i18n[currentLang].alertFields);
 
-            const updatedObj = {
-                id: idVal ? parseInt(idVal) : Date.now(),
+            // Construct compliant full multi-language structured nodes models to prevent breakage
+            const newAsset = {
+                id: Date.now(),
                 name: nameVal,
                 category: document.getElementById('toolCategory').value,
-                score: parseFloat(document.getElementById('toolScore').value) || 5.0,
-                price: document.getElementById('toolPrice').value || "Free",
+                score: 5.0,
                 link: linkVal,
-                desc: document.getElementById('toolDesc').value || "",
-                img: idVal ? (aiTools.find(x => x.id === parseInt(idVal))?.img || "") : ""
+                price: { en: document.getElementById('toolPrice').value || "Free", zh: "暂无标准", ja: "無料", ko: "무료" },
+                desc: { en: "Custom assets loaded inside admin panels.", zh: "后台自定义写入的AI基础资产设施。", ja: "カスタムツール", ko: "커스텀 도구" },
+                pros: { en: ["Custom active infrastructure"], zh: ["管理员自定义注入"] },
+                cons: { en: ["Awaiting user feedback reviews"], zh: ["尚未经过社区验证"] },
+                prompt: 'Analyze this input prompt assets:'
             };
 
-            if(idVal) {
-                aiTools = aiTools.map(item => item.id === parseInt(idVal) ? updatedObj : item);
-            } else { 
-                aiTools.push(updatedObj); 
-            }
-
+            aiTools.push(newAsset);
             localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             updateUIStrings();
             renderAdminTable();
-
-            ['toolId','toolName','toolScore','toolPrice','toolLink','toolDesc'].forEach(id => document.getElementById(id).value = '');
+            ['toolName','toolPrice','toolLink'].forEach(id => document.getElementById(id).value = '');
         }
 
         function deleteTool(id) {
             if(!confirm(i18n[currentLang].confirmDel)) return;
             aiTools = aiTools.filter(item => item.id !== id);
-            selectedCompare = selectedCompare.filter(item => item.id !== id);
             selectedFavs = selectedFavs.filter(favId => favId !== id);
             localStorage.setItem('portal_tools', JSON.stringify(aiTools));
             localStorage.setItem('portal_favs', JSON.stringify(selectedFavs));
             updateUIStrings();
             renderAdminTable();
-            if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) {
-                backToMainDashboard();
-            }
+            if(!detailViewBlock.classList.contains("hidden") && parseInt(detailViewBlock.dataset.activeId) === id) { backToMainDashboard(); }
         }
 
+        // Compare Module Handlers
         openCompareBtn.addEventListener("click", ()=>{
             compareContent.innerHTML = "";
             selectedCompare.forEach(tool=>{
@@ -573,26 +735,24 @@
                 card.className = "bg-gray-50 dark:bg-gray-700/50 p-5 rounded-xl border dark:border-gray-600";
                 card.innerHTML = `
                     <h3 class="text-lg font-bold mb-2 dark:text-white">${tool.name}</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-300 mb-4">${tool.desc}</p>
-                    <p class="text-xs mb-1 dark:text-white"><strong>${i18n[currentLang].pricing}</strong>${tool.price}</p>
-                    <p class="text-xs flex items-center gap-1 dark:text-white"><strong>Rating: </strong>${renderStar(tool.score)} ${tool.score}</p>
+                    <p class="text-xs mb-1 dark:text-white"><strong>Rating: </strong>${renderStar(tool.score)} ${tool.score.toFixed(1)}</p>
                 `;
                 compareContent.appendChild(card);
             });
             compareModal.classList.replace("hidden", "flex");
         });
-
         document.getElementById("closeCompare").addEventListener("click", ()=>compareModal.classList.replace("flex", "hidden"));
         document.getElementById("clearSelect").addEventListener("click", ()=>{ selectedCompare = []; compareModal.classList.replace("flex", "hidden"); renderTools(); });
         document.getElementById("closeAdmin").addEventListener("click", ()=>adminModal.classList.replace("flex", "hidden"));
 
+        // Dark-mode Switcher
         if(localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
         document.getElementById("themeToggle").addEventListener("click", ()=>{
             document.documentElement.classList.toggle("dark");
             localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
         });
 
-        // Initialize Core Sequence Execution Order 
+        // Bootstrap Launcher Sequence Execution
         renderLangSelectorUI();
         updateUIStrings();
     </script>
